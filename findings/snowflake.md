@@ -66,6 +66,14 @@ spark.sql("""MERGE INTO TPCH.COFFEE.ORDERS t USING updates s ON t.id = s.id
 | Iceberg metadata tables `.snapshots` / `.history` | Failed in every name form: "object name ... is invalid", or `Table '"1"' does not exist` with the extensions on. That blocks `VERSION AS OF <snapshot_id>` and `CALL system.rollback_to_snapshot`. | [Listed as supported](https://docs.snowflake.com/en/developer-guide/snowpark-connect/snowpark-connect-iceberg) | None found. The docs describe timestamp time travel (`as-of-timestamp`), which we didn't pursue. |
 | Append with `mergeSchema` on a **native** table | Column count mismatch. Works on Iceberg. | Not mentioned | `ALTER TABLE ADD COLUMNS` first (works) |
 | Spark 4-style Python code | `map_col[F.col(k)]` gives `UNSUPPORTED_DATA_TYPE`. The client is Spark **3.5.6**, so the error comes from the client, not from Snowflake. | Spark 3.5 documented | `F.element_at(map_col, F.col(k))` |
+| **No volumes: file I/O isn't standard** | See [Files are not standard](#files-are-not-standard-no-volumes) below. | Stage mounts: read-only on warehouses ([docs](https://docs.snowflake.com/en/developer-guide/code-bundles/code-bundle-yml-reference)) | Spark reads and writes to `@stage/...` paths, passed in as job arguments |
+
+### Files are not standard (no volumes)
+This is the biggest portability limit we hit. Other Spark platforms give a job ordinary file paths: Databricks has Unity Catalog Volumes (`/Volumes/...`), Fabric has the Lakehouse `Files/` area, and open-source Spark takes any filesystem or object-store path. Snowflake has no such area. (Its `EXTERNAL VOLUME` only stores Iceberg tables; it isn't a place a job can read and write files.)
+- **Files only live on stages, addressed as `@db.schema.stage/path`.** That's a Snowflake-only URI, so Spark code that reads `s3://`, `abfss://`, `/Volumes/...` or a local path has to be changed. Every job here takes its paths as arguments for this reason.
+- **Plain Python can't write files anywhere persistent.** Stage mounts are read-only on warehouses (`platforms/snowflake/probe/mount.py`), and `/` is read-only.
+- **A file written by a tool rather than Spark needs a Snowflake-only API to persist it.** For example, `tpchgen-cli` writing parquet to `/tmp` can only get that parquet onto a stage through Snowpark `session.file.put`. That's why TPC-H generation is `platforms/snowflake/tpch_gen.py` and not a portable job. On a platform with volumes, the tool would write straight to the volume.
+- Untested: whether `spark.read.parquet("/tmp/...")` can read a sandbox-local file and write it to a stage. `tpch_gen.py` has that as a fallback, but it never ran, because `file.put` succeeded first.
 
 ## Gotchas and behaviour differences
 - **`CREATE SCHEMA` switches the session into the new schema.** That's Snowflake behaviour; Spark doesn't do it. One-part names then resolve in the new schema.
