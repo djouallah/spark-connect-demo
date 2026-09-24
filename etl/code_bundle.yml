@@ -1,0 +1,10 @@
+bundle:
+  type: spark
+  compute_type: warehouse
+  language: python
+  compute_options: {}
+  properties:
+    spark_conf:
+      snowpark.connect.iceberg.external_volume: "SNOWFLAKE_MANAGED"
+      snowpark.connect.udf.packages: "[pandas]"
+      spark.sql.session.timeZone: "UTC"

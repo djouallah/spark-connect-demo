@@ -1,0 +1,16 @@
+bundle:
+  type: spark
+  compute_type: warehouse
+  language: python
+  compute_options: {}
+  stage_mounts:                # works for type: spark; read-only on warehouses (probe/mount.py)
+    tpch_raw:
+      stage_url: '@TPCH.PUBLIC.TPCH_RAW'
+      mount_path: '/tmp/mnt/tpch_raw/'   # /mnt fails: the mount is a symlink and / is read-only
+  properties:
+    python_dependencies:
+      packages:
+        - tpchgen-cli          # Rust TPC-H generator, installed into the job's sandbox
+    spark_conf:
+      snowpark.connect.iceberg.external_volume: "SNOWFLAKE_MANAGED"
+      spark.sql.session.timeZone: "UTC"

@@ -1,0 +1,586 @@
+{"customer_id": "C0001", "name": "Customer 1", "email": "customer1@example.com", "phone": "+1 500 843 6925", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-05-21 09:25:00"}
+{"customer_id": "C0002", "name": "Customer 2", "email": "customer2@example.com", "phone": "0448 840 994", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-22 03:53:00"}
+{"customer_id": "C0003", "name": "Customer 3", "email": "customer3@example.com", "phone": "0496 977 837", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-03-04 10:46:00"}
+{"customer_id": "C0003", "name": "Customer 3", "email": "customer3@example.com", "phone": "(02) 1372-8882", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-02-10 06:13:00"}
+{"customer_id": "C0004", "name": "Customer 4", "email": "customer4@example.com", "phone": "+64212110460", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-06-27 17:59:00"}
+{"customer_id": "C0004", "name": "Customer 4", "email": "customer4@example.com", "phone": "+61417507864", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-14 13:25:00"}
+{"customer_id": "C0004", "name": "Customer 4", "email": "customer4@example.com", "phone": "(04) 6092-9647", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-23 07:53:00"}
+{"customer_id": "C0005", "name": "Customer 5", "email": "customer5@example.com", "phone": "342.452.9830", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-04-17 04:31:00"}
+{"customer_id": "C0005", "name": "Customer 5", "email": "customer5@example.com", "phone": "0466 661 351", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-05-04 10:58:00"}
+{"customer_id": "C0005", "name": "Customer 5", "email": "customer5@example.com", "phone": "(341) 721-9085", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-29 08:15:00"}
+{"customer_id": "C0006", "name": "Customer 6", "email": "customer6@example.com", "phone": "+64218294150", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-06-11 06:57:00"}
+{"customer_id": "C0006", "name": "Customer 6", "email": "customer6@example.com", "phone": "(04) 8207-0937", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-06-07 01:57:00"}
+{"customer_id": "C0007", "name": "Customer 7", "email": "customer7@example.com", "phone": "0431 682 744", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-07-26 09:24:00"}
+{"customer_id": "C0007", "name": "Customer 7", "email": "customer7@example.com", "phone": "(02) 1287-6828", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-08-11 09:43:00"}
+{"customer_id": "C0007", "name": "Customer 7", "email": "customer7@example.com", "phone": "0219 517 485", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-07-21 03:02:00"}
+{"customer_id": "C0008", "name": "Customer 8", "email": "customer8@example.com", "phone": "(471) 740-7932", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-03-24 11:06:00"}
+{"customer_id": "C0008", "name": "Customer 8", "email": "customer8@example.com", "phone": "0218350099", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-04-06 17:28:00"}
+{"customer_id": "C0008", "name": "Customer 8", "email": "customer8@example.com", "phone": "+61419289546", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-03-06 08:17:00"}
+{"customer_id": "C0009", "name": "Customer 9", "email": "customer9@example.com", "phone": "+61440885476", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-05 09:27:00"}
+{"customer_id": "C0009", "name": "Customer 9", "email": "customer9@example.com", "phone": "0440 728 046", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-28 10:27:00"}
+{"customer_id": "C0010", "name": "Customer 10", "email": "customer10@example.com", "phone": "0218 835 373", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-02-19 23:21:00"}
+{"customer_id": "C0010", "name": "Customer 10", "email": "customer10@example.com", "phone": "(616) 394-2545", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-02-05 16:21:00"}
+{"customer_id": "C0010", "name": "Customer 10", "email": "customer10@example.com", "phone": "+61438754377", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-01-28 08:17:00"}
+{"customer_id": "C0011", "name": "Customer 11", "email": "customer11@example.com", "phone": "673.455.2235", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-07-20 08:01:00"}
+{"customer_id": "C0011", "name": "Customer 11", "email": "customer11@example.com", "phone": "0435529407", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-14 03:16:00"}
+{"customer_id": "C0012", "name": "Customer 12", "email": "customer12@example.com", "phone": "(260) 368-7209", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-06-26 10:52:00"}
+{"customer_id": "C0012", "name": "Customer 12", "email": "customer12@example.com", "phone": "0215785687", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-07-26 18:37:00"}
+{"customer_id": "C0012", "name": "Customer 12", "email": "customer12@example.com", "phone": "0432321899", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-06-19 04:02:00"}
+{"customer_id": "C0013", "name": "Customer 13", "email": "customer13@example.com", "phone": "(04) 1818-1586", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-04-05 09:15:00"}
+{"customer_id": "C0014", "name": "Customer 14", "email": "customer14@example.com", "phone": "(361) 258-9320", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-01-30 09:03:00"}
+{"customer_id": "C0014", "name": "Customer 14", "email": "customer14@example.com", "phone": "0441568532", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-19 10:12:00"}
+{"customer_id": "C0014", "name": "Customer 14", "email": "customer14@example.com", "phone": "0493 131 979", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-10 10:52:00"}
+{"customer_id": "C0015", "name": "Customer 15", "email": "customer15@example.com", "phone": "+64217640184", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-03-16 04:31:00"}
+{"customer_id": "C0016", "name": "Customer 16", "email": "customer16@example.com", "phone": "(04) 2777-8019", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-05-16 12:20:00"}
+{"customer_id": "C0016", "name": "Customer 16", "email": "customer16@example.com", "phone": "0493 370 583", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-04-29 07:49:00"}
+{"customer_id": "C0017", "name": "Customer 17", "email": "customer17@example.com", "phone": "(02) 1325-3031", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-20 11:02:00"}
+{"customer_id": "C0017", "name": "Customer 17", "email": "customer17@example.com", "phone": "0450 603 163", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-04-20 09:16:00"}
+{"customer_id": "C0018", "name": "Customer 18", "email": "customer18@example.com", "phone": "0447 135 391", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-29 16:31:00"}
+{"customer_id": "C0018", "name": "Customer 18", "email": "customer18@example.com", "phone": "+61491178885", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-07-19 04:48:00"}
+{"customer_id": "C0018", "name": "Customer 18", "email": "customer18@example.com", "phone": "0219479356", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-07-26 09:18:00"}
+{"customer_id": "C0019", "name": "Customer 19", "email": "customer19@example.com", "phone": "0430 005 727", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-07-11 08:49:00"}
+{"customer_id": "C0019", "name": "Customer 19", "email": "customer19@example.com", "phone": "0484045292", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-07-07 07:32:00"}
+{"customer_id": "C0020", "name": "Customer 20", "email": "customer20@example.com", "phone": "(04) 1535-4599", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-05-01 06:13:00"}
+{"customer_id": "C0021", "name": "Customer 21", "email": "customer21@example.com", "phone": "+61464543049", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-06 09:33:00"}
+{"customer_id": "C0022", "name": "Customer 22", "email": "customer22@example.com", "phone": "+1 954 540 7745", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-02-12 03:03:00"}
+{"customer_id": "C0023", "name": "Customer 23", "email": "customer23@example.com", "phone": "+61473174945", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-03-23 00:39:00"}
+{"customer_id": "C0024", "name": "Customer 24", "email": "customer24@example.com", "phone": "0214 740 036", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-25 03:53:00"}
+{"customer_id": "C0024", "name": "Customer 24", "email": "customer24@example.com", "phone": "271.991.5573", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-06-05 08:38:00"}
+{"customer_id": "C0025", "name": "Customer 25", "email": "customer25@example.com", "phone": "0215 453 786", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-01-14 09:54:00"}
+{"customer_id": "C0026", "name": "Customer 26", "email": "customer26@example.com", "phone": "0468 526 649", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-07-05 06:06:00"}
+{"customer_id": "C0026", "name": "Customer 26", "email": "customer26@example.com", "phone": "0218 321 474", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-06-26 05:21:00"}
+{"customer_id": "C0027", "name": "Customer 27", "email": "customer27@example.com", "phone": "(04) 9363-8503", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-04-26 05:38:00"}
+{"customer_id": "C0027", "name": "Customer 27", "email": "customer27@example.com", "phone": "(04) 7806-4830", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-20 10:45:00"}
+{"customer_id": "C0028", "name": "Customer 28", "email": "customer28@example.com", "phone": "0450392808", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-02 11:52:00"}
+{"customer_id": "C0028", "name": "Customer 28", "email": "customer28@example.com", "phone": "0214218542", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-04-12 02:10:00"}
+{"customer_id": "C0029", "name": "Customer 29", "email": "customer29@example.com", "phone": "(04) 9142-4737", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-04-02 09:53:00"}
+{"customer_id": "C0029", "name": "Customer 29", "email": "customer29@example.com", "phone": "+1 723 684 3780", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-17 13:31:00"}
+{"customer_id": "C0030", "name": "Customer 30", "email": "customer30@example.com", "phone": "+64216207974", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-15 04:00:00"}
+{"customer_id": "C0030", "name": "Customer 30", "email": "customer30@example.com", "phone": "0442862209", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-16 04:47:00"}
+{"customer_id": "C0030", "name": "Customer 30", "email": "customer30@example.com", "phone": "+61494525678", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-31 11:51:00"}
+{"customer_id": "C0031", "name": "Customer 31", "email": "customer31@example.com", "phone": "0472 350 830", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-06-07 08:55:00"}
+{"customer_id": "C0031", "name": "Customer 31", "email": "customer31@example.com", "phone": "0424305904", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-05-12 00:05:00"}
+{"customer_id": "C0032", "name": "Customer 32", "email": "customer32@example.com", "phone": "656.362.8777", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-03-26 17:16:00"}
+{"customer_id": "C0032", "name": "Customer 32", "email": "customer32@example.com", "phone": "(04) 9960-0766", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-02-27 07:55:00"}
+{"customer_id": "C0033", "name": "Customer 33", "email": "customer33@example.com", "phone": "0452 910 691", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-13 09:47:00"}
+{"customer_id": "C0033", "name": "Customer 33", "email": "customer33@example.com", "phone": "+1 481 650 2269", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-07-04 04:04:00"}
+{"customer_id": "C0034", "name": "Customer 34", "email": "customer34@example.com", "phone": "0418620650", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-24 03:39:00"}
+{"customer_id": "C0034", "name": "Customer 34", "email": "customer34@example.com", "phone": "0217 975 534", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-04-11 11:36:00"}
+{"customer_id": "C0035", "name": "Customer 35", "email": "customer35@example.com", "phone": "0461053877", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-05-08 09:49:00"}
+{"customer_id": "C0035", "name": "Customer 35", "email": "customer35@example.com", "phone": "0475 181 765", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-05-27 23:54:00"}
+{"customer_id": "C0035", "name": "Customer 35", "email": "customer35@example.com", "phone": "+64218030010", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-05-18 16:28:00"}
+{"customer_id": "C0036", "name": "Customer 36", "email": "customer36@example.com", "phone": "837.746.1441", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-08-04 02:10:00"}
+{"customer_id": "C0037", "name": "Customer 37", "email": "customer37@example.com", "phone": "0455298556", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-02-11 13:26:00"}
+{"customer_id": "C0037", "name": "Customer 37", "email": "customer37@example.com", "phone": "(681) 219-9837", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-02-20 14:49:00"}
+{"customer_id": "C0037", "name": "Customer 37", "email": "customer37@example.com", "phone": "386.251.5262", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-01-27 07:52:00"}
+{"customer_id": "C0038", "name": "Customer 38", "email": "customer38@example.com", "phone": "0473 560 289", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-08-21 02:40:00"}
+{"customer_id": "C0038", "name": "Customer 38", "email": "customer38@example.com", "phone": "+61443189803", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-08-13 00:31:00"}
+{"customer_id": "C0038", "name": "Customer 38", "email": "customer38@example.com", "phone": "+61459512272", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-09-05 07:02:00"}
+{"customer_id": "C0039", "name": "Customer 39", "email": "customer39@example.com", "phone": "(02) 1143-0812", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-07-23 09:52:00"}
+{"customer_id": "C0040", "name": "Customer 40", "email": "customer40@example.com", "phone": "(270) 718-6590", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-06-02 20:06:00"}
+{"customer_id": "C0040", "name": "Customer 40", "email": "customer40@example.com", "phone": "(04) 2367-6961", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-04-15 04:08:00"}
+{"customer_id": "C0040", "name": "Customer 40", "email": "customer40@example.com", "phone": "(04) 1551-2205", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-11 13:47:00"}
+{"customer_id": "C0041", "name": "Customer 41", "email": "customer41@example.com", "phone": "948.806.5397", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-05-29 10:02:00"}
+{"customer_id": "C0041", "name": "Customer 41", "email": "customer41@example.com", "phone": "+1 645 380 9548", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-05-14 02:36:00"}
+{"customer_id": "C0042", "name": "Customer 42", "email": "customer42@example.com", "phone": "0486483924", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-04-07 07:55:00"}
+{"customer_id": "C0042", "name": "Customer 42", "email": "customer42@example.com", "phone": "0434406132", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-04-23 13:27:00"}
+{"customer_id": "C0043", "name": "Customer 43", "email": "customer43@example.com", "phone": "+64211170307", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-04-06 04:42:00"}
+{"customer_id": "C0043", "name": "Customer 43", "email": "customer43@example.com", "phone": "+61475575808", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-04-30 11:38:00"}
+{"customer_id": "C0044", "name": "Customer 44", "email": "customer44@example.com", "phone": "538.560.8434", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-08-15 19:35:00"}
+{"customer_id": "C0044", "name": "Customer 44", "email": "customer44@example.com", "phone": "295.501.4630", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-06-30 00:17:00"}
+{"customer_id": "C0044", "name": "Customer 44", "email": "customer44@example.com", "phone": "0217191135", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-07-22 10:12:00"}
+{"customer_id": "C0045", "name": "Customer 45", "email": "customer45@example.com", "phone": "(04) 4711-1151", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-03-07 10:17:00"}
+{"customer_id": "C0045", "name": "Customer 45", "email": "customer45@example.com", "phone": "+61458436637", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-17 14:09:00"}
+{"customer_id": "C0045", "name": "Customer 45", "email": "customer45@example.com", "phone": "+61481922443", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-11 02:02:00"}
+{"customer_id": "C0046", "name": "Customer 46", "email": "customer46@example.com", "phone": "0426948946", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-03-30 04:59:00"}
+{"customer_id": "C0047", "name": "Customer 47", "email": "customer47@example.com", "phone": "(02) 1838-9840", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-01-20 08:10:00"}
+{"customer_id": "C0047", "name": "Customer 47", "email": "customer47@example.com", "phone": "0425 312 516", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-01-29 16:19:00"}
+{"customer_id": "C0047", "name": "Customer 47", "email": "customer47@example.com", "phone": "(844) 902-1878", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-02-02 02:09:00"}
+{"customer_id": "C0048", "name": "Customer 48", "email": "customer48@example.com", "phone": "+61491378577", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-02-09 07:06:00"}
+{"customer_id": "C0049", "name": "Customer 49", "email": "customer49@example.com", "phone": "0445 520 201", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-05-09 10:55:00"}
+{"customer_id": "C0049", "name": "Customer 49", "email": "customer49@example.com", "phone": "+1 512 782 1986", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-18 07:19:00"}
+{"customer_id": "C0050", "name": "Customer 50", "email": "customer50@example.com", "phone": "+1 437 495 5632", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-03-02 00:35:00"}
+{"customer_id": "C0050", "name": "Customer 50", "email": "customer50@example.com", "phone": "+61445507920", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-24 04:34:00"}
+{"customer_id": "C0050", "name": "Customer 50", "email": "customer50@example.com", "phone": "0464830300", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-02-20 00:02:00"}
+{"customer_id": "C0051", "name": "Customer 51", "email": "customer51@example.com", "phone": "0212 198 058", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-07-12 02:25:00"}
+{"customer_id": "C0052", "name": "Customer 52", "email": "customer52@example.com", "phone": "0219284509", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-04-21 11:19:00"}
+{"customer_id": "C0052", "name": "Customer 52", "email": "customer52@example.com", "phone": "(04) 5326-1270", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-05-20 18:41:00"}
+{"customer_id": "C0052", "name": "Customer 52", "email": "customer52@example.com", "phone": "(02) 1886-3447", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-04-04 02:07:00"}
+{"customer_id": "C0053", "name": "Customer 53", "email": "customer53@example.com", "phone": "+1 484 385 8141", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-08-03 12:07:00"}
+{"customer_id": "C0053", "name": "Customer 53", "email": "customer53@example.com", "phone": "0487 342 561", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-17 04:35:00"}
+{"customer_id": "C0053", "name": "Customer 53", "email": "customer53@example.com", "phone": "(04) 6480-7553", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-08-19 18:03:00"}
+{"customer_id": "C0054", "name": "Customer 54", "email": "customer54@example.com", "phone": "+1 495 878 7561", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-03-06 08:27:00"}
+{"customer_id": "C0054", "name": "Customer 54", "email": "customer54@example.com", "phone": "458.531.2899", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-03-09 13:49:00"}
+{"customer_id": "C0055", "name": "Customer 55", "email": "customer55@example.com", "phone": "0493568503", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-03 06:10:00"}
+{"customer_id": "C0056", "name": "Customer 56", "email": "customer56@example.com", "phone": "(04) 2758-4297", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-05-03 09:22:00"}
+{"customer_id": "C0057", "name": "Customer 57", "email": "customer57@example.com", "phone": "(04) 3125-7157", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-06-29 04:05:00"}
+{"customer_id": "C0057", "name": "Customer 57", "email": "customer57@example.com", "phone": "+61422510327", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-17 11:02:00"}
+{"customer_id": "C0058", "name": "Customer 58", "email": "customer58@example.com", "phone": "(04) 7829-9645", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-02-16 04:58:00"}
+{"customer_id": "C0058", "name": "Customer 58", "email": "customer58@example.com", "phone": "667.764.3369", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-03-04 09:07:00"}
+{"customer_id": "C0058", "name": "Customer 58", "email": "customer58@example.com", "phone": "0447077298", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-04-01 10:18:00"}
+{"customer_id": "C0059", "name": "Customer 59", "email": "customer59@example.com", "phone": "+64219214801", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-01-28 09:53:00"}
+{"customer_id": "C0059", "name": "Customer 59", "email": "customer59@example.com", "phone": "765.981.9903", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-02-09 15:33:00"}
+{"customer_id": "C0060", "name": "Customer 60", "email": "customer60@example.com", "phone": "(714) 804-6439", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-04-04 16:45:00"}
+{"customer_id": "C0060", "name": "Customer 60", "email": "customer60@example.com", "phone": "0217395997", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-04-02 14:36:00"}
+{"customer_id": "C0060", "name": "Customer 60", "email": "customer60@example.com", "phone": "0441348220", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-03-09 06:32:00"}
+{"customer_id": "C0061", "name": "Customer 61", "email": "customer61@example.com", "phone": "0420043277", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-01-18 02:38:00"}
+{"customer_id": "C0061", "name": "Customer 61", "email": "customer61@example.com", "phone": "(02) 1234-7467", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-02-07 09:25:00"}
+{"customer_id": "C0061", "name": "Customer 61", "email": "customer61@example.com", "phone": "0211 602 286", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-02-28 17:44:00"}
+{"customer_id": "C0062", "name": "Customer 62", "email": "customer62@example.com", "phone": "0460310319", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-04-16 12:53:00"}
+{"customer_id": "C0062", "name": "Customer 62", "email": "customer62@example.com", "phone": "0413 885 234", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-04-06 06:46:00"}
+{"customer_id": "C0062", "name": "Customer 62", "email": "customer62@example.com", "phone": "0495 060 193", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-14 01:40:00"}
+{"customer_id": "C0063", "name": "Customer 63", "email": "customer63@example.com", "phone": "+61429208935", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-06-16 12:56:00"}
+{"customer_id": "C0063", "name": "Customer 63", "email": "customer63@example.com", "phone": "0420598952", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-31 02:59:00"}
+{"customer_id": "C0063", "name": "Customer 63", "email": "customer63@example.com", "phone": "0211157662", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-07-01 17:17:00"}
+{"customer_id": "C0064", "name": "Customer 64", "email": "customer64@example.com", "phone": "(02) 1811-8722", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-02-07 05:06:00"}
+{"customer_id": "C0064", "name": "Customer 64", "email": "customer64@example.com", "phone": "0219 106 886", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-02-14 11:39:00"}
+{"customer_id": "C0065", "name": "Customer 65", "email": "customer65@example.com", "phone": "0491390501", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-07-08 05:52:00"}
+{"customer_id": "C0065", "name": "Customer 65", "email": "customer65@example.com", "phone": "0211368085", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-06-19 05:02:00"}
+{"customer_id": "C0066", "name": "Customer 66", "email": "customer66@example.com", "phone": "(04) 9333-4601", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-06-26 03:14:00"}
+{"customer_id": "C0066", "name": "Customer 66", "email": "customer66@example.com", "phone": "0494 216 001", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-07-17 04:53:00"}
+{"customer_id": "C0067", "name": "Customer 67", "email": "customer67@example.com", "phone": "(04) 4961-3214", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-17 13:52:00"}
+{"customer_id": "C0067", "name": "Customer 67", "email": "customer67@example.com", "phone": "(02) 1251-2187", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-02-02 02:14:00"}
+{"customer_id": "C0067", "name": "Customer 67", "email": "customer67@example.com", "phone": "+1 335 752 6994", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-02-08 05:39:00"}
+{"customer_id": "C0068", "name": "Customer 68", "email": "customer68@example.com", "phone": "(574) 292-7464", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-03-06 09:30:00"}
+{"customer_id": "C0069", "name": "Customer 69", "email": "customer69@example.com", "phone": "(798) 590-7086", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-05-30 04:28:00"}
+{"customer_id": "C0070", "name": "Customer 70", "email": "customer70@example.com", "phone": "0212060605", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-05-31 03:46:00"}
+{"customer_id": "C0071", "name": "Customer 71", "email": "customer71@example.com", "phone": "(04) 1499-4527", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-06-21 00:46:00"}
+{"customer_id": "C0071", "name": "Customer 71", "email": "customer71@example.com", "phone": "+61482148284", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-06-25 04:46:00"}
+{"customer_id": "C0072", "name": "Customer 72", "email": "customer72@example.com", "phone": "624.870.2622", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-04-24 02:38:00"}
+{"customer_id": "C0072", "name": "Customer 72", "email": "customer72@example.com", "phone": "0214645180", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-04-26 08:57:00"}
+{"customer_id": "C0072", "name": "Customer 72", "email": "customer72@example.com", "phone": "(04) 2333-5151", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-24 15:08:00"}
+{"customer_id": "C0073", "name": "Customer 73", "email": "customer73@example.com", "phone": "+61442691263", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-01-25 07:46:00"}
+{"customer_id": "C0073", "name": "Customer 73", "email": "customer73@example.com", "phone": "0218 628 891", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-01-23 02:05:00"}
+{"customer_id": "C0074", "name": "Customer 74", "email": "customer74@example.com", "phone": "0427 690 330", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-09 06:35:00"}
+{"customer_id": "C0074", "name": "Customer 74", "email": "customer74@example.com", "phone": "(04) 2744-7248", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-15 06:09:00"}
+{"customer_id": "C0074", "name": "Customer 74", "email": "customer74@example.com", "phone": "(04) 4127-2553", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-06 03:41:00"}
+{"customer_id": "C0075", "name": "Customer 75", "email": "customer75@example.com", "phone": "0218 062 546", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-01-07 02:09:00"}
+{"customer_id": "C0076", "name": "Customer 76", "email": "customer76@example.com", "phone": "+64218583392", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-19 01:51:00"}
+{"customer_id": "C0076", "name": "Customer 76", "email": "customer76@example.com", "phone": "0212020480", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-06-03 02:22:00"}
+{"customer_id": "C0077", "name": "Customer 77", "email": "customer77@example.com", "phone": "+1 275 282 6277", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-07-18 07:34:00"}
+{"customer_id": "C0078", "name": "Customer 78", "email": "customer78@example.com", "phone": "0216455706", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-02-06 09:59:00"}
+{"customer_id": "C0079", "name": "Customer 79", "email": "customer79@example.com", "phone": "(04) 5194-6203", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-05-26 15:01:00"}
+{"customer_id": "C0079", "name": "Customer 79", "email": "customer79@example.com", "phone": "0470867592", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-05-15 07:44:00"}
+{"customer_id": "C0079", "name": "Customer 79", "email": "customer79@example.com", "phone": "870.866.4522", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-05-01 01:57:00"}
+{"customer_id": "C0080", "name": "Customer 80", "email": "customer80@example.com", "phone": "(04) 2296-0658", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-01-21 07:22:00"}
+{"customer_id": "C0081", "name": "Customer 81", "email": "customer81@example.com", "phone": "(02) 1789-2225", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-06-14 02:05:00"}
+{"customer_id": "C0082", "name": "Customer 82", "email": "customer82@example.com", "phone": "0216 899 644", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-07-24 05:19:00"}
+{"customer_id": "C0083", "name": "Customer 83", "email": "customer83@example.com", "phone": "(02) 1558-4716", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-03-16 12:13:00"}
+{"customer_id": "C0083", "name": "Customer 83", "email": "customer83@example.com", "phone": "(558) 769-7022", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-02-17 01:50:00"}
+{"customer_id": "C0083", "name": "Customer 83", "email": "customer83@example.com", "phone": "0485 291 541", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-03-15 09:09:00"}
+{"customer_id": "C0084", "name": "Customer 84", "email": "customer84@example.com", "phone": "(958) 848-1502", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-02-19 02:25:00"}
+{"customer_id": "C0085", "name": "Customer 85", "email": "customer85@example.com", "phone": "0492 924 837", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-04-23 05:22:00"}
+{"customer_id": "C0085", "name": "Customer 85", "email": "customer85@example.com", "phone": "+1 578 519 6314", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-18 02:41:00"}
+{"customer_id": "C0086", "name": "Customer 86", "email": "customer86@example.com", "phone": "0215752087", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-04-10 09:25:00"}
+{"customer_id": "C0086", "name": "Customer 86", "email": "customer86@example.com", "phone": "+1 624 479 4531", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-03-27 07:32:00"}
+{"customer_id": "C0087", "name": "Customer 87", "email": "customer87@example.com", "phone": "+61450455821", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-27 03:29:00"}
+{"customer_id": "C0087", "name": "Customer 87", "email": "customer87@example.com", "phone": "0213 013 003", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-03-09 09:04:00"}
+{"customer_id": "C0088", "name": "Customer 88", "email": "customer88@example.com", "phone": "(712) 772-6802", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-03-04 03:55:00"}
+{"customer_id": "C0089", "name": "Customer 89", "email": "customer89@example.com", "phone": "+1 279 520 8033", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-07-10 07:50:00"}
+{"customer_id": "C0090", "name": "Customer 90", "email": "customer90@example.com", "phone": "+64212776088", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-07-14 09:24:00"}
+{"customer_id": "C0090", "name": "Customer 90", "email": "customer90@example.com", "phone": "(605) 517-6562", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-07-31 10:44:00"}
+{"customer_id": "C0090", "name": "Customer 90", "email": "customer90@example.com", "phone": "(614) 221-6321", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-07-11 01:57:00"}
+{"customer_id": "C0091", "name": "Customer 91", "email": "customer91@example.com", "phone": "(04) 3602-5314", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-05-28 08:42:00"}
+{"customer_id": "C0091", "name": "Customer 91", "email": "customer91@example.com", "phone": "(04) 2965-5410", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-05 10:27:00"}
+{"customer_id": "C0091", "name": "Customer 91", "email": "customer91@example.com", "phone": "0497 980 930", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-25 13:03:00"}
+{"customer_id": "C0092", "name": "Customer 92", "email": "customer92@example.com", "phone": "+1 858 850 6295", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-05-21 09:38:00"}
+{"customer_id": "C0092", "name": "Customer 92", "email": "customer92@example.com", "phone": "(02) 1194-2411", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-07-01 15:28:00"}
+{"customer_id": "C0092", "name": "Customer 92", "email": "customer92@example.com", "phone": "0472937522", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-06-05 10:47:00"}
+{"customer_id": "C0093", "name": "Customer 93", "email": "customer93@example.com", "phone": "0420 298 660", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-08 04:53:00"}
+{"customer_id": "C0094", "name": "Customer 94", "email": "customer94@example.com", "phone": "+64219411547", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-07-07 18:01:00"}
+{"customer_id": "C0094", "name": "Customer 94", "email": "customer94@example.com", "phone": "+1 931 286 9266", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-07-11 23:52:00"}
+{"customer_id": "C0094", "name": "Customer 94", "email": "customer94@example.com", "phone": "767.956.1672", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-06-17 09:54:00"}
+{"customer_id": "C0095", "name": "Customer 95", "email": "customer95@example.com", "phone": "+1 895 812 1857", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-08-01 14:41:00"}
+{"customer_id": "C0095", "name": "Customer 95", "email": "customer95@example.com", "phone": "824.362.6962", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-07-18 08:55:00"}
+{"customer_id": "C0096", "name": "Customer 96", "email": "customer96@example.com", "phone": "941.872.3463", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-05 04:18:00"}
+{"customer_id": "C0097", "name": "Customer 97", "email": "customer97@example.com", "phone": "0451638598", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-29 05:58:00"}
+{"customer_id": "C0097", "name": "Customer 97", "email": "customer97@example.com", "phone": "(04) 7824-8169", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-30 22:43:00"}
+{"customer_id": "C0097", "name": "Customer 97", "email": "customer97@example.com", "phone": "(04) 6055-7040", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-09 15:30:00"}
+{"customer_id": "C0098", "name": "Customer 98", "email": "customer98@example.com", "phone": "+64214221313", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-03-13 08:17:00"}
+{"customer_id": "C0099", "name": "Customer 99", "email": "customer99@example.com", "phone": "0219 517 619", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-03-09 01:43:00"}
+{"customer_id": "C0100", "name": "Customer 100", "email": "customer100@example.com", "phone": "+61470254091", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-09-13 18:44:00"}
+{"customer_id": "C0100", "name": "Customer 100", "email": "customer100@example.com", "phone": "0415864298", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-08-29 13:53:00"}
+{"customer_id": "C0100", "name": "Customer 100", "email": "customer100@example.com", "phone": "+61430703455", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-08-05 06:25:00"}
+{"customer_id": "C0101", "name": "Customer 101", "email": "customer101@example.com", "phone": "0469135982", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-08-01 09:44:00"}
+{"customer_id": "C0101", "name": "Customer 101", "email": "customer101@example.com", "phone": "+1 628 365 4271", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-08-18 18:44:00"}
+{"customer_id": "C0102", "name": "Customer 102", "email": "customer102@example.com", "phone": "+61422309586", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-04-04 16:31:00"}
+{"customer_id": "C0102", "name": "Customer 102", "email": "customer102@example.com", "phone": "(767) 305-9452", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-02-11 06:20:00"}
+{"customer_id": "C0102", "name": "Customer 102", "email": "customer102@example.com", "phone": "0446613428", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-03-08 09:04:00"}
+{"customer_id": "C0103", "name": "Customer 103", "email": "customer103@example.com", "phone": "441.595.2337", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-05-04 06:22:00"}
+{"customer_id": "C0104", "name": "Customer 104", "email": "customer104@example.com", "phone": "0213328554", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-03-06 13:46:00"}
+{"customer_id": "C0104", "name": "Customer 104", "email": "customer104@example.com", "phone": "+61429602406", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-04 05:43:00"}
+{"customer_id": "C0105", "name": "Customer 105", "email": "customer105@example.com", "phone": "0219854536", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-01-28 02:33:00"}
+{"customer_id": "C0106", "name": "Customer 106", "email": "customer106@example.com", "phone": "(711) 811-9782", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-07-31 03:57:00"}
+{"customer_id": "C0106", "name": "Customer 106", "email": "customer106@example.com", "phone": "+61416408822", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-07-28 02:04:00"}
+{"customer_id": "C0107", "name": "Customer 107", "email": "customer107@example.com", "phone": "0442287985", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-04-05 06:01:00"}
+{"customer_id": "C0107", "name": "Customer 107", "email": "customer107@example.com", "phone": "0419 083 764", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-04-22 12:10:00"}
+{"customer_id": "C0108", "name": "Customer 108", "email": "customer108@example.com", "phone": "(965) 216-6850", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-01-24 04:19:00"}
+{"customer_id": "C0108", "name": "Customer 108", "email": "customer108@example.com", "phone": "+61455439043", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-03-01 15:24:00"}
+{"customer_id": "C0108", "name": "Customer 108", "email": "customer108@example.com", "phone": "(04) 8810-1741", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-17 06:05:00"}
+{"customer_id": "C0109", "name": "Customer 109", "email": "customer109@example.com", "phone": "(04) 1496-3880", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-14 07:48:00"}
+{"customer_id": "C0110", "name": "Customer 110", "email": "customer110@example.com", "phone": "0479173614", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-01-23 05:17:00"}
+{"customer_id": "C0111", "name": "Customer 111", "email": "customer111@example.com", "phone": "(04) 4840-1154", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-05-27 03:15:00"}
+{"customer_id": "C0111", "name": "Customer 111", "email": "customer111@example.com", "phone": "0217174337", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-06-05 05:22:00"}
+{"customer_id": "C0112", "name": "Customer 112", "email": "customer112@example.com", "phone": "816.384.9937", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-04-28 15:49:00"}
+{"customer_id": "C0112", "name": "Customer 112", "email": "customer112@example.com", "phone": "(04) 5930-4469", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-04-25 08:29:00"}
+{"customer_id": "C0113", "name": "Customer 113", "email": "customer113@example.com", "phone": "0216914963", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-02-15 08:19:00"}
+{"customer_id": "C0113", "name": "Customer 113", "email": "customer113@example.com", "phone": "+64218149041", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-01-31 07:36:00"}
+{"customer_id": "C0114", "name": "Customer 114", "email": "customer114@example.com", "phone": "(04) 7038-7584", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-02-23 13:31:00"}
+{"customer_id": "C0114", "name": "Customer 114", "email": "customer114@example.com", "phone": "(967) 895-3621", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-02-01 08:45:00"}
+{"customer_id": "C0114", "name": "Customer 114", "email": "customer114@example.com", "phone": "268.441.7001", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-02-03 10:54:00"}
+{"customer_id": "C0115", "name": "Customer 115", "email": "customer115@example.com", "phone": "+64215675638", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-06-09 05:21:00"}
+{"customer_id": "C0116", "name": "Customer 116", "email": "customer116@example.com", "phone": "0461 940 566", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-01-23 08:50:00"}
+{"customer_id": "C0116", "name": "Customer 116", "email": "customer116@example.com", "phone": "(02) 1459-9894", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-02-15 16:26:00"}
+{"customer_id": "C0116", "name": "Customer 116", "email": "customer116@example.com", "phone": "0419939096", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-19 18:44:00"}
+{"customer_id": "C0117", "name": "Customer 117", "email": "customer117@example.com", "phone": "(02) 1208-9496", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-02-14 05:55:00"}
+{"customer_id": "C0117", "name": "Customer 117", "email": "customer117@example.com", "phone": "0441774192", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-04-04 11:15:00"}
+{"customer_id": "C0117", "name": "Customer 117", "email": "customer117@example.com", "phone": "+61458518659", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-03-09 08:53:00"}
+{"customer_id": "C0118", "name": "Customer 118", "email": "customer118@example.com", "phone": "(987) 619-2208", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-06-06 08:28:00"}
+{"customer_id": "C0118", "name": "Customer 118", "email": "customer118@example.com", "phone": "(04) 1882-4561", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-05-20 01:28:00"}
+{"customer_id": "C0118", "name": "Customer 118", "email": "customer118@example.com", "phone": "(04) 7943-8885", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-21 16:25:00"}
+{"customer_id": "C0119", "name": "Customer 119", "email": "customer119@example.com", "phone": "327.730.3507", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-08-02 00:56:00"}
+{"customer_id": "C0120", "name": "Customer 120", "email": "customer120@example.com", "phone": "0448 124 318", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-02-23 08:51:00"}
+{"customer_id": "C0120", "name": "Customer 120", "email": "customer120@example.com", "phone": "+61446836194", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-03-16 18:15:00"}
+{"customer_id": "C0121", "name": "Customer 121", "email": "customer121@example.com", "phone": "+61445521514", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-08-11 22:19:00"}
+{"customer_id": "C0121", "name": "Customer 121", "email": "customer121@example.com", "phone": "+61489431184", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-24 02:52:00"}
+{"customer_id": "C0121", "name": "Customer 121", "email": "customer121@example.com", "phone": "0211 691 125", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-07-21 12:29:00"}
+{"customer_id": "C0122", "name": "Customer 122", "email": "customer122@example.com", "phone": "+64219102469", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-05-29 05:09:00"}
+{"customer_id": "C0122", "name": "Customer 122", "email": "customer122@example.com", "phone": "+64212005173", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-06-13 06:23:00"}
+{"customer_id": "C0122", "name": "Customer 122", "email": "customer122@example.com", "phone": "408.548.3353", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-06-29 14:18:00"}
+{"customer_id": "C0123", "name": "Customer 123", "email": "customer123@example.com", "phone": "(02) 1278-1470", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-04-30 09:35:00"}
+{"customer_id": "C0124", "name": "Customer 124", "email": "customer124@example.com", "phone": "0213 363 534", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-15 04:13:00"}
+{"customer_id": "C0125", "name": "Customer 125", "email": "customer125@example.com", "phone": "(535) 791-6123", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-03-24 02:43:00"}
+{"customer_id": "C0125", "name": "Customer 125", "email": "customer125@example.com", "phone": "(710) 515-9148", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-10 10:41:00"}
+{"customer_id": "C0126", "name": "Customer 126", "email": "customer126@example.com", "phone": "0457 364 777", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-05-17 09:57:00"}
+{"customer_id": "C0126", "name": "Customer 126", "email": "customer126@example.com", "phone": "0215 794 062", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-06-02 17:58:00"}
+{"customer_id": "C0127", "name": "Customer 127", "email": "customer127@example.com", "phone": "0217 139 410", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-03-01 06:52:00"}
+{"customer_id": "C0127", "name": "Customer 127", "email": "customer127@example.com", "phone": "(04) 3612-6192", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-03-20 16:27:00"}
+{"customer_id": "C0128", "name": "Customer 128", "email": "customer128@example.com", "phone": "(771) 574-3363", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-02-25 15:10:00"}
+{"customer_id": "C0128", "name": "Customer 128", "email": "customer128@example.com", "phone": "(486) 838-2946", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-02-13 09:23:00"}
+{"customer_id": "C0129", "name": "Customer 129", "email": "customer129@example.com", "phone": "0473584863", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-04 05:41:00"}
+{"customer_id": "C0130", "name": "Customer 130", "email": "customer130@example.com", "phone": "0219511333", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-07-05 11:10:00"}
+{"customer_id": "C0130", "name": "Customer 130", "email": "customer130@example.com", "phone": "0431810655", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-06-16 05:26:00"}
+{"customer_id": "C0130", "name": "Customer 130", "email": "customer130@example.com", "phone": "577.539.2795", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-08-01 11:27:00"}
+{"customer_id": "C0131", "name": "Customer 131", "email": "customer131@example.com", "phone": "+61429834119", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-10 16:21:00"}
+{"customer_id": "C0131", "name": "Customer 131", "email": "customer131@example.com", "phone": "0214 817 541", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-06-23 09:52:00"}
+{"customer_id": "C0132", "name": "Customer 132", "email": "customer132@example.com", "phone": "355.622.4340", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-03-01 07:08:00"}
+{"customer_id": "C0133", "name": "Customer 133", "email": "customer133@example.com", "phone": "+61479616482", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-07-31 02:21:00"}
+{"customer_id": "C0133", "name": "Customer 133", "email": "customer133@example.com", "phone": "0219816043", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-08-22 10:30:00"}
+{"customer_id": "C0133", "name": "Customer 133", "email": "customer133@example.com", "phone": "(04) 5594-6354", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-09-06 19:35:00"}
+{"customer_id": "C0134", "name": "Customer 134", "email": "customer134@example.com", "phone": "(04) 8490-5122", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-14 04:45:00"}
+{"customer_id": "C0134", "name": "Customer 134", "email": "customer134@example.com", "phone": "0214477544", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-07-09 09:40:00"}
+{"customer_id": "C0135", "name": "Customer 135", "email": "customer135@example.com", "phone": "0217370211", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-04-10 02:04:00"}
+{"customer_id": "C0135", "name": "Customer 135", "email": "customer135@example.com", "phone": "0448 605 090", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-04-20 02:47:00"}
+{"customer_id": "C0135", "name": "Customer 135", "email": "customer135@example.com", "phone": "(965) 690-4505", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-05-11 07:09:00"}
+{"customer_id": "C0136", "name": "Customer 136", "email": "customer136@example.com", "phone": "+61499903592", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-02-13 00:51:00"}
+{"customer_id": "C0137", "name": "Customer 137", "email": "customer137@example.com", "phone": "0473 404 979", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-03-15 05:38:00"}
+{"customer_id": "C0138", "name": "Customer 138", "email": "customer138@example.com", "phone": "0464614193", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-08-04 02:41:00"}
+{"customer_id": "C0139", "name": "Customer 139", "email": "customer139@example.com", "phone": "0211 992 583", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-06-27 04:52:00"}
+{"customer_id": "C0140", "name": "Customer 140", "email": "customer140@example.com", "phone": "+61466087572", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-16 02:59:00"}
+{"customer_id": "C0140", "name": "Customer 140", "email": "customer140@example.com", "phone": "(390) 966-5742", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-07-12 11:26:00"}
+{"customer_id": "C0140", "name": "Customer 140", "email": "customer140@example.com", "phone": "(02) 1662-1073", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-07-31 13:15:00"}
+{"customer_id": "C0141", "name": "Customer 141", "email": "customer141@example.com", "phone": "(04) 6740-5358", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-03-14 13:22:00"}
+{"customer_id": "C0141", "name": "Customer 141", "email": "customer141@example.com", "phone": "+1 315 538 3662", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-02-13 03:17:00"}
+{"customer_id": "C0141", "name": "Customer 141", "email": "customer141@example.com", "phone": "(02) 1123-6293", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-03-08 06:27:00"}
+{"customer_id": "C0142", "name": "Customer 142", "email": "customer142@example.com", "phone": "(206) 467-7284", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-02-28 04:14:00"}
+{"customer_id": "C0143", "name": "Customer 143", "email": "customer143@example.com", "phone": "(02) 1119-1859", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-07-22 09:56:00"}
+{"customer_id": "C0143", "name": "Customer 143", "email": "customer143@example.com", "phone": "(04) 7246-4258", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-24 11:57:00"}
+{"customer_id": "C0144", "name": "Customer 144", "email": "customer144@example.com", "phone": "0430560218", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-07-23 10:09:00"}
+{"customer_id": "C0144", "name": "Customer 144", "email": "customer144@example.com", "phone": "(02) 1594-9909", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-07-18 02:00:00"}
+{"customer_id": "C0144", "name": "Customer 144", "email": "customer144@example.com", "phone": "+64218899184", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-08-06 19:31:00"}
+{"customer_id": "C0145", "name": "Customer 145", "email": "customer145@example.com", "phone": "0479839059", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-05-24 15:12:00"}
+{"customer_id": "C0145", "name": "Customer 145", "email": "customer145@example.com", "phone": "0212 882 551", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-18 09:37:00"}
+{"customer_id": "C0146", "name": "Customer 146", "email": "customer146@example.com", "phone": "(963) 423-2196", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-08-03 09:44:00"}
+{"customer_id": "C0146", "name": "Customer 146", "email": "customer146@example.com", "phone": "(656) 256-8429", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-07-06 08:42:00"}
+{"customer_id": "C0146", "name": "Customer 146", "email": "customer146@example.com", "phone": "+1 772 673 6049", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-07-25 09:41:00"}
+{"customer_id": "C0147", "name": "Customer 147", "email": "customer147@example.com", "phone": "(04) 1425-9382", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-06-18 08:03:00"}
+{"customer_id": "C0148", "name": "Customer 148", "email": "customer148@example.com", "phone": "(659) 586-7154", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-02-28 06:31:00"}
+{"customer_id": "C0149", "name": "Customer 149", "email": "customer149@example.com", "phone": "+61462755436", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-06-23 09:10:00"}
+{"customer_id": "C0149", "name": "Customer 149", "email": "customer149@example.com", "phone": "(04) 1305-1483", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-07-20 09:13:00"}
+{"customer_id": "C0150", "name": "Customer 150", "email": "customer150@example.com", "phone": "0414324134", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-06-24 09:46:00"}
+{"customer_id": "C0150", "name": "Customer 150", "email": "customer150@example.com", "phone": "+61456460773", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-05-25 07:51:00"}
+{"customer_id": "C0151", "name": "Customer 151", "email": "customer151@example.com", "phone": "0469 920 305", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-03-07 00:34:00"}
+{"customer_id": "C0152", "name": "Customer 152", "email": "customer152@example.com", "phone": "(752) 422-1924", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-07-24 03:59:00"}
+{"customer_id": "C0153", "name": "Customer 153", "email": "customer153@example.com", "phone": "(02) 1497-4590", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-03-20 05:28:00"}
+{"customer_id": "C0153", "name": "Customer 153", "email": "customer153@example.com", "phone": "0484605013", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-04-24 17:52:00"}
+{"customer_id": "C0153", "name": "Customer 153", "email": "customer153@example.com", "phone": "0446 930 534", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-04-03 10:35:00"}
+{"customer_id": "C0154", "name": "Customer 154", "email": "customer154@example.com", "phone": "+61450364158", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-06-26 06:22:00"}
+{"customer_id": "C0154", "name": "Customer 154", "email": "customer154@example.com", "phone": "+1 507 585 4012", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-05-29 02:32:00"}
+{"customer_id": "C0155", "name": "Customer 155", "email": "customer155@example.com", "phone": "(02) 1854-6170", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-07-02 10:22:00"}
+{"customer_id": "C0155", "name": "Customer 155", "email": "customer155@example.com", "phone": "337.597.4978", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-06-11 09:02:00"}
+{"customer_id": "C0156", "name": "Customer 156", "email": "customer156@example.com", "phone": "274.392.4555", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-02-05 00:40:00"}
+{"customer_id": "C0156", "name": "Customer 156", "email": "customer156@example.com", "phone": "+64214553544", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-02-15 00:55:00"}
+{"customer_id": "C0157", "name": "Customer 157", "email": "customer157@example.com", "phone": "(04) 8409-8828", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-17 04:05:00"}
+{"customer_id": "C0157", "name": "Customer 157", "email": "customer157@example.com", "phone": "(939) 680-6246", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-04-16 14:51:00"}
+{"customer_id": "C0157", "name": "Customer 157", "email": "customer157@example.com", "phone": "864.567.6053", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-04-01 13:11:00"}
+{"customer_id": "C0158", "name": "Customer 158", "email": "customer158@example.com", "phone": "+1 463 981 9005", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-03-05 10:50:00"}
+{"customer_id": "C0158", "name": "Customer 158", "email": "customer158@example.com", "phone": "(04) 1217-6998", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-02-05 02:29:00"}
+{"customer_id": "C0158", "name": "Customer 158", "email": "customer158@example.com", "phone": "400.537.4768", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-02-15 05:05:00"}
+{"customer_id": "C0159", "name": "Customer 159", "email": "customer159@example.com", "phone": "+61475540707", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-07-12 09:19:00"}
+{"customer_id": "C0159", "name": "Customer 159", "email": "customer159@example.com", "phone": "0419 976 458", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-29 09:53:00"}
+{"customer_id": "C0160", "name": "Customer 160", "email": "customer160@example.com", "phone": "0484040345", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-21 12:39:00"}
+{"customer_id": "C0160", "name": "Customer 160", "email": "customer160@example.com", "phone": "+1 832 853 8916", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-02-20 03:35:00"}
+{"customer_id": "C0160", "name": "Customer 160", "email": "customer160@example.com", "phone": "+61411226946", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-02-08 02:34:00"}
+{"customer_id": "C0161", "name": "Customer 161", "email": "customer161@example.com", "phone": "0434 060 788", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-04 07:20:00"}
+{"customer_id": "C0161", "name": "Customer 161", "email": "customer161@example.com", "phone": "(04) 9318-5576", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-06-12 10:36:00"}
+{"customer_id": "C0162", "name": "Customer 162", "email": "customer162@example.com", "phone": "+64215080351", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-04-25 07:50:00"}
+{"customer_id": "C0163", "name": "Customer 163", "email": "customer163@example.com", "phone": "0460903955", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-06-28 06:55:00"}
+{"customer_id": "C0164", "name": "Customer 164", "email": "customer164@example.com", "phone": "0421097943", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-05-25 02:55:00"}
+{"customer_id": "C0165", "name": "Customer 165", "email": "customer165@example.com", "phone": "+1 276 900 5593", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-07-23 09:47:00"}
+{"customer_id": "C0165", "name": "Customer 165", "email": "customer165@example.com", "phone": "+61415711200", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-14 09:00:00"}
+{"customer_id": "C0166", "name": "Customer 166", "email": "customer166@example.com", "phone": "0463 458 386", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-04-10 02:27:00"}
+{"customer_id": "C0167", "name": "Customer 167", "email": "customer167@example.com", "phone": "(04) 8255-3061", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-02 06:38:00"}
+{"customer_id": "C0167", "name": "Customer 167", "email": "customer167@example.com", "phone": "(04) 7721-5278", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-03-28 07:58:00"}
+{"customer_id": "C0167", "name": "Customer 167", "email": "customer167@example.com", "phone": "(04) 2020-2996", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-04-11 11:55:00"}
+{"customer_id": "C0168", "name": "Customer 168", "email": "customer168@example.com", "phone": "+64218245206", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-08-26 11:03:00"}
+{"customer_id": "C0168", "name": "Customer 168", "email": "customer168@example.com", "phone": "0470471823", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-08-08 04:39:00"}
+{"customer_id": "C0169", "name": "Customer 169", "email": "customer169@example.com", "phone": "0451374957", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-08-28 06:54:00"}
+{"customer_id": "C0169", "name": "Customer 169", "email": "customer169@example.com", "phone": "0212 233 237", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-08-12 04:12:00"}
+{"customer_id": "C0169", "name": "Customer 169", "email": "customer169@example.com", "phone": "(04) 6229-4176", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-08-25 06:49:00"}
+{"customer_id": "C0170", "name": "Customer 170", "email": "customer170@example.com", "phone": "0484757265", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-17 07:39:00"}
+{"customer_id": "C0171", "name": "Customer 171", "email": "customer171@example.com", "phone": "0216443037", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-01-25 01:35:00"}
+{"customer_id": "C0172", "name": "Customer 172", "email": "customer172@example.com", "phone": "475.508.5397", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-16 03:48:00"}
+{"customer_id": "C0172", "name": "Customer 172", "email": "customer172@example.com", "phone": "+1 942 772 4977", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-10 01:26:00"}
+{"customer_id": "C0173", "name": "Customer 173", "email": "customer173@example.com", "phone": "0214280754", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-03-06 13:33:00"}
+{"customer_id": "C0173", "name": "Customer 173", "email": "customer173@example.com", "phone": "0219 124 053", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-02-26 05:06:00"}
+{"customer_id": "C0174", "name": "Customer 174", "email": "customer174@example.com", "phone": "537.650.6484", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-03-30 06:29:00"}
+{"customer_id": "C0175", "name": "Customer 175", "email": "customer175@example.com", "phone": "0433842070", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-04-03 05:21:00"}
+{"customer_id": "C0175", "name": "Customer 175", "email": "customer175@example.com", "phone": "(02) 1506-7204", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-04-27 13:43:00"}
+{"customer_id": "C0176", "name": "Customer 176", "email": "customer176@example.com", "phone": "0438138531", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-06-04 17:29:00"}
+{"customer_id": "C0176", "name": "Customer 176", "email": "customer176@example.com", "phone": "+61436816708", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-11 09:37:00"}
+{"customer_id": "C0177", "name": "Customer 177", "email": "customer177@example.com", "phone": "0482 062 301", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-05-19 18:57:00"}
+{"customer_id": "C0177", "name": "Customer 177", "email": "customer177@example.com", "phone": "+1 812 690 7566", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-04-23 12:49:00"}
+{"customer_id": "C0177", "name": "Customer 177", "email": "customer177@example.com", "phone": "+1 447 458 3525", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-04-20 05:10:00"}
+{"customer_id": "C0178", "name": "Customer 178", "email": "customer178@example.com", "phone": "+64219396422", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-03-20 19:07:00"}
+{"customer_id": "C0178", "name": "Customer 178", "email": "customer178@example.com", "phone": "+61439796480", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-07 11:13:00"}
+{"customer_id": "C0178", "name": "Customer 178", "email": "customer178@example.com", "phone": "0454506155", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-03-03 06:49:00"}
+{"customer_id": "C0179", "name": "Customer 179", "email": "customer179@example.com", "phone": "318.947.3321", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-02-26 01:27:00"}
+{"customer_id": "C0179", "name": "Customer 179", "email": "customer179@example.com", "phone": "0219742856", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-03-13 04:58:00"}
+{"customer_id": "C0180", "name": "Customer 180", "email": "customer180@example.com", "phone": "+61442737441", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-02-27 03:56:00"}
+{"customer_id": "C0180", "name": "Customer 180", "email": "customer180@example.com", "phone": "(507) 245-2885", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-02-05 01:08:00"}
+{"customer_id": "C0181", "name": "Customer 181", "email": "customer181@example.com", "phone": "0418 397 164", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-04-18 12:04:00"}
+{"customer_id": "C0181", "name": "Customer 181", "email": "customer181@example.com", "phone": "660.806.8037", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-11 07:19:00"}
+{"customer_id": "C0181", "name": "Customer 181", "email": "customer181@example.com", "phone": "(614) 844-4022", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-04-10 03:57:00"}
+{"customer_id": "C0182", "name": "Customer 182", "email": "customer182@example.com", "phone": "+1 886 701 9646", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-03-29 04:28:00"}
+{"customer_id": "C0183", "name": "Customer 183", "email": "customer183@example.com", "phone": "(02) 1324-7270", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-07-21 03:22:00"}
+{"customer_id": "C0183", "name": "Customer 183", "email": "customer183@example.com", "phone": "+1 556 560 8501", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-06-21 01:56:00"}
+{"customer_id": "C0184", "name": "Customer 184", "email": "customer184@example.com", "phone": "0478561753", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-04-01 02:24:00"}
+{"customer_id": "C0185", "name": "Customer 185", "email": "customer185@example.com", "phone": "+1 698 850 9804", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-06-16 03:10:00"}
+{"customer_id": "C0186", "name": "Customer 186", "email": "customer186@example.com", "phone": "+1 391 522 8389", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-06-02 02:23:00"}
+{"customer_id": "C0187", "name": "Customer 187", "email": "customer187@example.com", "phone": "+1 593 775 9281", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-04-07 03:19:00"}
+{"customer_id": "C0188", "name": "Customer 188", "email": "customer188@example.com", "phone": "+1 700 371 2354", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-29 07:34:00"}
+{"customer_id": "C0188", "name": "Customer 188", "email": "customer188@example.com", "phone": "0219 309 978", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-15 15:55:00"}
+{"customer_id": "C0188", "name": "Customer 188", "email": "customer188@example.com", "phone": "+61446890134", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-09 08:07:00"}
+{"customer_id": "C0189", "name": "Customer 189", "email": "customer189@example.com", "phone": "635.304.5055", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-06-06 03:43:00"}
+{"customer_id": "C0190", "name": "Customer 190", "email": "customer190@example.com", "phone": "0491907952", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-19 07:28:00"}
+{"customer_id": "C0190", "name": "Customer 190", "email": "customer190@example.com", "phone": "0218 366 370", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-24 01:29:00"}
+{"customer_id": "C0191", "name": "Customer 191", "email": "customer191@example.com", "phone": "(04) 8651-4083", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-08-15 01:00:00"}
+{"customer_id": "C0192", "name": "Customer 192", "email": "customer192@example.com", "phone": "+61443511112", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-04-21 14:15:00"}
+{"customer_id": "C0192", "name": "Customer 192", "email": "customer192@example.com", "phone": "(04) 4883-3650", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-03-24 04:59:00"}
+{"customer_id": "C0192", "name": "Customer 192", "email": "customer192@example.com", "phone": "(04) 1795-7216", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-03-29 12:00:00"}
+{"customer_id": "C0193", "name": "Customer 193", "email": "customer193@example.com", "phone": "+1 791 847 5402", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-07-30 02:25:00"}
+{"customer_id": "C0193", "name": "Customer 193", "email": "customer193@example.com", "phone": "848.987.2525", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-08-14 03:42:00"}
+{"customer_id": "C0193", "name": "Customer 193", "email": "customer193@example.com", "phone": "0216 491 002", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-08-29 12:01:00"}
+{"customer_id": "C0194", "name": "Customer 194", "email": "customer194@example.com", "phone": "0456 135 950", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-08-25 12:56:00"}
+{"customer_id": "C0194", "name": "Customer 194", "email": "customer194@example.com", "phone": "706.474.6289", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-08-06 04:40:00"}
+{"customer_id": "C0194", "name": "Customer 194", "email": "customer194@example.com", "phone": "0219966154", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-07-10 01:04:00"}
+{"customer_id": "C0195", "name": "Customer 195", "email": "customer195@example.com", "phone": "0410090721", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-01-20 07:47:00"}
+{"customer_id": "C0196", "name": "Customer 196", "email": "customer196@example.com", "phone": "(02) 1256-5985", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-07-02 04:40:00"}
+{"customer_id": "C0197", "name": "Customer 197", "email": "customer197@example.com", "phone": "(04) 9396-7184", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-01-24 06:45:00"}
+{"customer_id": "C0197", "name": "Customer 197", "email": "customer197@example.com", "phone": "0422 775 337", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-07 08:18:00"}
+{"customer_id": "C0198", "name": "Customer 198", "email": "customer198@example.com", "phone": "0411 246 473", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-02-06 07:35:00"}
+{"customer_id": "C0199", "name": "Customer 199", "email": "customer199@example.com", "phone": "689.272.4751", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-21 02:15:00"}
+{"customer_id": "C0200", "name": "Customer 200", "email": "customer200@example.com", "phone": "+61450165370", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-07-18 06:16:00"}
+{"customer_id": "C0201", "name": "Customer 201", "email": "customer201@example.com", "phone": "0485 603 667", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-07-21 09:03:00"}
+{"customer_id": "C0202", "name": "Customer 202", "email": "customer202@example.com", "phone": "843.966.3480", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-06-28 03:38:00"}
+{"customer_id": "C0203", "name": "Customer 203", "email": "customer203@example.com", "phone": "0489131271", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-02 02:06:00"}
+{"customer_id": "C0204", "name": "Customer 204", "email": "customer204@example.com", "phone": "0496 519 508", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-04-28 04:43:00"}
+{"customer_id": "C0204", "name": "Customer 204", "email": "customer204@example.com", "phone": "+64216060836", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-23 05:10:00"}
+{"customer_id": "C0205", "name": "Customer 205", "email": "customer205@example.com", "phone": "(02) 1806-0918", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-03 11:53:00"}
+{"customer_id": "C0205", "name": "Customer 205", "email": "customer205@example.com", "phone": "0476422705", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-04-12 04:05:00"}
+{"customer_id": "C0205", "name": "Customer 205", "email": "customer205@example.com", "phone": "0480 905 413", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-04-28 05:17:00"}
+{"customer_id": "C0206", "name": "Customer 206", "email": "customer206@example.com", "phone": "750.830.3501", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-01-26 18:30:00"}
+{"customer_id": "C0206", "name": "Customer 206", "email": "customer206@example.com", "phone": "0438 956 527", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-01-06 04:28:00"}
+{"customer_id": "C0206", "name": "Customer 206", "email": "customer206@example.com", "phone": "843.929.9209", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-01-23 09:21:00"}
+{"customer_id": "C0207", "name": "Customer 207", "email": "customer207@example.com", "phone": "0462 443 094", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-05-29 05:34:00"}
+{"customer_id": "C0208", "name": "Customer 208", "email": "customer208@example.com", "phone": "(516) 882-3877", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-07-20 05:06:00"}
+{"customer_id": "C0208", "name": "Customer 208", "email": "customer208@example.com", "phone": "0421571285", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-30 04:10:00"}
+{"customer_id": "C0209", "name": "Customer 209", "email": "customer209@example.com", "phone": "(04) 8019-6591", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-15 05:55:00"}
+{"customer_id": "C0210", "name": "Customer 210", "email": "customer210@example.com", "phone": "(02) 1149-2516", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-04-30 02:00:00"}
+{"customer_id": "C0211", "name": "Customer 211", "email": "customer211@example.com", "phone": "256.711.3734", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-06 15:58:00"}
+{"customer_id": "C0211", "name": "Customer 211", "email": "customer211@example.com", "phone": "+64212934976", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-01 17:43:00"}
+{"customer_id": "C0211", "name": "Customer 211", "email": "customer211@example.com", "phone": "0494 226 031", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-20 09:50:00"}
+{"customer_id": "C0212", "name": "Customer 212", "email": "customer212@example.com", "phone": "+1 353 383 1579", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-03-16 06:32:00"}
+{"customer_id": "C0213", "name": "Customer 213", "email": "customer213@example.com", "phone": "+64211883692", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-03-17 14:01:00"}
+{"customer_id": "C0213", "name": "Customer 213", "email": "customer213@example.com", "phone": "0446 407 626", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-03-13 05:27:00"}
+{"customer_id": "C0214", "name": "Customer 214", "email": "customer214@example.com", "phone": "(992) 518-6362", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-05-11 04:49:00"}
+{"customer_id": "C0215", "name": "Customer 215", "email": "customer215@example.com", "phone": "+64214278644", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-02-01 18:02:00"}
+{"customer_id": "C0215", "name": "Customer 215", "email": "customer215@example.com", "phone": "+61450790016", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-01-13 09:37:00"}
+{"customer_id": "C0216", "name": "Customer 216", "email": "customer216@example.com", "phone": "0495 354 668", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-05-03 05:54:00"}
+{"customer_id": "C0217", "name": "Customer 217", "email": "customer217@example.com", "phone": "(928) 486-2524", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-01-31 07:39:00"}
+{"customer_id": "C0217", "name": "Customer 217", "email": "customer217@example.com", "phone": "(306) 410-9680", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-01-29 05:14:00"}
+{"customer_id": "C0217", "name": "Customer 217", "email": "customer217@example.com", "phone": "+1 669 965 2391", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-02-23 14:00:00"}
+{"customer_id": "C0218", "name": "Customer 218", "email": "customer218@example.com", "phone": "0418359464", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-07-02 09:41:00"}
+{"customer_id": "C0218", "name": "Customer 218", "email": "customer218@example.com", "phone": "(04) 4502-9610", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-07-10 14:39:00"}
+{"customer_id": "C0219", "name": "Customer 219", "email": "customer219@example.com", "phone": "+64214400953", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-03-31 01:16:00"}
+{"customer_id": "C0219", "name": "Customer 219", "email": "customer219@example.com", "phone": "0470339827", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-04-04 04:04:00"}
+{"customer_id": "C0220", "name": "Customer 220", "email": "customer220@example.com", "phone": "0429 907 683", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-04-01 11:09:00"}
+{"customer_id": "C0220", "name": "Customer 220", "email": "customer220@example.com", "phone": "+64212517010", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-03-25 05:34:00"}
+{"customer_id": "C0220", "name": "Customer 220", "email": "customer220@example.com", "phone": "(02) 1858-1910", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-02-25 03:32:00"}
+{"customer_id": "C0221", "name": "Customer 221", "email": "customer221@example.com", "phone": "(769) 966-5093", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-06-01 12:49:00"}
+{"customer_id": "C0221", "name": "Customer 221", "email": "customer221@example.com", "phone": "0426 301 180", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-27 15:12:00"}
+{"customer_id": "C0221", "name": "Customer 221", "email": "customer221@example.com", "phone": "+61444918995", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-05-04 05:06:00"}
+{"customer_id": "C0222", "name": "Customer 222", "email": "customer222@example.com", "phone": "0427 286 109", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-21 09:00:00"}
+{"customer_id": "C0222", "name": "Customer 222", "email": "customer222@example.com", "phone": "0215 342 289", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-03-14 01:26:00"}
+{"customer_id": "C0223", "name": "Customer 223", "email": "customer223@example.com", "phone": "(04) 3319-3791", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-01-30 17:03:00"}
+{"customer_id": "C0223", "name": "Customer 223", "email": "customer223@example.com", "phone": "0468137264", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-01-17 09:47:00"}
+{"customer_id": "C0224", "name": "Customer 224", "email": "customer224@example.com", "phone": "690.262.2437", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-04-24 11:55:00"}
+{"customer_id": "C0224", "name": "Customer 224", "email": "customer224@example.com", "phone": "+1 235 828 5026", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-04-10 02:32:00"}
+{"customer_id": "C0225", "name": "Customer 225", "email": "customer225@example.com", "phone": "0412621269", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-09 09:16:00"}
+{"customer_id": "C0226", "name": "Customer 226", "email": "customer226@example.com", "phone": "714.529.7363", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-14 09:39:00"}
+{"customer_id": "C0226", "name": "Customer 226", "email": "customer226@example.com", "phone": "(04) 1393-3043", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-04-25 13:23:00"}
+{"customer_id": "C0227", "name": "Customer 227", "email": "customer227@example.com", "phone": "0487268086", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-06-16 05:26:00"}
+{"customer_id": "C0227", "name": "Customer 227", "email": "customer227@example.com", "phone": "+61443266810", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-05-22 01:42:00"}
+{"customer_id": "C0228", "name": "Customer 228", "email": "customer228@example.com", "phone": "(02) 1147-3227", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-03-13 06:07:00"}
+{"customer_id": "C0229", "name": "Customer 229", "email": "customer229@example.com", "phone": "(379) 702-1621", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-06-12 05:16:00"}
+{"customer_id": "C0230", "name": "Customer 230", "email": "customer230@example.com", "phone": "0474 154 596", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-02 08:59:00"}
+{"customer_id": "C0230", "name": "Customer 230", "email": "customer230@example.com", "phone": "+61455735904", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-28 11:12:00"}
+{"customer_id": "C0230", "name": "Customer 230", "email": "customer230@example.com", "phone": "+61488733350", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-03-29 13:43:00"}
+{"customer_id": "C0231", "name": "Customer 231", "email": "customer231@example.com", "phone": "+1 864 524 3854", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-03-05 10:01:00"}
+{"customer_id": "C0231", "name": "Customer 231", "email": "customer231@example.com", "phone": "(544) 509-6285", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-02-07 01:43:00"}
+{"customer_id": "C0232", "name": "Customer 232", "email": "customer232@example.com", "phone": "0212746679", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-08-25 18:46:00"}
+{"customer_id": "C0232", "name": "Customer 232", "email": "customer232@example.com", "phone": "+61449529438", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-03 05:14:00"}
+{"customer_id": "C0232", "name": "Customer 232", "email": "customer232@example.com", "phone": "0462 559 853", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-26 15:00:00"}
+{"customer_id": "C0233", "name": "Customer 233", "email": "customer233@example.com", "phone": "(02) 1213-7407", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-03-15 05:45:00"}
+{"customer_id": "C0233", "name": "Customer 233", "email": "customer233@example.com", "phone": "0216632941", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-03-08 01:30:00"}
+{"customer_id": "C0234", "name": "Customer 234", "email": "customer234@example.com", "phone": "+61466324902", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-07-17 07:28:00"}
+{"customer_id": "C0235", "name": "Customer 235", "email": "customer235@example.com", "phone": "0212701688", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-25 06:24:00"}
+{"customer_id": "C0235", "name": "Customer 235", "email": "customer235@example.com", "phone": "(04) 1448-4588", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-09 07:39:00"}
+{"customer_id": "C0236", "name": "Customer 236", "email": "customer236@example.com", "phone": "+61460393104", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-03-19 02:54:00"}
+{"customer_id": "C0237", "name": "Customer 237", "email": "customer237@example.com", "phone": "(02) 1786-6576", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-02-27 18:52:00"}
+{"customer_id": "C0237", "name": "Customer 237", "email": "customer237@example.com", "phone": "0414159837", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-01-31 08:14:00"}
+{"customer_id": "C0237", "name": "Customer 237", "email": "customer237@example.com", "phone": "0431 086 112", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-20 15:38:00"}
+{"customer_id": "C0238", "name": "Customer 238", "email": "customer238@example.com", "phone": "702.357.1893", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-02-13 09:22:00"}
+{"customer_id": "C0239", "name": "Customer 239", "email": "customer239@example.com", "phone": "0214 349 987", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-17 08:11:00"}
+{"customer_id": "C0240", "name": "Customer 240", "email": "customer240@example.com", "phone": "(02) 1293-7918", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-02-25 08:04:00"}
+{"customer_id": "C0241", "name": "Customer 241", "email": "customer241@example.com", "phone": "+64217501626", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-05-04 09:17:00"}
+{"customer_id": "C0241", "name": "Customer 241", "email": "customer241@example.com", "phone": "656.245.5313", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-05-16 12:28:00"}
+{"customer_id": "C0242", "name": "Customer 242", "email": "customer242@example.com", "phone": "(04) 2150-3440", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-03-04 01:39:00"}
+{"customer_id": "C0242", "name": "Customer 242", "email": "customer242@example.com", "phone": "+1 766 262 7342", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-03-29 05:31:00"}
+{"customer_id": "C0243", "name": "Customer 243", "email": "customer243@example.com", "phone": "+1 604 931 1568", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-06-06 01:20:00"}
+{"customer_id": "C0244", "name": "Customer 244", "email": "customer244@example.com", "phone": "+61435867257", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-02-06 03:36:00"}
+{"customer_id": "C0244", "name": "Customer 244", "email": "customer244@example.com", "phone": "+1 406 842 3422", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-02-09 11:01:00"}
+{"customer_id": "C0245", "name": "Customer 245", "email": "customer245@example.com", "phone": "(04) 6333-2084", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-07-19 09:29:00"}
+{"customer_id": "C0246", "name": "Customer 246", "email": "customer246@example.com", "phone": "0488 911 183", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-14 18:35:00"}
+{"customer_id": "C0246", "name": "Customer 246", "email": "customer246@example.com", "phone": "0466 316 931", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-06-09 08:55:00"}
+{"customer_id": "C0247", "name": "Customer 247", "email": "customer247@example.com", "phone": "0215431477", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-04-13 07:00:00"}
+{"customer_id": "C0247", "name": "Customer 247", "email": "customer247@example.com", "phone": "0441 887 353", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-04-28 15:35:00"}
+{"customer_id": "C0247", "name": "Customer 247", "email": "customer247@example.com", "phone": "+1 482 612 3356", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-04-15 09:56:00"}
+{"customer_id": "C0248", "name": "Customer 248", "email": "customer248@example.com", "phone": "(02) 1621-6863", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-05-03 05:10:00"}
+{"customer_id": "C0249", "name": "Customer 249", "email": "customer249@example.com", "phone": "0464649480", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-09-04 12:57:00"}
+{"customer_id": "C0249", "name": "Customer 249", "email": "customer249@example.com", "phone": "(04) 2803-6919", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-07-26 03:53:00"}
+{"customer_id": "C0249", "name": "Customer 249", "email": "customer249@example.com", "phone": "+1 475 946 7828", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-08-20 09:21:00"}
+{"customer_id": "C0250", "name": "Customer 250", "email": "customer250@example.com", "phone": "+61464141437", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-22 08:38:00"}
+{"customer_id": "C0251", "name": "Customer 251", "email": "customer251@example.com", "phone": "+61417734634", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-02 03:25:00"}
+{"customer_id": "C0252", "name": "Customer 252", "email": "customer252@example.com", "phone": "(02) 1559-6579", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-05-20 03:23:00"}
+{"customer_id": "C0253", "name": "Customer 253", "email": "customer253@example.com", "phone": "(04) 4247-2381", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-06-01 00:31:00"}
+{"customer_id": "C0253", "name": "Customer 253", "email": "customer253@example.com", "phone": "800.764.6730", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-06-07 08:36:00"}
+{"customer_id": "C0254", "name": "Customer 254", "email": "customer254@example.com", "phone": "0478 891 441", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-08-27 11:13:00"}
+{"customer_id": "C0254", "name": "Customer 254", "email": "customer254@example.com", "phone": "+61496889858", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-08-18 04:14:00"}
+{"customer_id": "C0254", "name": "Customer 254", "email": "customer254@example.com", "phone": "0461 883 966", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-21 00:28:00"}
+{"customer_id": "C0255", "name": "Customer 255", "email": "customer255@example.com", "phone": "0218110298", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-03-18 04:49:00"}
+{"customer_id": "C0255", "name": "Customer 255", "email": "customer255@example.com", "phone": "(04) 4003-3905", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-02-23 00:08:00"}
+{"customer_id": "C0255", "name": "Customer 255", "email": "customer255@example.com", "phone": "+1 677 509 9530", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-03-27 08:32:00"}
+{"customer_id": "C0256", "name": "Customer 256", "email": "customer256@example.com", "phone": "+64214160157", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-02-21 14:37:00"}
+{"customer_id": "C0256", "name": "Customer 256", "email": "customer256@example.com", "phone": "(04) 9597-9171", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-01-31 09:32:00"}
+{"customer_id": "C0256", "name": "Customer 256", "email": "customer256@example.com", "phone": "0216 007 595", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-01-20 04:49:00"}
+{"customer_id": "C0257", "name": "Customer 257", "email": "customer257@example.com", "phone": "0217788043", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-08-12 07:34:00"}
+{"customer_id": "C0257", "name": "Customer 257", "email": "customer257@example.com", "phone": "0497966375", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-07-13 00:26:00"}
+{"customer_id": "C0258", "name": "Customer 258", "email": "customer258@example.com", "phone": "+61444715663", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-23 16:25:00"}
+{"customer_id": "C0258", "name": "Customer 258", "email": "customer258@example.com", "phone": "0495672999", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-04-20 09:07:00"}
+{"customer_id": "C0258", "name": "Customer 258", "email": "customer258@example.com", "phone": "+64213851902", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-05-07 14:14:00"}
+{"customer_id": "C0259", "name": "Customer 259", "email": "customer259@example.com", "phone": "0218 780 612", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-04-10 10:15:00"}
+{"customer_id": "C0259", "name": "Customer 259", "email": "customer259@example.com", "phone": "(04) 6643-4872", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-22 05:14:00"}
+{"customer_id": "C0260", "name": "Customer 260", "email": "customer260@example.com", "phone": "(623) 255-3470", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-07-15 08:24:00"}
+{"customer_id": "C0260", "name": "Customer 260", "email": "customer260@example.com", "phone": "0477 172 936", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-06-28 03:19:00"}
+{"customer_id": "C0260", "name": "Customer 260", "email": "customer260@example.com", "phone": "+64218676774", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-07-29 18:07:00"}
+{"customer_id": "C0261", "name": "Customer 261", "email": "customer261@example.com", "phone": "(520) 849-1950", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-07-30 03:01:00"}
+{"customer_id": "C0262", "name": "Customer 262", "email": "customer262@example.com", "phone": "0475 709 924", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-03-31 02:42:00"}
+{"customer_id": "C0263", "name": "Customer 263", "email": "customer263@example.com", "phone": "+64219909268", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-06-21 12:48:00"}
+{"customer_id": "C0263", "name": "Customer 263", "email": "customer263@example.com", "phone": "(688) 592-1076", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-06-20 07:19:00"}
+{"customer_id": "C0264", "name": "Customer 264", "email": "customer264@example.com", "phone": "+61451888314", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-18 05:52:00"}
+{"customer_id": "C0264", "name": "Customer 264", "email": "customer264@example.com", "phone": "810.736.6535", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-07-29 19:57:00"}
+{"customer_id": "C0264", "name": "Customer 264", "email": "customer264@example.com", "phone": "371.266.1749", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-07-05 11:05:00"}
+{"customer_id": "C0265", "name": "Customer 265", "email": "customer265@example.com", "phone": "+61412566878", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-05-02 06:53:00"}
+{"customer_id": "C0266", "name": "Customer 266", "email": "customer266@example.com", "phone": "+61489147232", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-30 00:22:00"}
+{"customer_id": "C0267", "name": "Customer 267", "email": "customer267@example.com", "phone": "0481 770 706", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-04-17 04:21:00"}
+{"customer_id": "C0267", "name": "Customer 267", "email": "customer267@example.com", "phone": "0461 036 796", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-23 13:45:00"}
+{"customer_id": "C0267", "name": "Customer 267", "email": "customer267@example.com", "phone": "0497 720 360", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-05-09 06:11:00"}
+{"customer_id": "C0268", "name": "Customer 268", "email": "customer268@example.com", "phone": "0450415166", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-07-22 00:09:00"}
+{"customer_id": "C0269", "name": "Customer 269", "email": "customer269@example.com", "phone": "(02) 1438-3514", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-03-18 13:03:00"}
+{"customer_id": "C0269", "name": "Customer 269", "email": "customer269@example.com", "phone": "0218 026 730", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-02-15 02:20:00"}
+{"customer_id": "C0269", "name": "Customer 269", "email": "customer269@example.com", "phone": "+64219350675", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-02-19 04:08:00"}
+{"customer_id": "C0270", "name": "Customer 270", "email": "customer270@example.com", "phone": "0424821786", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-03-04 05:03:00"}
+{"customer_id": "C0270", "name": "Customer 270", "email": "customer270@example.com", "phone": "(904) 692-6416", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-02-10 03:32:00"}
+{"customer_id": "C0270", "name": "Customer 270", "email": "customer270@example.com", "phone": "0420 072 800", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-29 13:46:00"}
+{"customer_id": "C0271", "name": "Customer 271", "email": "customer271@example.com", "phone": "0218 147 013", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-24 06:11:00"}
+{"customer_id": "C0271", "name": "Customer 271", "email": "customer271@example.com", "phone": "+64212674515", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-12 00:51:00"}
+{"customer_id": "C0272", "name": "Customer 272", "email": "customer272@example.com", "phone": "(04) 6874-9047", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-01-14 06:06:00"}
+{"customer_id": "C0273", "name": "Customer 273", "email": "customer273@example.com", "phone": "0219023619", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-02-26 08:30:00"}
+{"customer_id": "C0273", "name": "Customer 273", "email": "customer273@example.com", "phone": "0217723930", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-01-30 01:56:00"}
+{"customer_id": "C0274", "name": "Customer 274", "email": "customer274@example.com", "phone": "0213192032", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-04-18 12:54:00"}
+{"customer_id": "C0274", "name": "Customer 274", "email": "customer274@example.com", "phone": "+1 894 648 3969", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-03-29 12:25:00"}
+{"customer_id": "C0274", "name": "Customer 274", "email": "customer274@example.com", "phone": "0423920137", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-03-03 02:43:00"}
+{"customer_id": "C0275", "name": "Customer 275", "email": "customer275@example.com", "phone": "+61411658959", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-02 05:21:00"}
+{"customer_id": "C0276", "name": "Customer 276", "email": "customer276@example.com", "phone": "(04) 7468-3506", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-04-11 04:14:00"}
+{"customer_id": "C0276", "name": "Customer 276", "email": "customer276@example.com", "phone": "369.276.9055", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-05-14 22:12:00"}
+{"customer_id": "C0276", "name": "Customer 276", "email": "customer276@example.com", "phone": "+1 827 255 1190", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-16 13:45:00"}
+{"customer_id": "C0277", "name": "Customer 277", "email": "customer277@example.com", "phone": "658.290.9166", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-02-15 16:13:00"}
+{"customer_id": "C0277", "name": "Customer 277", "email": "customer277@example.com", "phone": "0423776553", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-03 16:31:00"}
+{"customer_id": "C0277", "name": "Customer 277", "email": "customer277@example.com", "phone": "+61464126921", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-01-31 06:27:00"}
+{"customer_id": "C0278", "name": "Customer 278", "email": "customer278@example.com", "phone": "(933) 663-2868", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-13 15:47:00"}
+{"customer_id": "C0278", "name": "Customer 278", "email": "customer278@example.com", "phone": "0214739945", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-03-21 09:35:00"}
+{"customer_id": "C0278", "name": "Customer 278", "email": "customer278@example.com", "phone": "0214470388", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-02-22 08:40:00"}
+{"customer_id": "C0279", "name": "Customer 279", "email": "customer279@example.com", "phone": "+61462733674", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-05-12 13:20:00"}
+{"customer_id": "C0279", "name": "Customer 279", "email": "customer279@example.com", "phone": "0464 923 338", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-05-05 11:17:00"}
+{"customer_id": "C0279", "name": "Customer 279", "email": "customer279@example.com", "phone": "0217 272 839", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-04-19 08:54:00"}
+{"customer_id": "C0280", "name": "Customer 280", "email": "customer280@example.com", "phone": "0470465703", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-02-27 02:06:00"}
+{"customer_id": "C0280", "name": "Customer 280", "email": "customer280@example.com", "phone": "0481 184 297", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-03-15 02:10:00"}
+{"customer_id": "C0281", "name": "Customer 281", "email": "customer281@example.com", "phone": "+61433306944", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-22 09:52:00"}
+{"customer_id": "C0281", "name": "Customer 281", "email": "customer281@example.com", "phone": "+1 716 593 7859", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-07-14 15:21:00"}
+{"customer_id": "C0282", "name": "Customer 282", "email": "customer282@example.com", "phone": "0213318275", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-04-27 02:16:00"}
+{"customer_id": "C0282", "name": "Customer 282", "email": "customer282@example.com", "phone": "+64214646403", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-05-20 11:42:00"}
+{"customer_id": "C0283", "name": "Customer 283", "email": "customer283@example.com", "phone": "(04) 7763-1432", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-07-18 03:02:00"}
+{"customer_id": "C0283", "name": "Customer 283", "email": "customer283@example.com", "phone": "0485467972", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-08-12 09:02:00"}
+{"customer_id": "C0284", "name": "Customer 284", "email": "customer284@example.com", "phone": "886.257.4275", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-07-26 08:06:00"}
+{"customer_id": "C0284", "name": "Customer 284", "email": "customer284@example.com", "phone": "0213 456 660", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-08-17 12:22:00"}
+{"customer_id": "C0284", "name": "Customer 284", "email": "customer284@example.com", "phone": "0211 214 253", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-07-21 07:12:00"}
+{"customer_id": "C0285", "name": "Customer 285", "email": "customer285@example.com", "phone": "0440106027", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-04-22 09:35:00"}
+{"customer_id": "C0285", "name": "Customer 285", "email": "customer285@example.com", "phone": "0217401894", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-05-15 10:23:00"}
+{"customer_id": "C0286", "name": "Customer 286", "email": "customer286@example.com", "phone": "0437257905", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-06-15 04:17:00"}
+{"customer_id": "C0287", "name": "Customer 287", "email": "customer287@example.com", "phone": "(04) 8470-5402", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-27 15:20:00"}
+{"customer_id": "C0287", "name": "Customer 287", "email": "customer287@example.com", "phone": "(391) 377-9418", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-07-13 10:35:00"}
+{"customer_id": "C0287", "name": "Customer 287", "email": "customer287@example.com", "phone": "+64214296204", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-07-07 09:19:00"}
+{"customer_id": "C0288", "name": "Customer 288", "email": "customer288@example.com", "phone": "0217 007 679", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-02-10 12:24:00"}
+{"customer_id": "C0288", "name": "Customer 288", "email": "customer288@example.com", "phone": "+1 240 357 6285", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-01-25 02:38:00"}
+{"customer_id": "C0289", "name": "Customer 289", "email": "customer289@example.com", "phone": "0431390345", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-03-15 08:37:00"}
+{"customer_id": "C0289", "name": "Customer 289", "email": "customer289@example.com", "phone": "426.418.6437", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-03-18 14:34:00"}
+{"customer_id": "C0289", "name": "Customer 289", "email": "customer289@example.com", "phone": "0218 966 781", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-03-25 23:37:00"}
+{"customer_id": "C0290", "name": "Customer 290", "email": "customer290@example.com", "phone": "0461 186 964", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-04-27 05:28:00"}
+{"customer_id": "C0291", "name": "Customer 291", "email": "customer291@example.com", "phone": "0452 991 650", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-03-18 12:06:00"}
+{"customer_id": "C0291", "name": "Customer 291", "email": "customer291@example.com", "phone": "0481 565 674", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-04-12 21:16:00"}
+{"customer_id": "C0291", "name": "Customer 291", "email": "customer291@example.com", "phone": "0217290752", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-03-08 08:49:00"}
+{"customer_id": "C0292", "name": "Customer 292", "email": "customer292@example.com", "phone": "0212 228 898", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-08-11 09:56:00"}
+{"customer_id": "C0292", "name": "Customer 292", "email": "customer292@example.com", "phone": "+61423948820", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-07-19 07:14:00"}
+{"customer_id": "C0292", "name": "Customer 292", "email": "customer292@example.com", "phone": "(964) 902-3519", "address": {"city": "Austin", "country": "US"}, "updated_at": "2026-08-09 08:27:00"}
+{"customer_id": "C0293", "name": "Customer 293", "email": "customer293@example.com", "phone": "0218568632", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-06-11 06:37:00"}
+{"customer_id": "C0294", "name": "Customer 294", "email": "customer294@example.com", "phone": "+1 747 206 2036", "address": {"city": "Seattle", "country": "US"}, "updated_at": "2026-04-13 02:01:00"}
+{"customer_id": "C0295", "name": "Customer 295", "email": "customer295@example.com", "phone": "(02) 1278-0658", "address": {"city": "Wellington", "country": "NZ"}, "updated_at": "2026-07-29 08:34:00"}
+{"customer_id": "C0296", "name": "Customer 296", "email": "customer296@example.com", "phone": "0217399057", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-06-30 07:28:00"}
+{"customer_id": "C0297", "name": "Customer 297", "email": "customer297@example.com", "phone": "(04) 8324-5898", "address": {"city": "Brisbane", "country": "AU"}, "updated_at": "2026-05-07 06:40:00"}
+{"customer_id": "C0298", "name": "Customer 298", "email": "customer298@example.com", "phone": "0482 095 327", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-02-26 16:09:00"}
+{"customer_id": "C0298", "name": "Customer 298", "email": "customer298@example.com", "phone": "0213 371 859", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-02-07 09:26:00"}
+{"customer_id": "C0299", "name": "Customer 299", "email": "customer299@example.com", "phone": "0436 082 023", "address": {"city": "Sydney", "country": "AU"}, "updated_at": "2026-07-26 11:20:00"}
+{"customer_id": "C0299", "name": "Customer 299", "email": "customer299@example.com", "phone": "+64219599207", "address": {"city": "Auckland", "country": "NZ"}, "updated_at": "2026-07-18 07:02:00"}
+{"customer_id": "C0299", "name": "Customer 299", "email": "customer299@example.com", "phone": "0471 909 967", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-08-23 20:42:00"}
+{"customer_id": "C0300", "name": "Customer 300", "email": "customer300@example.com", "phone": "(04) 7538-9589", "address": {"city": "Melbourne", "country": "AU"}, "updated_at": "2026-03-30 09:54:00"}

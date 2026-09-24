@@ -1,0 +1,9 @@
+bundle:
+  type: spark
+  compute_type: warehouse
+  language: python
+  compute_options: {}
+  stage_mounts:                # docs: read-only on warehouses, documented for type: custom -- testing type: spark
+    tpch_raw:
+      stage_url: '@TPCH.PUBLIC.TPCH_RAW'
+      mount_path: '/tmp/mnt/tpch_raw/'   # /mnt fails: mount = symlink and / is read-only

@@ -1,0 +1,13 @@
+bundle:
+  type: spark
+  compute_type: warehouse
+  language: python
+  compute_options: {}
+  properties:
+    python_dependencies:
+      packages:
+        - snowpark-connect-deps-iceberg   # required by the Iceberg SQL extensions (VERSION AS OF, CALL ...)
+    spark_conf:
+      snowpark.connect.iceberg.external_volume: "SNOWFLAKE_MANAGED"
+      spark.sql.extensions: "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions"
+      spark.sql.session.timeZone: "UTC"

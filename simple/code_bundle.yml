@@ -1,0 +1,5 @@
+bundle:
+  type: spark
+  compute_type: warehouse
+  language: python
+  compute_options: {}
