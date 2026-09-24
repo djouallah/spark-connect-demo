@@ -1,11 +1,15 @@
-"""Snowflake-only data prep for jobs/tpch/tpch.py: generate TPC-H parquet inside a Code Bundle and put it on a stage.
+"""NON-STANDARD, Snowflake only: Snowflake has no volumes, so this needs Snowpark (see findings/snowflake.md,
+"Files are not standard"). On a platform with volumes this file isn't needed: run tpchgen-cli into a folder
+and point tpch.py --raw at it.
+
+Data prep for tpch.py: generate TPC-H parquet inside a Code Bundle and put it on a stage.
 
     --sf 1  [--stage @TPCH.PUBLIC.TPCH_RAW]  [--force]
 
 Generates with tpchgen-cli (PyPI dependency) one part at a time into /tmp, copies each part to
 <stage>/gen/sf<n>_put/<table>/ with the injected Snowpark session's file.put (Spark as fallback),
 then deletes it from /tmp: /tmp is 4 GiB, so parts stay small. A table whose stage folder already
-has the TPC-H row count is skipped. This uses Snowpark, so it is platform tooling, not a test job.
+has the TPC-H row count is skipped.
 """
 import logging, math, shutil, subprocess, sys, time
 from pathlib import Path
@@ -18,7 +22,7 @@ spark = SparkSession.builder.getOrCreate()
 SF = int(sys.argv[sys.argv.index("--sf") + 1]) if "--sf" in sys.argv else 1
 STAGE = sys.argv[sys.argv.index("--stage") + 1] if "--stage" in sys.argv else "@TPCH.PUBLIC.TPCH_RAW"
 FORCE = "--force" in sys.argv
-DEST = f"{STAGE}/gen/sf{SF}_put"               # jobs/tpch/tpch.py --raw points here
+DEST = f"{STAGE}/gen/sf{SF}_put"               # tpch.py --raw points here
 TMP = Path("/tmp/tpch")
 TABLES = ("lineitem", "orders", "partsupp", "part", "customer", "nation", "region", "supplier")
 MIB_PER_SF = {"lineitem": 221, "orders": 61, "partsupp": 43, "customer": 14, "part": 7,

@@ -11,7 +11,7 @@ The results were checked against independently computed answers, down to the cen
 All tests are **pure PySpark and Spark SQL**, with no Snowflake SQL inside a job. When Spark fails, that failure is the finding (see `CLAUDE.md`).
 
 ## What works well (the pleasant surprises)
-- **TPC-H SF100 data generated and loaded inside one Spark job on an X-Small warehouse** (measured as one job, now split into `platforms/snowflake/tpch_gen.py` and `jobs/tpch/`; nothing generated on the laptop):
+- **TPC-H SF100 data generated and loaded inside one Spark job on an X-Small warehouse** (measured as one job, now split into `jobs/tpch/tpch_gen_snowflake.py` and `jobs/tpch/tpch.py`; nothing generated on the laptop):
 
   | Step | How | Result |
   |---|---|---|
@@ -72,8 +72,8 @@ spark.sql("""MERGE INTO TPCH.COFFEE.ORDERS t USING updates s ON t.id = s.id
 This is the biggest portability limit we hit. Other Spark platforms give a job ordinary file paths: Databricks has Unity Catalog Volumes (`/Volumes/...`), Fabric has the Lakehouse `Files/` area, and open-source Spark takes any filesystem or object-store path. Snowflake has no such area. (Its `EXTERNAL VOLUME` only stores Iceberg tables; it isn't a place a job can read and write files.)
 - **Files only live on stages, addressed as `@db.schema.stage/path`.** That's a Snowflake-only URI, so Spark code that reads `s3://`, `abfss://`, `/Volumes/...` or a local path has to be changed. Every job here takes its paths as arguments for this reason.
 - **Plain Python can't write files anywhere persistent.** Stage mounts are read-only on warehouses (`platforms/snowflake/probe/mount.py`), and `/` is read-only.
-- **A file written by a tool rather than Spark needs a Snowflake-only API to persist it.** For example, `tpchgen-cli` writing parquet to `/tmp` can only get that parquet onto a stage through Snowpark `session.file.put`. That's why TPC-H generation is `platforms/snowflake/tpch_gen.py` and not a portable job. On a platform with volumes, the tool would write straight to the volume.
-- Untested: whether `spark.read.parquet("/tmp/...")` can read a sandbox-local file and write it to a stage. `tpch_gen.py` has that as a fallback, but it never ran, because `file.put` succeeded first.
+- **A file written by a tool rather than Spark needs a Snowflake-only API to persist it.** For example, `tpchgen-cli` writing parquet to `/tmp` can only get that parquet onto a stage through Snowpark `session.file.put`. That's why TPC-H generation is the non-standard `jobs/tpch/tpch_gen_snowflake.py`. On a platform with volumes, the tool would write straight to the volume.
+- Untested: whether `spark.read.parquet("/tmp/...")` can read a sandbox-local file and write it to a stage. `tpch_gen_snowflake.py` has that as a fallback, but it never ran, because `file.put` succeeded first.
 
 ## Gotchas and behaviour differences
 - **`CREATE SCHEMA` switches the session into the new schema.** That's Snowflake behaviour; Spark doesn't do it. One-part names then resolve in the new schema.

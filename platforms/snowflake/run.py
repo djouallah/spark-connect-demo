@@ -28,7 +28,7 @@ JOBS = {
                          result="TPCH.DML.RESULTS_EXT"),
     "dml_noext":    dict(job="jobs/dml/dml.py", spec="dml_noext", args=["--schema", "TPCH.DML", "--tag", "noext"],
                          result="TPCH.DML.RESULTS_NOEXT"),
-    "tpch_gen":     dict(job="platforms/snowflake/tpch_gen.py", spec="tpch_gen", args=["--stage", "@TPCH.PUBLIC.TPCH_RAW"]),
+    "tpch_gen":     dict(job="jobs/tpch/tpch_gen_snowflake.py", spec="tpch_gen", args=["--stage", "@TPCH.PUBLIC.TPCH_RAW"]),
     "tpch":         dict(job="jobs/tpch/tpch.py", spec="tpch", data="jobs/tpch/data", stage="TPCH_RAW",
                          args=["--sql", "@TPCH.PUBLIC.TPCH_RAW/raw/tpch_sql/tpch.sql"]),
     "probe":        dict(job="platforms/snowflake/probe/probe.py", spec="probe"),
