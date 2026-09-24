@@ -1,6 +1,6 @@
-"""Generate messy raw files for jobs/etl.py, plus the answers the ETL must reproduce.
+"""Generate messy raw files for etl.py, plus the answers the ETL must reproduce.
 
-    python data/etl/gen_data.py   ->  data/etl/{orders,customers,products,fx}/...  and  data/etl/expected.json
+    python jobs/etl/gen_data.py   ->  jobs/etl/data/{orders,customers,products,fx}/...  and  jobs/etl/data/expected.json
 """
 import csv, json, random, re
 from collections import defaultdict
@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 random.seed(42)
-OUT = Path(__file__).parent
+OUT = Path(__file__).parent / "data"
 DAYS = ["2026-09-01", "2026-09-02", "2026-09-03"]
 FX = {"AUD": 0.66, "NZD": 0.60, "USD": 1.0}
 DIAL = {"AU": "61", "NZ": "64", "US": "1"}

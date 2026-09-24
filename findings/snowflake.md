@@ -11,7 +11,7 @@ The results were checked against independently computed answers, down to the cen
 All tests are **pure PySpark and Spark SQL**, with no Snowflake SQL inside a job. When Spark fails, that failure is the finding (see `CLAUDE.md`).
 
 ## What works well (the pleasant surprises)
-- **TPC-H SF100 data generated and loaded inside one Spark job on an X-Small warehouse** (measured as one job, now split into `platforms/snowflake/tpch_gen.py` and `jobs/tpch.py`; nothing generated on the laptop):
+- **TPC-H SF100 data generated and loaded inside one Spark job on an X-Small warehouse** (measured as one job, now split into `platforms/snowflake/tpch_gen.py` and `jobs/tpch/`; nothing generated on the laptop):
 
   | Step | How | Result |
   |---|---|---|
@@ -20,15 +20,15 @@ All tests are **pure PySpark and Spark SQL**, with no Snowflake SQL inside a job
   | Load | `spark.read.parquet("@stage/...")` then `.write.format("iceberg").saveAsTable(...)` | 8 tables, lineitem **600,037,902 rows in 914 s**; all tables in about 26 min |
 
   - **File layout matters for the load.** At SF1, one 221 MiB parquet file took 174 s to load, while 16 files of 14 MiB took 14 s. Generate many ~128 MiB parts, not one big file.
-- **Real third-party code runs almost unchanged** (`jobs/coffee_gen.py`, `jobs/coffee_bench.py`).
+- **Real third-party code runs almost unchanged** (`jobs/coffee/`).
   - Josue Bogran's coffee-shop generator runs with **one line changed**. It uses `rand` seeds, `crossJoin`, `sequence`/`posexplode`, `sha2` and `create_map`, and produced about 14.4M Iceberg rows in about 225 s.
   - **All 17 benchmark queries run unchanged through `spark.sql()`**, taking 4–11 s each. They use windows with `ROWS BETWEEN`, `RANK`/`DENSE_RANK`, CTEs, range joins and `COUNT(DISTINCT)`.
-- **The ETL output is correct to the cent** (`jobs/etl.py`).
+- **The ETL output is correct to the cent** (`jobs/etl/`).
   - The input was messy CSV and nested JSON on a stage.
   - The job trims every string column (driven by the schema), deduplicates, keeps the latest customer version with a window function, normalises phone numbers with a **Python UDF** and converts to USD with a **pandas UDF**.
   - It writes three Iceberg tables, one of them partitioned by day. All 15 checks against independently computed answers passed.
 - **`spark.sql("CREATE OR REPLACE TABLE t USING iceberg AS SELECT ...")` creates a real Iceberg table.** The [Iceberg docs](https://docs.snowflake.com/en/developer-guide/snowpark-connect/snowpark-connect-iceberg) say Spark SQL DDL can't create Iceberg tables; it did. Without `USING iceberg`, the same CTAS makes a native table.
-- **Everyday DML matches Spark** on both Iceberg and native tables (`jobs/dml.py`, 43 of 59 checks pass, with the rows compared): INSERT with VALUES or SELECT, INSERT OVERWRITE (including dynamic partitions), DELETE, UPDATE, MERGE upsert (`UPDATE SET *` / `INSERT *`), MERGE with conditional DELETE, TRUNCATE, `insertInto`, `writeTo.append` / `.overwrite(cond)`, `CREATE TABLE ... PARTITIONED BY (days())`, `ALTER TABLE` add/rename/drop column, `ALTER TABLE ... RENAME TO`, `mergeSchema` on Iceberg, views and DROP.
+- **Everyday DML matches Spark** on both Iceberg and native tables (`jobs/dml/`, 43 of 59 checks pass, with the rows compared): INSERT with VALUES or SELECT, INSERT OVERWRITE (including dynamic partitions), DELETE, UPDATE, MERGE upsert (`UPDATE SET *` / `INSERT *`), MERGE with conditional DELETE, TRUNCATE, `insertInto`, `writeTo.append` / `.overwrite(cond)`, `CREATE TABLE ... PARTITIONED BY (days())`, `ALTER TABLE` add/rename/drop column, `ALTER TABLE ... RENAME TO`, `mergeSchema` on Iceberg, views and DROP.
 - **Naming and organisation behave like a proper catalog:**
   - `CREATE SCHEMA` from Spark SQL works.
   - Three-, two- and one-part names work everywhere.
@@ -124,7 +124,7 @@ spark.sql("""MERGE INTO TPCH.COFFEE.ORDERS t USING updates s ON t.id = s.id
 | Name | What it tests | Warehouse |
 |---|---|---|
 | `simple` | Smoke test: DataFrame conveniences end to end | Standard Small |
-| `etl` | Messy stage files, clean/join/UDF/pandas UDF, 3 Iceberg tables. `data/etl/gen_data.py` generates the data, `platforms/snowflake/check_etl.py` verifies it. | Standard Small |
+| `etl` | Messy stage files, clean/join/UDF/pandas UDF, 3 Iceberg tables. `jobs/etl/gen_data.py` generates the data, `platforms/snowflake/check_etl.py` verifies it. | Standard Small |
 | `coffee_gen`, `coffee_bench` | Josue Bogran's generator plus the 17 benchmark queries, run unchanged in `TPCH.COFFEE` (all Iceberg); schema, naming and stage checks | Standard Small |
 | `dml`, `dml_noext` | 59-check DML/DDL matrix, Iceberg and native, with and without the Iceberg extensions | Standard Small |
 | `probe`, `probe_context`, `probe_mount` | Sandbox hardware, limits, network, packages; Snowpark Connect context chatter; stage-mount read/write | X-Small, Small, Snowpark-optimized Medium |

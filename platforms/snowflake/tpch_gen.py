@@ -1,4 +1,4 @@
-"""Snowflake-only data prep for jobs/tpch.py: generate TPC-H parquet inside a Code Bundle and put it on a stage.
+"""Snowflake-only data prep for jobs/tpch/tpch.py: generate TPC-H parquet inside a Code Bundle and put it on a stage.
 
     --sf 1  [--stage @TPCH.PUBLIC.TPCH_RAW]  [--force]
 
@@ -18,7 +18,7 @@ spark = SparkSession.builder.getOrCreate()
 SF = int(sys.argv[sys.argv.index("--sf") + 1]) if "--sf" in sys.argv else 1
 STAGE = sys.argv[sys.argv.index("--stage") + 1] if "--stage" in sys.argv else "@TPCH.PUBLIC.TPCH_RAW"
 FORCE = "--force" in sys.argv
-DEST = f"{STAGE}/gen/sf{SF}_put"               # jobs/tpch.py --raw points here
+DEST = f"{STAGE}/gen/sf{SF}_put"               # jobs/tpch/tpch.py --raw points here
 TMP = Path("/tmp/tpch")
 TABLES = ("lineitem", "orders", "partsupp", "part", "customer", "nation", "region", "supplier")
 MIB_PER_SF = {"lineitem": 221, "orders": 61, "partsupp": 43, "customer": 14, "part": 7,

@@ -1,9 +1,9 @@
-"""Compare the tables jobs/etl.py wrote against data/etl/expected.json (computed by data/etl/gen_data.py)."""
+"""Compare the tables jobs/etl/etl.py wrote against jobs/etl/data/expected.json (computed by jobs/etl/gen_data.py)."""
 import json
 from pathlib import Path
 from sf import connect
 
-exp = json.load(open(Path(__file__).resolve().parents[2] / "data" / "etl" / "expected.json"))
+exp = json.load(open(Path(__file__).resolve().parents[2] / "jobs" / "etl" / "data" / "expected.json"))
 cur = connect().cursor()
 
 def q(sql):

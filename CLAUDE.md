@@ -9,7 +9,6 @@ The whole point of this repo is to test what Spark supports on each platform.
 - Only tooling under `platforms/<platform>/` may use platform SQL or APIs: uploading, submitting, data prep (`tpch_gen.py`) and read-only check scripts.
 
 ## Layout
-- `jobs/`: the portable Spark jobs.
-- `data/`: the test inputs, one folder per job family.
+- `jobs/<test>/`: one folder per test (`simple`, `etl`, `coffee`, `dml`, `tpch`) with its portable Spark job(s) and its `data/`.
 - `platforms/snowflake/`: `run.py` holds every Snowflake-specific value in `JOBS`. Also the bundle specs, `sf.py`, `check_etl.py`, the sandbox probes and `tpch_gen.py`.
 - `findings/`: the results, one file per platform.
