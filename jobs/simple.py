@@ -1,6 +1,18 @@
+import sys
 from pyspark.sql import SparkSession, functions as F
 
 spark = SparkSession.builder.getOrCreate()
+
+
+def arg(name, default=None):
+    """Job argument `--name value`. Every platform-specific value (paths, schema, format) comes in this way."""
+    if name in sys.argv:
+        return sys.argv[sys.argv.index(name) + 1]
+    if default is None:
+        raise SystemExit(f"missing job argument {name}")
+    return default
+
+TABLE = arg("--table", "SIMPLE_DEMO")
 
 # Messy input: mixed-case column names, padded strings, a duplicate row
 raw = spark.createDataFrame(
@@ -57,5 +69,5 @@ print("pipeline columns:", pipeline.columns)
 result.printSchema()
 result.show()
 
-result.write.mode("overwrite").saveAsTable("CODE_BUNDLE_DEMO")
-print("rows written:", spark.table("CODE_BUNDLE_DEMO").count())
+result.write.mode("overwrite").saveAsTable(TABLE)
+print("rows written:", spark.table(TABLE).count())

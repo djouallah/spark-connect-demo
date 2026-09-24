@@ -1,10 +1,9 @@
-"""Compare the Iceberg tables etl.py wrote against data/expected.json (computed by gen_data.py)."""
-import json, sys
+"""Compare the tables jobs/etl.py wrote against data/etl/expected.json (computed by data/etl/gen_data.py)."""
+import json
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from sf import connect
 
-exp = json.load(open(Path(__file__).parent / "data" / "expected.json"))
+exp = json.load(open(Path(__file__).resolve().parents[2] / "data" / "etl" / "expected.json"))
 cur = connect().cursor()
 
 def q(sql):

@@ -1,11 +1,13 @@
-"""DML / DDL feature matrix for Spark on Snowflake -- pure PySpark + Spark SQL (see CLAUDE.md).
+"""DML / DDL feature matrix -- pure PySpark + Spark SQL (see CLAUDE.md).
+
+    --schema <catalog.schema>  [--tag default] [--only <substring of a check name>]
 
 Every check starts from a fresh 5-row table, runs one operation, then compares the table's actual
 contents with what Spark semantics say they must be. Outcomes:
   PASS   ran and the data is right
   WRONG  ran but the data is not what Spark would produce
   FAIL   raised an error (the error is the finding)
-Each check runs against an Iceberg table and a native Snowflake table (iceberg-only checks are marked).
+Each check runs against an Iceberg table and a native table, i.e. no format given (iceberg-only checks are marked).
 """
 import logging, sys, time, datetime as dt
 from pyspark.sql import SparkSession, functions as F
@@ -14,9 +16,18 @@ log = logging.getLogger("quack.dml")
 log.setLevel(logging.INFO)
 spark = SparkSession.builder.getOrCreate()
 
-S = "TPCH.DML"
-TAG = sys.argv[sys.argv.index("--tag") + 1] if "--tag" in sys.argv else "default"
-ONLY = sys.argv[sys.argv.index("--only") + 1] if "--only" in sys.argv else ""
+
+def arg(name, default=None):
+    """Job argument `--name value`. Every platform-specific value (paths, schema, format) comes in this way."""
+    if name in sys.argv:
+        return sys.argv[sys.argv.index(name) + 1]
+    if default is None:
+        raise SystemExit(f"missing job argument {name}")
+    return default
+
+S = arg("--schema")
+TAG = arg("--tag", "default")
+ONLY = arg("--only", "")
 spark.sql(f"CREATE SCHEMA IF NOT EXISTS {S}")
 D = dt.date(2026, 1, 1)
 BASE = [(i, chr(96 + i), float(i * 10), D + dt.timedelta(days=i)) for i in range(1, 6)]   # (1,'a',10.0,2026-01-02) ...
@@ -202,7 +213,7 @@ def snapshots_sql_select(t, fmt):
 
 def snapshots_1part_after_use(t, fmt):
     _two_snapshots(t)
-    spark.sql("USE TPCH.DML")
+    spark.sql(f"USE {S}")
     return spark.table(f"{t.split('.')[-1]}.snapshots").count() >= 2, True
 
 def snapshots_read_format_load(t, fmt):
@@ -233,7 +244,7 @@ def time_travel_version_as_of(t, fmt):
 def call_rollback_to_snapshot(t, fmt):
     _two_snapshots(t)
     first = spark.table(f"{t}.snapshots").orderBy("committed_at").first()["snapshot_id"]
-    db, sch, tbl = t.split(".")
+    sch, tbl = t.split(".")[-2:]
     spark.sql(f"CALL system.rollback_to_snapshot('{sch}.{tbl}', {first})")
     return state(t), FIVE
 

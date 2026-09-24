@@ -1,11 +1,11 @@
-"""Snowflake connection: service user + PAT from .env (gitignored), same as direct_query/warehouse/snow."""
+"""Snowflake connection: service user + PAT from the repo-root .env (gitignored; see .env.example)."""
 import os
 from pathlib import Path
 import snowflake.connector
 
 
 def connect():
-    for line in open(Path(__file__).parent / ".env"):
+    for line in open(Path(__file__).resolve().parents[2] / ".env"):
         if "=" in line and not line.lstrip().startswith("#"):
             k, v = line.split("=", 1)
             os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))

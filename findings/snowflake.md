@@ -11,7 +11,7 @@ The results were checked against independently computed answers, down to the cen
 All tests are **pure PySpark and Spark SQL**, with no Snowflake SQL inside a job. When Spark fails, that failure is the finding (see `CLAUDE.md`).
 
 ## What works well (the pleasant surprises)
-- **TPC-H SF100 data generated and loaded inside one Spark job on an X-Small warehouse** (`tpch/`, nothing generated on the laptop):
+- **TPC-H SF100 data generated and loaded inside one Spark job on an X-Small warehouse** (measured as one job, now split into `platforms/snowflake/tpch_gen.py` and `jobs/tpch.py`; nothing generated on the laptop):
 
   | Step | How | Result |
   |---|---|---|
@@ -20,15 +20,15 @@ All tests are **pure PySpark and Spark SQL**, with no Snowflake SQL inside a job
   | Load | `spark.read.parquet("@stage/...")` then `.write.format("iceberg").saveAsTable(...)` | 8 tables, lineitem **600,037,902 rows in 914 s**; all tables in about 26 min |
 
   - **File layout matters for the load.** At SF1, one 221 MiB parquet file took 174 s to load, while 16 files of 14 MiB took 14 s. Generate many ~128 MiB parts, not one big file.
-- **Real third-party code runs almost unchanged** (`coffee/`).
+- **Real third-party code runs almost unchanged** (`jobs/coffee_gen.py`, `jobs/coffee_bench.py`).
   - Josue Bogran's coffee-shop generator runs with **one line changed**. It uses `rand` seeds, `crossJoin`, `sequence`/`posexplode`, `sha2` and `create_map`, and produced about 14.4M Iceberg rows in about 225 s.
   - **All 17 benchmark queries run unchanged through `spark.sql()`**, taking 4–11 s each. They use windows with `ROWS BETWEEN`, `RANK`/`DENSE_RANK`, CTEs, range joins and `COUNT(DISTINCT)`.
-- **The ETL output is correct to the cent** (`etl/`).
+- **The ETL output is correct to the cent** (`jobs/etl.py`).
   - The input was messy CSV and nested JSON on a stage.
   - The job trims every string column (driven by the schema), deduplicates, keeps the latest customer version with a window function, normalises phone numbers with a **Python UDF** and converts to USD with a **pandas UDF**.
   - It writes three Iceberg tables, one of them partitioned by day. All 15 checks against independently computed answers passed.
 - **`spark.sql("CREATE OR REPLACE TABLE t USING iceberg AS SELECT ...")` creates a real Iceberg table.** The [Iceberg docs](https://docs.snowflake.com/en/developer-guide/snowpark-connect/snowpark-connect-iceberg) say Spark SQL DDL can't create Iceberg tables; it did. Without `USING iceberg`, the same CTAS makes a native table.
-- **Everyday DML matches Spark** on both Iceberg and native tables (`dml/`, 43 of 59 checks pass, with the rows compared): INSERT with VALUES or SELECT, INSERT OVERWRITE (including dynamic partitions), DELETE, UPDATE, MERGE upsert (`UPDATE SET *` / `INSERT *`), MERGE with conditional DELETE, TRUNCATE, `insertInto`, `writeTo.append` / `.overwrite(cond)`, `CREATE TABLE ... PARTITIONED BY (days())`, `ALTER TABLE` add/rename/drop column, `ALTER TABLE ... RENAME TO`, `mergeSchema` on Iceberg, views and DROP.
+- **Everyday DML matches Spark** on both Iceberg and native tables (`jobs/dml.py`, 43 of 59 checks pass, with the rows compared): INSERT with VALUES or SELECT, INSERT OVERWRITE (including dynamic partitions), DELETE, UPDATE, MERGE upsert (`UPDATE SET *` / `INSERT *`), MERGE with conditional DELETE, TRUNCATE, `insertInto`, `writeTo.append` / `.overwrite(cond)`, `CREATE TABLE ... PARTITIONED BY (days())`, `ALTER TABLE` add/rename/drop column, `ALTER TABLE ... RENAME TO`, `mergeSchema` on Iceberg, views and DROP.
 - **Naming and organisation behave like a proper catalog:**
   - `CREATE SCHEMA` from Spark SQL works.
   - Three-, two- and one-part names work everywhere.
@@ -54,7 +54,7 @@ spark.sql("""MERGE INTO TPCH.COFFEE.ORDERS t USING updates s ON t.id = s.id
 - **Iceberg storage:** set `snowpark.connect.iceberg.external_volume: "SNOWFLAKE_MANAGED"` in `code_bundle.yml`, under `properties.spark_conf`.
 - **Python packages for the job:** list them in `properties.python_dependencies.packages`; they're installed before the job starts. UDFs install packages separately, through `spark_conf: snowpark.connect.udf.packages: "[pandas]"`. The ETL's pandas UDF used this. See the [Code Bundle docs](https://docs.snowflake.com/en/developer-guide/snowpark-connect/snowpark-connect-submit-code-bundle).
 - **More memory or CPU for the job's own Python** (pandas, `toPandas()`, model training): use a **Snowpark-optimized** warehouse. The job's Python got 32 vCPU / 200 GiB there, against 8 vCPU / 12 GiB on standard warehouses (see Under the hood).
-- **Loading files from a laptop:** a single `PUT 'file://.../*' @stage/path/ AUTO_COMPRESS=FALSE` (see `run.py`), or drag and drop in Snowsight.
+- **Loading files from a laptop:** a single `PUT 'file://.../*' @stage/path/ AUTO_COMPRESS=FALSE` (see `platforms/snowflake/run.py`), or drag and drop in Snowsight.
 - **Reaching websites and APIs from a job:** this needs an external access integration in the spec, since the sandbox has no internet access by default ([docs](https://docs.snowflake.com/en/developer-guide/snowpark-connect/snowpark-connect-submit-code-bundle)). We haven't tested it yet.
 
 ## Gaps found
@@ -84,7 +84,7 @@ spark.sql("""MERGE INTO TPCH.COFFEE.ORDERS t USING updates s ON t.id = s.id
   - `EXECUTE CODE BUNDLE FROM` must point at the **stage folder**, with the file name in `ENTRYPOINT`.
   - The call blocks until the job ends.
   - Stopping the local command does **not** stop the job; a run we aborted still created tables.
-- **Set the Spark current database first, or Snowpark Connect chatters** (`probe/context.py`).
+- **Set the Spark current database first, or Snowpark Connect chatters** (`platforms/snowflake/probe/context.py`).
   - **The symptom:** without `spark.sql("USE db.schema")` or `spark.catalog.setCurrentDatabase(...)`, Snowpark Connect sends about 17 `SELECT CURRENT_DATABASE()` / `CURRENT_SCHEMA()` round trips per query, even with fully qualified names.
   - **The probe:** 15 queries sent 300 statements (about 23 s of chatter, 40 s wall). After `USE` or `setCurrentDatabase` it was about 33 statements, zero chatter, 7–9 s wall. Real query time was identical, about 3.5 s.
   - **At SF100, same 22 TPC-H queries on an X-Small:**
@@ -92,7 +92,7 @@ spark.sql("""MERGE INTO TPCH.COFFEE.ORDERS t USING updates s ON t.id = s.id
     - with `USE`: **157 s**, 132 statements
     - Snowflake execution was about 126–130 s both times, so the whole difference was chatter. With `USE`, Spark SQL runs TPC-H SF100 at about native speed.
   - **The fix is the explicit `USE` itself.** `USE` with fully qualified names was just as clean: 33 statements, zero chatter, 6.9 s, against 300 statements and 41 s without it. Put `spark.sql("USE <db>.<schema>")` at the top of every job.
-- **Stage mounts work in Spark bundles, read-only** (`probe/mount.py`). The docs only describe them for `type: custom`.
+- **Stage mounts work in Spark bundles, read-only** (`platforms/snowflake/probe/mount.py`). The docs only describe them for `type: custom`.
   - A "mount" on a warehouse is a **symlink** to a read-only copy under `/home/udf/<id>/` (gVisor 9p, `ro`).
   - `mount_path: '/mnt/...'` fails at startup with `Read-only file system`, because the symlink can't be created. Put the mount under `/tmp/`, for example `/tmp/mnt/tpch_raw/`.
   - Reading works: listing, text, and a 221 MiB parquet read in 0.03 s, so the files are already local when the job starts. Every write, mkdir or delete fails with `Errno 30`, matching the [docs](https://docs.snowflake.com/en/developer-guide/code-bundles/code-bundle-yml-reference) ("read-only on warehouses").
@@ -105,7 +105,7 @@ spark.sql("""MERGE INTO TPCH.COFFEE.ORDERS t USING updates s ON t.id = s.id
 - **Where your Python runs:** a sandbox on one warehouse node. The traceback (`_udf_code.py`, handler `run`, `/home/udf/...`, `runpy`) suggests the bundle runs as a Python stored procedure, which is inference. Snowflake documents stored procedures as [single-node](https://docs.snowflake.com/en/developer-guide/snowpark/python/python-snowpark-training-ml).
 - **Where the Spark work runs:** `SPARK_REMOTE=sc://127.0.0.1:15002`, so Spark Connect talks to a server inside the same sandbox. That server turns your plan into Snowflake SQL, which runs on the warehouse ([engineering blog](https://www.snowflake.com/en/engineering-blog/spark-connect-engine-snowflake-engineering-deep-dive/)).
 - **UDFs:** Spark UDFs become Snowflake UDFs and [scale across the warehouse](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-designing). They're correct in our tests; we haven't measured their parallelism.
-- **The sandbox box** (`probe/`):
+- **The sandbox box** (`platforms/snowflake/probe/`):
 
   | Warehouse | vCPU | RAM | `/tmp` | CPU |
   |---|---|---|---|---|
@@ -120,14 +120,14 @@ spark.sql("""MERGE INTO TPCH.COFFEE.ORDERS t USING updates s ON t.id = s.id
   - There's **no internet egress**: `pypi.org` and `8.8.8.8` are blocked.
   - Python 3.11 with 87 packages: pandas, numpy, pyarrow, boto3, s3fs/gcsfs, and a JDK 21 via `jdk4py`. There's no scikit-learn, polars or duckdb.
 
-## The tests (`python run.py <folder>/<job>.py ...`)
-| Folder | What it tests | Warehouse |
+## The tests (`python platforms/snowflake/run.py <name>`)
+| Name | What it tests | Warehouse |
 |---|---|---|
-| `simple/` | Smoke test: DataFrame conveniences end to end | Standard Small |
-| `etl/` | Messy stage files, clean/join/UDF/pandas UDF, 3 Iceberg tables. `gen_data.py` generates the data, `check.py` verifies it. | Standard Small |
-| `coffee/` | Josue Bogran's generator plus the 17 benchmark queries, run unchanged in `TPCH.COFFEE` (all Iceberg); schema, naming and stage checks | Standard Small |
-| `dml/` | 59-check DML/DDL matrix, Iceberg and native, with and without the Iceberg extensions (`--spec dml/code_bundle_noext.yml`) | Standard Small |
-| `probe/` | Sandbox hardware, limits, network, packages; `mount.py` checks stage-mount read/write | X-Small, Small, Snowpark-optimized Medium |
-| `tpch/` | TPC-H data generation in the sandbox (`tpchgen-cli`), uploaded with `session.file.put`, loaded to Iceberg. Run with `--args --sf 100`. | Standard X-Small |
+| `simple` | Smoke test: DataFrame conveniences end to end | Standard Small |
+| `etl` | Messy stage files, clean/join/UDF/pandas UDF, 3 Iceberg tables. `data/etl/gen_data.py` generates the data, `platforms/snowflake/check_etl.py` verifies it. | Standard Small |
+| `coffee_gen`, `coffee_bench` | Josue Bogran's generator plus the 17 benchmark queries, run unchanged in `TPCH.COFFEE` (all Iceberg); schema, naming and stage checks | Standard Small |
+| `dml`, `dml_noext` | 59-check DML/DDL matrix, Iceberg and native, with and without the Iceberg extensions | Standard Small |
+| `probe`, `probe_context`, `probe_mount` | Sandbox hardware, limits, network, packages; Snowpark Connect context chatter; stage-mount read/write | X-Small, Small, Snowpark-optimized Medium |
+| `tpch_gen`, `tpch` | TPC-H data generation in the sandbox (`tpchgen-cli`), uploaded with `session.file.put`; then loaded to Iceberg and the 22 queries run. Run with `--args --sf 100 ...`. | Standard X-Small |
 
 The warehouse name `XSMALL` was actually size **Small** for every run before the hardware probes. The coffee and DML timings are Small numbers.

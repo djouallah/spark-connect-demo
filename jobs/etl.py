@@ -1,8 +1,10 @@
-"""ETL on Spark-on-Snowflake: raw files on a stage -> cleaned, enriched Iceberg tables.
+"""ETL: raw files -> cleaned, enriched tables.
 
-Only `logging` output reaches the event table, so progress goes through `log`, not print.
+    --raw <dir with orders/ customers/ products/ fx/>  --schema <catalog.schema>  [--format iceberg]
+
+Progress goes through `log`, not print (some platforms only keep `logging` output).
 """
-import logging, re
+import logging, re, sys
 import pandas as pd
 from pyspark.sql import SparkSession, Window, functions as F
 from pyspark.sql.functions import pandas_udf
@@ -11,7 +13,20 @@ log = logging.getLogger("quack.etl")
 log.setLevel(logging.INFO)
 spark = SparkSession.builder.getOrCreate()
 
-RAW = "@TPCH.PUBLIC.CODE_BUNDLE_TEST/raw"
+
+def arg(name, default=None):
+    """Job argument `--name value`. Every platform-specific value (paths, schema, format) comes in this way."""
+    if name in sys.argv:
+        return sys.argv[sys.argv.index(name) + 1]
+    if default is None:
+        raise SystemExit(f"missing job argument {name}")
+    return default
+
+RAW = arg("--raw")
+SCHEMA = arg("--schema")
+FMT = arg("--format", "iceberg")
+spark.sql(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
+spark.sql(f"USE {SCHEMA}")
 DIAL = {"AU": "61", "NZ": "64", "US": "1"}
 
 
@@ -97,12 +112,12 @@ agg_daily_country = (fct_orders.groupBy("order_date", "country")
                           F.countDistinct("customer_id").alias("customers"))
                      .orderBy("order_date", "country"))
 
-# ---------------- load: Iceberg ----------------
-dim_customer.write.format("iceberg").mode("overwrite").saveAsTable("ETL_DIM_CUSTOMER")      # V1 API
-(fct_orders.writeTo("ETL_FCT_ORDERS").using("iceberg")                                      # V2 API
+# ---------------- load ----------------
+dim_customer.write.format(FMT).mode("overwrite").saveAsTable("ETL_DIM_CUSTOMER")      # V1 API
+(fct_orders.writeTo("ETL_FCT_ORDERS").using(FMT)                                      # V2 API
            .partitionedBy(F.days("order_ts"))
            .createOrReplace())
-agg_daily_country.write.format("iceberg").mode("overwrite").saveAsTable("ETL_AGG_DAILY_COUNTRY")
+agg_daily_country.write.format(FMT).mode("overwrite").saveAsTable("ETL_AGG_DAILY_COUNTRY")
 
 log.info("LOAD|dim_customer=%d fct_orders=%d agg_daily_country=%d",
          spark.table("ETL_DIM_CUSTOMER").count(),

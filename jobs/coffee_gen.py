@@ -1,5 +1,6 @@
 # Josue Bogran's "Data Generator V2" (github.com/JosueBogran/coffeeshopdatageneratorv2), run as a
-# Snowflake Code Bundle. Generation logic is untouched; every edit is marked "# CHANGED:".
+# Spark job. Generation logic is untouched; every edit is marked "# CHANGED:".
+#   --raw <dir with Dim_Locations.csv, Dim_Products.csv>  --schema <catalog.schema>  [--format iceberg] [--orders N]
 import logging, sys, time                                                       # CHANGED: logging/argv/timing
 from pyspark.sql import SparkSession, functions as F, types as T
 from datetime import datetime, timedelta
@@ -9,12 +10,23 @@ log = logging.getLogger("quack.coffee_gen")                                    #
 log.setLevel(logging.INFO)
 spark = SparkSession.builder.getOrCreate()                                      # CHANGED: no notebook-provided `spark`
 
+
+def arg(name, default=None):
+    """Job argument `--name value`. Every platform-specific value (paths, schema, format) comes in this way."""
+    if name in sys.argv:
+        return sys.argv[sys.argv.index(name) + 1]
+    if default is None:
+        raise SystemExit(f"missing job argument {name}")
+    return default
+
 # -------------------- Parameters --------------------
-schema_name        = "TPCH.COFFEE"                                             # CHANGED: Snowflake db.schema instead of sweetcoffeetree.<schema>
+schema_name        = arg("--schema")                                           # CHANGED: from --schema instead of sweetcoffeetree.<schema>
+db_name            = schema_name.split(".")[-1]                               # CHANGED: for the 2-part / 1-part naming probes
+fmt                = arg("--format", "iceberg")                               # CHANGED: table format from --format
 fact_table_name    = "FACT_SALES"
 from_date_str      = "2023-01-01"
 to_date_str        = "2024-12-31"
-total_order_count  = int(sys.argv[sys.argv.index("--orders") + 1]) if "--orders" in sys.argv else 10_000_000  # CHANGED: from ARGUMENTS
+total_order_count  = int(arg("--orders", "10000000"))                         # CHANGED: from --orders
 
 
 def probe(name, fn):                                                            # CHANGED: log naming/DDL probes, keep going
@@ -30,7 +42,7 @@ def probe(name, fn):                                                            
 if not probe("spark.sql CREATE SCHEMA", lambda: spark.sql(f"CREATE SCHEMA IF NOT EXISTS {schema_name}").collect()):
     raise SystemExit("CREATE SCHEMA via Spark SQL failed -- that is the finding")
 
-DIMS = "@TPCH.PUBLIC.COFFEE_RAW/raw/coffee_dims"                                # CHANGED: dims from a different stage than the job's
+DIMS = arg("--raw")                                                            # CHANGED: dims location from --raw
 # README: all dim_locations fields STRING; dim_products costs DOUBLE, dates DATE, rest STRING
 dim_locations = spark.read.option("header", True).csv(f"{DIMS}/Dim_Locations.csv")
 dim_products = (spark.read.option("header", True).csv(f"{DIMS}/Dim_Products.csv")
@@ -40,22 +52,22 @@ dim_products = (spark.read.option("header", True).csv(f"{DIMS}/Dim_Products.csv"
                 .withColumn("to_date", F.to_date("to_date")))
 
 # Naming probes: write 3-part, read 2-part, switch schema, read 1-part
-probe("write 3-part iceberg TPCH.COFFEE.DIM_LOCATIONS",
-      lambda: dim_locations.write.format("iceberg").mode("overwrite").saveAsTable(f"{schema_name}.DIM_LOCATIONS"))
-probe("write 3-part iceberg TPCH.COFFEE.DIM_PRODUCTS",
-      lambda: dim_products.write.format("iceberg").mode("overwrite").saveAsTable(f"{schema_name}.DIM_PRODUCTS"))
-probe("read 3-part TPCH.COFFEE.DIM_LOCATIONS", lambda: spark.table("TPCH.COFFEE.DIM_LOCATIONS").count())
-probe("read 2-part COFFEE.DIM_LOCATIONS", lambda: spark.table("COFFEE.DIM_LOCATIONS").count())
-probe("read 1-part DIM_LOCATIONS before switching (expect FAIL: current schema is PUBLIC)",
+probe(f"write {schema_name}.DIM_LOCATIONS",
+      lambda: dim_locations.write.format(fmt).mode("overwrite").saveAsTable(f"{schema_name}.DIM_LOCATIONS"))
+probe(f"write {schema_name}.DIM_PRODUCTS",
+      lambda: dim_products.write.format(fmt).mode("overwrite").saveAsTable(f"{schema_name}.DIM_PRODUCTS"))
+probe(f"read {schema_name}.DIM_LOCATIONS", lambda: spark.table(f"{schema_name}.DIM_LOCATIONS").count())
+probe(f"read {db_name}.DIM_LOCATIONS", lambda: spark.table(f"{db_name}.DIM_LOCATIONS").count())
+probe("read 1-part DIM_LOCATIONS before switching (expect FAIL: not the current schema yet)",
       lambda: spark.table("DIM_LOCATIONS").count())
 probe("currentDatabase before", lambda: spark.catalog.currentDatabase())
-probe("spark.sql USE TPCH.COFFEE", lambda: spark.sql("USE TPCH.COFFEE").collect())
+probe(f"spark.sql USE {schema_name}", lambda: spark.sql(f"USE {schema_name}").collect())
 probe("currentDatabase after USE", lambda: spark.catalog.currentDatabase())
-probe("catalog.setCurrentDatabase('COFFEE')", lambda: spark.catalog.setCurrentDatabase("COFFEE"))
+probe(f"catalog.setCurrentDatabase('{db_name}')", lambda: spark.catalog.setCurrentDatabase(db_name))
 probe("currentDatabase after setCurrentDatabase", lambda: spark.catalog.currentDatabase())
 probe("read 1-part DIM_LOCATIONS", lambda: spark.table("DIM_LOCATIONS").count())
 probe("spark.sql 1-part SELECT", lambda: spark.sql("SELECT count(*) AS n FROM DIM_PRODUCTS").first()["n"])
-probe("catalog.listTables('COFFEE')", lambda: [t.name for t in spark.catalog.listTables("COFFEE")])
+probe(f"catalog.listTables('{db_name}')", lambda: [t.name for t in spark.catalog.listTables(db_name)])
 log.info("DIMS|locations=%d products=%d orders_param=%d",
          spark.table(f"{schema_name}.DIM_LOCATIONS").count(), spark.table(f"{schema_name}.DIM_PRODUCTS").count(),
          total_order_count)
@@ -401,9 +413,9 @@ for qi, (chunk_start, chunk_end) in enumerate(quarter_ranges):                 #
             "month", "location_id", "region", "product_id", "quantity", "discount_rate"
         )
         .write
-        .format("iceberg")                                                      # CHANGED: delta -> iceberg
+        .format(fmt)                                                            # CHANGED: delta -> --format
         .mode("overwrite" if qi == 0 else "append")                             # CHANGED: first quarter overwrites (rerunnable); dropped overwriteSchema
-        .saveAsTable(f"{schema_name}.FACTSBASE")                             # CHANGED: 3-part Snowflake name
+        .saveAsTable(f"{schema_name}.FACTSBASE")                             # CHANGED: name from --schema
     )
     log.info("QUARTER|%s..%s|%.1fs", chunk_start, chunk_end, time.time() - t0)
 
@@ -433,5 +445,5 @@ fact_sales = (
          F.col("f.product_id"),
      )
 )
-fact_sales.write.format("iceberg").mode("overwrite").saveAsTable(f"{schema_name}.{fact_table_name}")
+fact_sales.write.format(fmt).mode("overwrite").saveAsTable(f"{schema_name}.{fact_table_name}")
 log.info("FACT|%s rows=%d|%.1fs", fact_table_name, spark.table(f"{schema_name}.{fact_table_name}").count(), time.time() - t0)
