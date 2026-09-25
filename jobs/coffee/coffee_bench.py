@@ -23,6 +23,21 @@ def arg(name, default=None):
         raise SystemExit(f"missing job argument {name}")
     return default
 
+
+# NON-STANDARD, Sail only (findings/lakesail.md). Sail answers version() with its own version, Spark with its own.
+SAIL = spark.sql("SELECT version()").first()[0].split()[0] != spark.version
+
+
+def overwrite(df, table, fmt=""):
+    """df.write.format(fmt).mode("overwrite").saveAsTable(table).
+    NON-STANDARD, Sail only: Sail can't replace a table on the OneLake Iceberg catalog, so drop it, then create it."""
+    w = df.write.format(fmt) if fmt else df.write
+    if SAIL:
+        spark.sql(f"DROP TABLE IF EXISTS {table}")
+        w.saveAsTable(table)
+    else:
+        w.mode("overwrite").saveAsTable(table)
+
 SCHEMA = arg("--schema")
 FMT = arg("--format", "iceberg")
 
@@ -42,11 +57,15 @@ def run(q):
         return len(spark.sql(q).collect()), "select"
     table, select = m.groups()
     try:
-        spark.sql(f"CREATE OR REPLACE TABLE {table} USING {FMT} AS {select}").collect()
+        if SAIL:                                 # NON-STANDARD, Sail only: no table replace, so drop + create
+            spark.sql(f"DROP TABLE IF EXISTS {table}").collect()
+            spark.sql(f"CREATE TABLE {table} USING {FMT} AS {select}").collect()
+        else:
+            spark.sql(f"CREATE OR REPLACE TABLE {table} USING {FMT} AS {select}").collect()
         how = f"spark.sql CTAS USING {FMT}"
     except Exception as e:
         log.info("CTAS|%s|spark.sql USING %s FAIL|%s", table, FMT, f"{type(e).__name__}: {e}".splitlines()[0][:400])
-        spark.sql(select).write.format(FMT).mode("overwrite").saveAsTable(table)
+        overwrite(spark.sql(select), table, FMT)
         how = f"spark.sql(select).write.format({FMT})"
     return spark.table(table).count(), how
 
@@ -63,5 +82,5 @@ for name, q in queries.items():
     results.append((name, status, secs, rows, how, err))
     log.info("QUERY|%s|%s|%.2fs|rows=%d|%s|%s", name, status, secs, rows, how, err)
 
-(spark.createDataFrame(results, "query string, status string, seconds double, row_count long, how string, error string")
-      .write.format(FMT).mode("overwrite").saveAsTable(f"{SCHEMA}.TIMINGS_SPARK"))
+overwrite(spark.createDataFrame(results, "query string, status string, seconds double, row_count long, how string, error string"),
+          f"{SCHEMA}.TIMINGS_SPARK", FMT)

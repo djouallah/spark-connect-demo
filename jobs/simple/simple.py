@@ -12,6 +12,21 @@ def arg(name, default=None):
         raise SystemExit(f"missing job argument {name}")
     return default
 
+
+# NON-STANDARD, Sail only (findings/lakesail.md). Sail answers version() with its own version, Spark with its own.
+SAIL = spark.sql("SELECT version()").first()[0].split()[0] != spark.version
+
+
+def overwrite(df, table, fmt=""):
+    """df.write.format(fmt).mode("overwrite").saveAsTable(table).
+    NON-STANDARD, Sail only: Sail can't replace a table on the OneLake Iceberg catalog, so drop it, then create it."""
+    w = df.write.format(fmt) if fmt else df.write
+    if SAIL:
+        spark.sql(f"DROP TABLE IF EXISTS {table}")
+        w.saveAsTable(table)
+    else:
+        w.mode("overwrite").saveAsTable(table)
+
 TABLE = arg("--table", "SIMPLE_DEMO")
 FMT = arg("--format", "")                     # empty: the platform's default table format
 
@@ -70,6 +85,5 @@ print("pipeline columns:", pipeline.columns)
 result.printSchema()
 result.show()
 
-w = result.write.mode("overwrite")
-(w.format(FMT) if FMT else w).saveAsTable(TABLE)
+overwrite(result, TABLE, FMT)
 print("rows written:", spark.table(TABLE).count())

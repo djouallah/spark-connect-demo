@@ -22,7 +22,7 @@ def arg(name, default=None):
 
 
 exp = json.loads("\n".join(r.value for r in spark.read.text(arg("--expected")).collect()))
-spark.sql(f"USE {arg('--schema')}")
+spark.sql(f"USE SCHEMA {arg('--schema')}")
 
 
 def q(sql):

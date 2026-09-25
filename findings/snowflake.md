@@ -99,7 +99,7 @@ This is the biggest portability limit we hit. Other Spark platforms give a job o
     - without `USE`: **308 s**, 1,387 statements, 1,307 of them context round trips
     - with `USE`: **157 s**, 132 statements
     - Snowflake execution was about 126–130 s both times, so the whole difference was chatter. With `USE`, Spark SQL runs TPC-H SF100 at about native speed.
-  - **The fix is the explicit `USE` itself.** `USE` with fully qualified names was just as clean: 33 statements, zero chatter, 6.9 s, against 300 statements and 41 s without it. Put `spark.sql("USE <db>.<schema>")` at the top of every job.
+  - **The fix is the explicit `USE` itself.** `USE` with fully qualified names was just as clean: 33 statements, zero chatter, 6.9 s, against 300 statements and 41 s without it. Put `spark.sql("USE <db>.<schema>")` at the top of every job. `USE SCHEMA <db>.<schema>` works the same way, with no per-query chatter; the jobs use that form because LakeSail rejects the bare `USE`.
 - **Stage mounts work in Spark bundles, read-only** (`platforms/snowflake/probe/mount.py`). The docs only describe them for `type: custom`.
   - A "mount" on a warehouse is a **symlink** to a read-only copy under `/home/udf/<id>/` (gVisor 9p, `ro`).
   - `mount_path: '/mnt/...'` fails at startup with `Read-only file system`, because the symlink can't be created. Put the mount under `/tmp/`, for example `/tmp/mnt/tpch_raw/`.

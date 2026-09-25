@@ -25,6 +25,21 @@ def arg(name, default=None):
         raise SystemExit(f"missing job argument {name}")
     return default
 
+
+# NON-STANDARD, Sail only (findings/lakesail.md). Sail answers version() with its own version, Spark with its own.
+SAIL = spark.sql("SELECT version()").first()[0].split()[0] != spark.version
+
+
+def overwrite(df, table, fmt=""):
+    """df.write.format(fmt).mode("overwrite").saveAsTable(table).
+    NON-STANDARD, Sail only: Sail can't replace a table on the OneLake Iceberg catalog, so drop it, then create it."""
+    w = df.write.format(fmt) if fmt else df.write
+    if SAIL:
+        spark.sql(f"DROP TABLE IF EXISTS {table}")
+        w.saveAsTable(table)
+    else:
+        w.mode("overwrite").saveAsTable(table)
+
 S = arg("--schema")
 TAG = arg("--tag", "default")
 ONLY = arg("--only", "")
@@ -35,8 +50,17 @@ COLS = "id int, name string, amount double, dt date"
 
 
 def fresh(t, fmt, rows=BASE):
-    w = spark.createDataFrame(rows, COLS).write.mode("overwrite")
-    (w.format("iceberg") if fmt == "iceberg" else w).saveAsTable(t)
+    """Setup, not a check: a fresh table with the 5 base rows."""
+    df = spark.createDataFrame(rows, COLS)
+    if SAIL and fmt == "iceberg":
+        # NON-STANDARD, Sail only: DELETE/UPDATE/MERGE need merge-on-read, and ALTER TABLE can't set it later
+        spark.sql(f"DROP TABLE IF EXISTS {t}")
+        w = df.writeTo(t).using("iceberg")
+        for k in ("write.delete.mode", "write.update.mode", "write.merge.mode"):
+            w = w.tableProperty(k, "merge-on-read")
+        w.create()
+    else:
+        overwrite(df, t, "iceberg" if fmt == "iceberg" else "")
 
 
 def state(t, cols="id, amount"):
@@ -213,7 +237,7 @@ def snapshots_sql_select(t, fmt):
 
 def snapshots_1part_after_use(t, fmt):
     _two_snapshots(t)
-    spark.sql(f"USE {S}")
+    spark.sql(f"USE SCHEMA {S}")
     return spark.table(f"{t.split('.')[-1]}.snapshots").count() >= 2, True
 
 def snapshots_read_format_load(t, fmt):
@@ -312,7 +336,7 @@ for fmt in ("iceberg", "native"):
         results.append((fmt, name, status, secs, detail[:500]))
         log.info("DML|%s|%s|%s|%.1fs|%s", fmt, name, status, secs, detail[:300])
 
-(spark.createDataFrame(results, "format string, feature string, status string, seconds double, detail string")
-      .write.format("iceberg").mode("overwrite").saveAsTable(f"{S}.RESULTS_{TAG.upper()}"))
+overwrite(spark.createDataFrame(results, "format string, feature string, status string, seconds double, detail string"),
+          f"{S}.RESULTS_{TAG.upper()}", "iceberg")
 log.info("DONE|%s|" % TAG + "%d checks, %d pass, %d wrong, %d fail", len(results),
          sum(r[2] == "PASS" for r in results), sum(r[2] == "WRONG" for r in results), sum(r[2] == "FAIL" for r in results))

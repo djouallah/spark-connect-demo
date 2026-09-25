@@ -3,7 +3,7 @@
     --raw <dir with one parquet folder per table>  --sql <path to tpch.sql>  --schema <catalog.schema>
     [--sf 1] [--format iceberg] [--force]
 
-0. CREATE SCHEMA + USE it (on Snowflake, without USE Snowpark Connect sends ~17 CURRENT_DATABASE/SCHEMA
+0. CREATE SCHEMA + USE SCHEMA it (on Snowflake, without USE Snowpark Connect sends ~17 CURRENT_DATABASE/SCHEMA
    round trips per query). Tables already loaded with the right row count are skipped (idempotent;
    --force reloads everything).
 1. Load each missing table from <raw>/<table>/ (parquet) into <schema>.<table>.
@@ -27,6 +27,21 @@ def arg(name, default=None):
     return default
 
 
+# NON-STANDARD, Sail only (findings/lakesail.md). Sail answers version() with its own version, Spark with its own.
+SAIL = spark.sql("SELECT version()").first()[0].split()[0] != spark.version
+
+
+def overwrite(df, table, fmt=""):
+    """df.write.format(fmt).mode("overwrite").saveAsTable(table).
+    NON-STANDARD, Sail only: Sail can't replace a table on the OneLake Iceberg catalog, so drop it, then create it."""
+    w = df.write.format(fmt) if fmt else df.write
+    if SAIL:
+        spark.sql(f"DROP TABLE IF EXISTS {table}")
+        w.saveAsTable(table)
+    else:
+        w.mode("overwrite").saveAsTable(table)
+
+
 RAW = arg("--raw").rstrip("/")
 S = arg("--schema")
 SF = int(arg("--sf", "1"))
@@ -39,7 +54,7 @@ EXPECTED = {"orders": 1_500_000 * SF, "partsupp": 800_000 * SF, "part": 200_000 
 
 # ---- 0. schema, context, what is already loaded ----
 spark.sql(f"CREATE SCHEMA IF NOT EXISTS {S}")
-spark.sql(f"USE {S}")
+spark.sql(f"USE SCHEMA {S}")
 
 
 def loaded(t):
@@ -60,15 +75,14 @@ for t in TABLES:
 load_rows = []
 for t in todo:
     t0 = time.time()
-    spark.read.parquet(f"{RAW}/{t}/").write.format(FMT).mode("overwrite").saveAsTable(f"{S}.{t}")
+    overwrite(spark.read.parquet(f"{RAW}/{t}/"), f"{S}.{t}", FMT)
     n = spark.table(f"{S}.{t}").count()
     secs = round(time.time() - t0, 2)
     load_rows.append((t, n, secs))
     log.info("LOAD|%s|rows=%d|load %.2fs", t, n, secs)
 
 if load_rows:                                  # keep the previous LOAD_TIMINGS when nothing was reloaded
-    (spark.createDataFrame(load_rows, "tbl string, row_count long, load_s double")
-          .write.format(FMT).mode("overwrite").saveAsTable(f"{S}.LOAD_TIMINGS"))
+    overwrite(spark.createDataFrame(load_rows, "tbl string, row_count long, load_s double"), f"{S}.LOAD_TIMINGS", FMT)
 
 # ---- 2. the 22 queries through Spark SQL; only the timings are saved ----
 raw = "\n".join(r.value for r in spark.read.text(arg("--sql")).collect())
@@ -91,7 +105,7 @@ for i, q in enumerate(queries, 1):
     results.append((name, status, secs, rows, error))
     log.info("QUERY|%s|%s|%.2fs|rows=%d|%s", name, status, secs, rows, error)
 
-(spark.createDataFrame(results, "query string, status string, seconds double, row_count long, error string")
-      .write.format(FMT).mode("overwrite").saveAsTable(f"{S}.TIMINGS"))
+overwrite(spark.createDataFrame(results, "query string, status string, seconds double, row_count long, error string"),
+          f"{S}.TIMINGS", FMT)
 log.info("DONE|sf=%d|loaded %d tables, skipped %d|%d/22 ok|total query s=%.1f", SF, len(todo), len(TABLES) - len(todo),
          sum(r[1] == "OK" for r in results), sum(r[2] for r in results))

@@ -19,6 +19,21 @@ def arg(name, default=None):
         raise SystemExit(f"missing job argument {name}")
     return default
 
+
+# NON-STANDARD, Sail only (findings/lakesail.md). Sail answers version() with its own version, Spark with its own.
+SAIL = spark.sql("SELECT version()").first()[0].split()[0] != spark.version
+
+
+def overwrite(df, table, fmt=""):
+    """df.write.format(fmt).mode("overwrite").saveAsTable(table).
+    NON-STANDARD, Sail only: Sail can't replace a table on the OneLake Iceberg catalog, so drop it, then create it."""
+    w = df.write.format(fmt) if fmt else df.write
+    if SAIL:
+        spark.sql(f"DROP TABLE IF EXISTS {table}")
+        w.saveAsTable(table)
+    else:
+        w.mode("overwrite").saveAsTable(table)
+
 # -------------------- Parameters --------------------
 schema_name        = arg("--schema")                                           # CHANGED: from --schema instead of sweetcoffeetree.<schema>
 db_name            = schema_name.split(".")[-1]                               # CHANGED: for the 2-part / 1-part naming probes
@@ -53,15 +68,15 @@ dim_products = (spark.read.option("header", True).csv(f"{DIMS}/Dim_Products.csv"
 
 # Naming probes: write 3-part, read 2-part, switch schema, read 1-part
 probe(f"write {schema_name}.DIM_LOCATIONS",
-      lambda: dim_locations.write.format(fmt).mode("overwrite").saveAsTable(f"{schema_name}.DIM_LOCATIONS"))
+      lambda: overwrite(dim_locations, f"{schema_name}.DIM_LOCATIONS", fmt))
 probe(f"write {schema_name}.DIM_PRODUCTS",
-      lambda: dim_products.write.format(fmt).mode("overwrite").saveAsTable(f"{schema_name}.DIM_PRODUCTS"))
+      lambda: overwrite(dim_products, f"{schema_name}.DIM_PRODUCTS", fmt))
 probe(f"read {schema_name}.DIM_LOCATIONS", lambda: spark.table(f"{schema_name}.DIM_LOCATIONS").count())
 probe(f"read {db_name}.DIM_LOCATIONS", lambda: spark.table(f"{db_name}.DIM_LOCATIONS").count())
 probe("read 1-part DIM_LOCATIONS before switching (expect FAIL: not the current schema yet)",
       lambda: spark.table("DIM_LOCATIONS").count())
 probe("currentDatabase before", lambda: spark.catalog.currentDatabase())
-probe(f"spark.sql USE {schema_name}", lambda: spark.sql(f"USE {schema_name}").collect())
+probe(f"spark.sql USE SCHEMA {schema_name}", lambda: spark.sql(f"USE SCHEMA {schema_name}").collect())
 probe("currentDatabase after USE", lambda: spark.catalog.currentDatabase())
 probe(f"catalog.setCurrentDatabase('{db_name}')", lambda: spark.catalog.setCurrentDatabase(db_name))
 probe("currentDatabase after setCurrentDatabase", lambda: spark.catalog.currentDatabase())
@@ -406,6 +421,8 @@ for qi, (chunk_start, chunk_end) in enumerate(quarter_ranges):                 #
     )
 
     # Persist this quarter’s factsbase in append mode
+    if qi == 0 and SAIL:                                                        # CHANGED: NON-STANDARD, Sail can't replace a table
+        spark.sql(f"DROP TABLE IF EXISTS {schema_name}.FACTSBASE")
     (
         final_line_items
         .select(
@@ -414,7 +431,7 @@ for qi, (chunk_start, chunk_end) in enumerate(quarter_ranges):                 #
         )
         .write
         .format(fmt)                                                            # CHANGED: delta -> --format
-        .mode("overwrite" if qi == 0 else "append")                             # CHANGED: first quarter overwrites (rerunnable); dropped overwriteSchema
+        .mode("overwrite" if qi == 0 and not SAIL else "append")                # CHANGED: first quarter overwrites (rerunnable); dropped overwriteSchema
         .saveAsTable(f"{schema_name}.FACTSBASE")                             # CHANGED: name from --schema
     )
     log.info("QUARTER|%s..%s|%.1fs", chunk_start, chunk_end, time.time() - t0)
@@ -445,5 +462,5 @@ fact_sales = (
          F.col("f.product_id"),
      )
 )
-fact_sales.write.format(fmt).mode("overwrite").saveAsTable(f"{schema_name}.{fact_table_name}")
+overwrite(fact_sales, f"{schema_name}.{fact_table_name}", fmt)
 log.info("FACT|%s rows=%d|%.1fs", fact_table_name, spark.table(f"{schema_name}.{fact_table_name}").count(), time.time() - t0)

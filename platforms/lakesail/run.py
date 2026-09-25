@@ -22,6 +22,11 @@ def local(p):
     return (ROOT / p).resolve().as_posix()
 
 
+# Session conf, the counterpart of spark_conf in the Snowflake bundle specs. Sail follows Spark 4, where ANSI mode is
+# on by default: a bad to_timestamp()/cast raises instead of returning NULL. The jobs are Spark 3.5 code (what
+# Snowflake runs), so run them with 3.5 semantics.
+SPARK_CONF = {"spark.sql.session.timeZone": "UTC", "spark.sql.ansi.enabled": "false"}
+
 # name: job file, job arguments, result table to show
 JOBS = {
     "simple":       dict(job="jobs/simple/simple.py", args=["--table", "dbo.simple_demo", "--format", "iceberg"],
@@ -75,6 +80,11 @@ _, port = server.listening_address
 os.environ["SPARK_REMOTE"] = f"sc://localhost:{port}"          # the job's getOrCreate() connects here
 print(f"sail listening on {port}, catalog {CATALOG} = OneLake {os.environ['ONELAKE_WAREHOUSE']}")
 
+from pyspark.sql import SparkSession
+session = SparkSession.builder.getOrCreate()                  # the job's getOrCreate() returns this same session
+for k, v in SPARK_CONF.items():
+    session.conf.set(k, v)
+
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s", stream=sys.stdout)
 job = ROOT / cfg["job"]
 sys.argv = [str(job)] + cfg.get("args", []) + a.args
@@ -88,5 +98,4 @@ except Exception as e:
 print(f"\njob {a.name}: {status} in {time.time() - t0:.1f}s")
 
 if cfg.get("result") and status == "DONE":
-    from pyspark.sql import SparkSession
-    SparkSession.builder.getOrCreate().table(cfg["result"]).show(50, truncate=False)
+    session.table(cfg["result"]).show(50, truncate=False)

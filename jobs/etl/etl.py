@@ -22,11 +22,26 @@ def arg(name, default=None):
         raise SystemExit(f"missing job argument {name}")
     return default
 
+
+# NON-STANDARD, Sail only (findings/lakesail.md). Sail answers version() with its own version, Spark with its own.
+SAIL = spark.sql("SELECT version()").first()[0].split()[0] != spark.version
+
+
+def overwrite(df, table, fmt=""):
+    """df.write.format(fmt).mode("overwrite").saveAsTable(table).
+    NON-STANDARD, Sail only: Sail can't replace a table on the OneLake Iceberg catalog, so drop it, then create it."""
+    w = df.write.format(fmt) if fmt else df.write
+    if SAIL:
+        spark.sql(f"DROP TABLE IF EXISTS {table}")
+        w.saveAsTable(table)
+    else:
+        w.mode("overwrite").saveAsTable(table)
+
 RAW = arg("--raw")
 SCHEMA = arg("--schema")
 FMT = arg("--format", "iceberg")
 spark.sql(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
-spark.sql(f"USE {SCHEMA}")
+spark.sql(f"USE SCHEMA {SCHEMA}")
 DIAL = {"AU": "61", "NZ": "64", "US": "1"}
 
 
@@ -113,11 +128,14 @@ agg_daily_country = (fct_orders.groupBy("order_date", "country")
                      .orderBy("order_date", "country"))
 
 # ---------------- load ----------------
-dim_customer.write.format(FMT).mode("overwrite").saveAsTable("ETL_DIM_CUSTOMER")      # V1 API
-(fct_orders.writeTo("ETL_FCT_ORDERS").using(FMT)                                      # V2 API
-           .partitionedBy(F.days("order_ts"))
-           .createOrReplace())
-agg_daily_country.write.format(FMT).mode("overwrite").saveAsTable("ETL_AGG_DAILY_COUNTRY")
+overwrite(dim_customer, "ETL_DIM_CUSTOMER", FMT)                                        # V1 API
+v2 = fct_orders.writeTo("ETL_FCT_ORDERS").using(FMT).partitionedBy(F.days("order_ts"))  # V2 API
+if SAIL:                                     # NON-STANDARD, Sail only: no table replace, so drop + create
+    spark.sql("DROP TABLE IF EXISTS ETL_FCT_ORDERS")
+    v2.create()
+else:
+    v2.createOrReplace()
+overwrite(agg_daily_country, "ETL_AGG_DAILY_COUNTRY", FMT)
 
 log.info("LOAD|dim_customer=%d fct_orders=%d agg_daily_country=%d",
          spark.table("ETL_DIM_CUSTOMER").count(),
