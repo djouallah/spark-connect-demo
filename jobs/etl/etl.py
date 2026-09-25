@@ -29,8 +29,8 @@ try:
     get_active_session()                         # only Snowflake Code Bundles have a Snowpark session
     ENGINE = "snowflake"
 except Exception:
-    # Spark SQL version() is the engine's own version: on Spark it matches spark.version, on Sail it doesn't
-    ENGINE = "sail" if spark.sql("SELECT version()").first()[0].split()[0] != spark.version else "spark"
+    # Spark SQL version() is the engine's own version: spark.version starts with it on Spark (Fabric adds a suffix), not on Sail
+    ENGINE = "spark" if spark.version.startswith(spark.sql("SELECT version()").first()[0].split()[0]) else "sail"
 
 RAW = arg("--raw")
 SCHEMA = arg("--schema")
@@ -129,7 +129,7 @@ if ENGINE == "sail":        # NON-STANDARD: Sail can't replace a table on the On
     dim_customer.write.format(FMT).saveAsTable("ETL_DIM_CUSTOMER")
 else:
     dim_customer.write.format(FMT).mode("overwrite").saveAsTable("ETL_DIM_CUSTOMER")
-v2 = fct_orders.writeTo("ETL_FCT_ORDERS").using(FMT).partitionedBy(F.days("order_ts"))  # V2 API
+v2 = fct_orders.writeTo("ETL_FCT_ORDERS").using(FMT).partitionedBy("order_date")  # V2 API; a plain column, which every table format supports
 if ENGINE == "sail":        # NON-STANDARD: Sail can't replace a table on the OneLake Iceberg catalog, so drop it and create it
     spark.sql("DROP TABLE IF EXISTS ETL_FCT_ORDERS")
     v2.create()

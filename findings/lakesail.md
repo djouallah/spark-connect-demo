@@ -8,7 +8,7 @@
 - **Auth:** one Entra token for `https://storage.azure.com/`, taken from `az login`. Sail has no credential vending, so the runner passes the token twice: `bearer_token` for the catalog and `AZURE_STORAGE_TOKEN` for the files.
 
 ## Verdict so far
-**`simple` and `etl` pass, with the same answers as on Snowflake.** `etl_check` gets ALL PASS: the Python UDF, the pandas UDF, windows and a `days()`-partitioned Iceberg table all behave correctly.
+**`simple` and `etl` pass, with the same answers as on Snowflake.** `etl_check` gets ALL PASS: the Python UDF, the pandas UDF, windows and a date-partitioned Iceberg table all behave correctly.
 
 Getting there needed one non-standard branch. **Sail can't replace a table on this catalog**, and every job overwrites its outputs. So each job does `if ENGINE == "sail":` drop the table, then create it, `else:` overwrite it, right at each write and marked `NON-STANDARD`.
 

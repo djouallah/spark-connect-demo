@@ -32,8 +32,8 @@ try:
     get_active_session()                         # only Snowflake Code Bundles have a Snowpark session
     ENGINE = "snowflake"
 except Exception:
-    # Spark SQL version() is the engine's own version: on Spark it matches spark.version, on Sail it doesn't
-    ENGINE = "sail" if spark.sql("SELECT version()").first()[0].split()[0] != spark.version else "spark"
+    # Spark SQL version() is the engine's own version: spark.version starts with it on Spark (Fabric adds a suffix), not on Sail
+    ENGINE = "spark" if spark.version.startswith(spark.sql("SELECT version()").first()[0].split()[0]) else "sail"
 
 S = arg("--schema")
 TAG = arg("--tag", "default")
