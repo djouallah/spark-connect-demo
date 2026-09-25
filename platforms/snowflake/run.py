@@ -40,12 +40,12 @@ JOBS = {
 }
 
 p = argparse.ArgumentParser()
-p.add_argument("name", choices=JOBS)
+p.add_argument("name", help=f"one of {', '.join(JOBS)}, or a path to any .py job (probe spec)")
 p.add_argument("--spec", help="bundle spec to use instead of the job's own")
 p.add_argument("--args", nargs=argparse.REMAINDER, default=[], help="extra ARGUMENTS passed to the job")
 a = p.parse_args()
-cfg = JOBS[a.name]
-job = ROOT / cfg["job"]
+cfg = JOBS[a.name] if a.name in JOBS else dict(job=str(Path(a.name).resolve()), spec="probe")
+job = ROOT / cfg["job"]                        # an absolute job path stays as is
 spec_path = Path(a.spec) if a.spec else HERE / "bundles" / f"{cfg['spec']}.yml"
 job_args = cfg.get("args", []) + a.args
 
