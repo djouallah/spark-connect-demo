@@ -13,6 +13,7 @@ def arg(name, default=None):
     return default
 
 TABLE = arg("--table", "SIMPLE_DEMO")
+FMT = arg("--format", "")                     # empty: the platform's default table format
 
 # Messy input: mixed-case column names, padded strings, a duplicate row
 raw = spark.createDataFrame(
@@ -69,5 +70,6 @@ print("pipeline columns:", pipeline.columns)
 result.printSchema()
 result.show()
 
-result.write.mode("overwrite").saveAsTable(TABLE)
+w = result.write.mode("overwrite")
+(w.format(FMT) if FMT else w).saveAsTable(TABLE)
 print("rows written:", spark.table(TABLE).count())
