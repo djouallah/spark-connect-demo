@@ -6,3 +6,4 @@ __pycache__/
 *.pyc
 .venv/
 jobs/tpch/data/sf*/
+.ipynb_checkpoints/
