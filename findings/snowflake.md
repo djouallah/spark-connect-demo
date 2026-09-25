@@ -132,7 +132,7 @@ This is the biggest portability limit we hit. Other Spark platforms give a job o
 | Name | What it tests | Warehouse |
 |---|---|---|
 | `simple` | Smoke test: DataFrame conveniences end to end | Standard Small |
-| `etl` | Messy stage files, clean/join/UDF/pandas UDF, 3 Iceberg tables. `jobs/etl/gen_data.py` generates the data, `platforms/snowflake/check_etl.py` verifies it. | Standard Small |
+| `etl` | Messy stage files, clean/join/UDF/pandas UDF, 3 Iceberg tables. `jobs/etl/gen_data.py` generates the data, `jobs/etl/check.py` (`etl_check`) verifies it. | Standard Small |
 | `coffee_gen`, `coffee_bench` | Josue Bogran's generator plus the 17 benchmark queries, run unchanged in `TPCH.COFFEE` (all Iceberg); schema, naming and stage checks | Standard Small |
 | `dml`, `dml_noext` | 59-check DML/DDL matrix, Iceberg and native, with and without the Iceberg extensions | Standard Small |
 | `probe`, `probe_context`, `probe_mount` | Sandbox hardware, limits, network, packages; Snowpark Connect context chatter; stage-mount read/write | X-Small, Small, Snowpark-optimized Medium |

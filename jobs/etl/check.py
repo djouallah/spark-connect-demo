@@ -1,19 +1,38 @@
-"""Compare the tables jobs/etl/etl.py wrote against jobs/etl/data/expected.json (computed by jobs/etl/gen_data.py)."""
-import json
-from pathlib import Path
-from sf import connect
+"""Check the tables etl.py wrote against expected.json (computed independently by gen_data.py, in plain Python).
 
-exp = json.load(open(Path(__file__).resolve().parents[2] / "jobs" / "etl" / "data" / "expected.json"))
-cur = connect().cursor()
+    --expected <path to expected.json>  --schema <catalog.schema etl.py wrote to>
+
+Fails the job (SystemExit) if any check fails.
+"""
+import json, logging, sys
+from pyspark.sql import SparkSession
+
+log = logging.getLogger("quack.etl_check")
+log.setLevel(logging.INFO)
+spark = SparkSession.builder.getOrCreate()
+
+
+def arg(name, default=None):
+    """Job argument `--name value`. Every platform-specific value (paths, schema, format) comes in this way."""
+    if name in sys.argv:
+        return sys.argv[sys.argv.index(name) + 1]
+    if default is None:
+        raise SystemExit(f"missing job argument {name}")
+    return default
+
+
+exp = json.loads("\n".join(r.value for r in spark.read.text(arg("--expected")).collect()))
+spark.sql(f"USE {arg('--schema')}")
+
 
 def q(sql):
-    cur.execute(sql)
-    return cur.fetchall()
+    return [tuple(r) for r in spark.sql(sql).collect()]
+
 
 fails = []
 def check(name, got, want):
     ok = got == want
-    print(f"{'PASS' if ok else 'FAIL'}  {name}: got={got} want={want}")
+    log.info("CHECK|%s|%s|got=%s want=%s", "PASS" if ok else "FAIL", name, got, want)
     if not ok:
         fails.append(name)
 
@@ -33,8 +52,10 @@ check("agg groups", sorted(got), sorted(want))
 for k in sorted(want):
     g, w = got.get(k), want[k]
     ok = g is not None and g[0] == w[0] and g[2] == w[2] and abs(g[1] - w[1]) <= 0.01
-    print(f"{'PASS' if ok else 'FAIL'}  {k}: got={g} want={w}")
+    log.info("CHECK|%s|%s|got=%s want=%s", "PASS" if ok else "FAIL", k, g, w)
     if not ok:
         fails.append(k)
 
-print("\nALL PASS" if not fails else f"\n{len(fails)} FAILED: {fails}")
+log.info("DONE|%s", "ALL PASS" if not fails else f"{len(fails)} FAILED: {fails}")
+if fails:
+    raise SystemExit(f"{len(fails)} checks failed: {fails}")

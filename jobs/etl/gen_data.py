@@ -1,6 +1,6 @@
 """Generate messy raw files for etl.py, plus the answers the ETL must reproduce.
 
-    python jobs/etl/gen_data.py   ->  jobs/etl/data/{orders,customers,products,fx}/...  and  jobs/etl/data/expected.json
+    python jobs/etl/gen_data.py   ->  jobs/etl/data/{orders,customers,products,fx}/...  and  jobs/etl/data/expected/expected.json
 """
 import csv, json, random, re
 from collections import defaultdict
@@ -14,7 +14,7 @@ FX = {"AUD": 0.66, "NZD": 0.60, "USD": 1.0}
 DIAL = {"AU": "61", "NZ": "64", "US": "1"}
 CITIES = {"AU": ["Sydney", "Melbourne", "Brisbane"], "NZ": ["Auckland", "Wellington"], "US": ["Seattle", "Austin"]}
 
-for sub in ("orders", "customers", "products", "fx"):
+for sub in ("orders", "customers", "products", "fx", "expected"):
     (OUT / sub).mkdir(parents=True, exist_ok=True)
 
 
@@ -126,6 +126,6 @@ expected = {
     "phones": {cid: e164(v["phone"], v["address"]["country"]) for cid, v in latest.items()},
     "countries": {cid: v["address"]["country"] for cid, v in latest.items()},
 }
-(OUT / "expected.json").write_text(json.dumps(expected, indent=1))
+(OUT / "expected" / "expected.json").write_text(json.dumps(expected, indent=1))
 print(f"orders={exp_orders} rejects={exp_rejects} customers={len(latest)} "
       f"raw_order_lines={sum(1 for p in (OUT / 'orders').glob('*.csv') for _ in open(p)) - len(DAYS)}")

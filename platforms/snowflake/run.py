@@ -2,8 +2,9 @@
 result, then the job's logs. Every Snowflake-specific value the jobs need is in JOBS below.
 
     python platforms/snowflake/run.py simple
-    python platforms/snowflake/run.py etl            # then: python platforms/snowflake/check_etl.py
-    python platforms/snowflake/run.py tpch_gen --args --sf 100
+    python platforms/snowflake/run.py etl
+    python platforms/snowflake/run.py etl_check
+    python platforms/snowflake/run.py tpch_gen --args --sf 100 --raw @TPCH.PUBLIC.TPCH_RAW/gen/sf100_put
     python platforms/snowflake/run.py tpch --args --sf 100 --schema TPCH.TPCH_SF100 --raw @TPCH.PUBLIC.TPCH_RAW/gen/sf100_put
 """
 import argparse, time
@@ -19,6 +20,8 @@ JOBS = {
     "etl":          dict(job="jobs/etl/etl.py", spec="etl", data="jobs/etl/data", stage="CODE_BUNDLE_TEST",
                          args=["--raw", "@TPCH.PUBLIC.CODE_BUNDLE_TEST/raw", "--schema", "TPCH.PUBLIC"],
                          result="ETL_AGG_DAILY_COUNTRY"),
+    "etl_check":    dict(job="jobs/etl/check.py", spec="simple",
+                         args=["--expected", "@TPCH.PUBLIC.CODE_BUNDLE_TEST/raw/expected/expected.json", "--schema", "TPCH.PUBLIC"]),
     "coffee_gen":   dict(job="jobs/coffee/coffee_gen.py", spec="coffee", data="jobs/coffee/data", stage="COFFEE_RAW",
                          args=["--raw", "@TPCH.PUBLIC.COFFEE_RAW/raw/coffee_dims", "--schema", "TPCH.COFFEE"]),
     "coffee_bench": dict(job="jobs/coffee/coffee_bench.py", spec="coffee",
@@ -28,7 +31,7 @@ JOBS = {
                          result="TPCH.DML.RESULTS_EXT"),
     "dml_noext":    dict(job="jobs/dml/dml.py", spec="dml_noext", args=["--schema", "TPCH.DML", "--tag", "noext"],
                          result="TPCH.DML.RESULTS_NOEXT"),
-    "tpch_gen":     dict(job="jobs/tpch/tpch_gen_snowflake.py", spec="tpch_gen", args=["--stage", "@TPCH.PUBLIC.TPCH_RAW"]),
+    "tpch_gen":     dict(job="jobs/tpch/tpch_gen.py", spec="tpch_gen"),
     "tpch":         dict(job="jobs/tpch/tpch.py", spec="tpch", data="jobs/tpch/data", stage="TPCH_RAW",
                          args=["--sql", "@TPCH.PUBLIC.TPCH_RAW/raw/tpch_sql/tpch.sql"]),
     "probe":        dict(job="platforms/snowflake/probe/probe.py", spec="probe"),
