@@ -23,7 +23,7 @@ except Exception:
     ENGINE = "spark" if spark.version.startswith(spark.sql("SELECT version()").first()[0].split()[0]) else "sail"
 
 TABLE = arg("--table", "SIMPLE_DEMO")
-FMT = arg("--format", "")                     # empty: the platform's default table format
+FMT = arg("--format", "iceberg")
 
 # Messy input: mixed-case column names, padded strings, a duplicate row
 raw = spark.createDataFrame(
@@ -80,7 +80,7 @@ print("pipeline columns:", pipeline.columns)
 result.printSchema()
 result.show()
 
-w = result.write.format(FMT) if FMT else result.write
+w = result.write.format(FMT)
 if ENGINE == "sail":        # NON-STANDARD: Sail can't replace a table on the OneLake Iceberg catalog, so drop it and create it
     spark.sql(f"DROP TABLE IF EXISTS {TABLE}")
     w.saveAsTable(TABLE)

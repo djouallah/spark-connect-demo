@@ -27,8 +27,8 @@ All tests are **pure PySpark and Spark SQL**, with no Snowflake SQL inside a job
   - The input was messy CSV and nested JSON on a stage.
   - The job trims every string column (driven by the schema), deduplicates, keeps the latest customer version with a window function, normalises phone numbers with a **Python UDF** and converts to USD with a **pandas UDF**.
   - It writes three Iceberg tables, one of them partitioned by day. All 15 checks against independently computed answers passed.
-- **`spark.sql("CREATE OR REPLACE TABLE t USING iceberg AS SELECT ...")` creates a real Iceberg table.** The [Iceberg docs](https://docs.snowflake.com/en/developer-guide/snowpark-connect/snowpark-connect-iceberg) say Spark SQL DDL can't create Iceberg tables; it did. Without `USING iceberg`, the same CTAS makes a native table.
-- **Everyday DML matches Spark** on both Iceberg and native tables (`jobs/dml/`, 43 of 59 checks pass, with the rows compared): INSERT with VALUES or SELECT, INSERT OVERWRITE (including dynamic partitions), DELETE, UPDATE, MERGE upsert (`UPDATE SET *` / `INSERT *`), MERGE with conditional DELETE, TRUNCATE, `insertInto`, `writeTo.append` / `.overwrite(cond)`, `CREATE TABLE ... PARTITIONED BY (days())`, `ALTER TABLE` add/rename/drop column, `ALTER TABLE ... RENAME TO`, `mergeSchema` on Iceberg, views and DROP.
+- **`spark.sql("CREATE OR REPLACE TABLE t USING iceberg AS SELECT ...")` creates a real Iceberg table.** The [Iceberg docs](https://docs.snowflake.com/en/developer-guide/snowpark-connect/snowpark-connect-iceberg) say Spark SQL DDL can't create Iceberg tables; it did.
+- **Everyday DML matches Spark** on Iceberg tables (`jobs/dml/`, 24 of 35 checks pass, with the rows compared): INSERT with VALUES or SELECT, INSERT OVERWRITE (including dynamic partitions), DELETE, UPDATE, MERGE upsert (`UPDATE SET *` / `INSERT *`), MERGE with conditional DELETE, TRUNCATE, `insertInto`, `writeTo.append` / `.overwrite(cond)`, `CREATE TABLE ... PARTITIONED BY (days())`, `ALTER TABLE` add/rename/drop column, `ALTER TABLE ... RENAME TO`, `mergeSchema`, views, DROP, and time travel by timestamp (`TIMESTAMP AS OF`, `as-of-timestamp`).
 - **Naming and organisation behave like a proper catalog:**
   - `CREATE SCHEMA` from Spark SQL works.
   - Three-, two- and one-part names work everywhere.
@@ -42,7 +42,6 @@ All tests are **pure PySpark and Spark SQL**, with no Snowflake SQL inside a job
 df = spark.read.option("header", True).csv("@TPCH.PUBLIC.COFFEE_RAW/raw/orders/")
 df.write.format("iceberg").mode("overwrite").saveAsTable("TPCH.COFFEE.ORDERS")                    # V1
 df.writeTo("TPCH.COFFEE.ORDERS_P").using("iceberg").partitionedBy(F.days("order_ts")).createOrReplace()  # V2
-spark.sql("CREATE OR REPLACE TABLE TPCH.COFFEE.Q AS SELECT ...")      # native table
 spark.sql("CREATE OR REPLACE TABLE TPCH.COFFEE.Q USING iceberg AS SELECT ...")  # Iceberg
 
 # Upsert
@@ -60,12 +59,12 @@ spark.sql("""MERGE INTO TPCH.COFFEE.ORDERS t USING updates s ON t.id = s.id
 ## Gaps found
 | Gap | What we saw | Docs | Pure-Spark alternative |
 |---|---|---|---|
-| MERGE `WHEN NOT MATCHED BY SOURCE` (DELETE or UPDATE) | `SnowparkConnectNotImplementedError`: "Snowflake does not support 'not matched by source'" (Iceberg and native) | Not mentioned | A separate `DELETE ... WHERE id NOT IN (SELECT id FROM src)` |
-| `df.write.insertInto(t, overwrite=True)` on **Iceberg** | "Object ... already exists as ICEBERG_TABLE": it tries to recreate the table as a native table. Works on native tables. | Not mentioned | `INSERT OVERWRITE t SELECT ...` or `writeTo(t).overwrite(cond)` |
+| MERGE `WHEN NOT MATCHED BY SOURCE` (DELETE or UPDATE) | `SnowparkConnectNotImplementedError`: "Snowflake does not support 'not matched by source'" | Not mentioned | A separate `DELETE ... WHERE id NOT IN (SELECT id FROM src)` |
+| `df.write.insertInto(t, overwrite=True)` | "Object ... already exists as ICEBERG_TABLE": it tries to recreate the Iceberg table as a Snowflake table. | Not mentioned | `INSERT OVERWRITE t SELECT ...` or `writeTo(t).overwrite(cond)` |
 | `writeTo(t).overwritePartitions()` | Snowflake internal error, with an incident number | Not mentioned | `INSERT OVERWRITE` with `partitionOverwriteMode=dynamic` (works) |
-| Iceberg metadata tables `.snapshots` / `.history` | Failed in every name form: "object name ... is invalid", or `Table '"1"' does not exist` with the extensions on. That blocks `VERSION AS OF <snapshot_id>` and `CALL system.rollback_to_snapshot`. | [Listed as supported](https://docs.snowflake.com/en/developer-guide/snowpark-connect/snowpark-connect-iceberg) | None found. The docs describe timestamp time travel (`as-of-timestamp`), which we didn't pursue. |
-| Append with `mergeSchema` on a **native** table | Column count mismatch. Works on Iceberg. | Not mentioned | `ALTER TABLE ADD COLUMNS` first (works) |
+| Iceberg metadata tables `.snapshots` / `.history` | Failed in every name form: "object name ... is invalid", or `Table '"1"' does not exist` with the extensions on. That blocks `VERSION AS OF <snapshot_id>` and `CALL system.rollback_to_snapshot`. | [Listed as supported](https://docs.snowflake.com/en/developer-guide/snowpark-connect/snowpark-connect-iceberg) | Time travel by timestamp works (`TIMESTAMP AS OF '...'`, read option `as-of-timestamp`). |
 | Spark 4-style Python code | `map_col[F.col(k)]` gives `UNSUPPORTED_DATA_TYPE`. The client is Spark **3.5.6**, so the error comes from the client, not from Snowflake. | Spark 3.5 documented | `F.element_at(map_col, F.col(k))` |
+| Iceberg as the default format: `spark.sql.sources.default=iceberg` | Ignored, whether it's set in the bundle's `spark_conf` or with `spark.conf.set`. `saveAsTable`, `writeTo().create()`, `CREATE TABLE` and CTAS with no format all still create Snowflake tables (checked with `SHOW ICEBERG TABLES`). Sail honours it. | Only `snowpark.connect.iceberg.external_volume` is documented | Name the format on every write: `--format iceberg` (the jobs' default) |
 | **No volumes: file I/O isn't standard** | See [Files are not standard](#files-are-not-standard-no-volumes) below. | Stage mounts: read-only on warehouses ([docs](https://docs.snowflake.com/en/developer-guide/code-bundles/code-bundle-yml-reference)) | Spark reads and writes to `@stage/...` paths, passed in as job arguments |
 
 ### Files are not standard (no volumes)
@@ -98,14 +97,14 @@ This is the biggest portability limit we hit. Other Spark platforms give a job o
   - **At SF100, same 22 TPC-H queries on an X-Small:**
     - without `USE`: **308 s**, 1,387 statements, 1,307 of them context round trips
     - with `USE`: **157 s**, 132 statements
-    - Snowflake execution was about 126–130 s both times, so the whole difference was chatter. With `USE`, Spark SQL runs TPC-H SF100 at about native speed.
+    - Snowflake execution was about 126–130 s both times, so the whole difference was chatter. With `USE`, Spark SQL runs TPC-H SF100 at about the speed of the same queries in Snowflake SQL.
   - **The fix is the explicit `USE` itself.** `USE` with fully qualified names was just as clean: 33 statements, zero chatter, 6.9 s, against 300 statements and 41 s without it. Put `spark.sql("USE <db>.<schema>")` at the top of every job. `USE SCHEMA <db>.<schema>` works the same way, with no per-query chatter; the jobs use that form because LakeSail rejects the bare `USE`.
 - **Stage mounts work in Spark bundles, read-only** (`platforms/snowflake/probe/mount.py`). The docs only describe them for `type: custom`.
   - A "mount" on a warehouse is a **symlink** to a read-only copy under `/home/udf/<id>/` (gVisor 9p, `ro`).
   - `mount_path: '/mnt/...'` fails at startup with `Read-only file system`, because the symlink can't be created. Put the mount under `/tmp/`, for example `/tmp/mnt/tpch_raw/`.
   - Reading works: listing, text, and a 221 MiB parquet read in 0.03 s, so the files are already local when the job starts. Every write, mkdir or delete fails with `Errno 30`, matching the [docs](https://docs.snowflake.com/en/developer-guide/code-bundles/code-bundle-yml-reference) ("read-only on warehouses").
   - Getting files *onto* a stage from a warehouse job has to go through Spark (`df.write.parquet("@stage/...")`), not the mount.
-- **Iceberg SQL extensions:** setting `spark.sql.extensions` (IcebergSparkSessionExtensions) requires the package `snowpark-connect-deps-iceberg`. Across all 59 checks it made **no difference** to any result, only to some error messages.
+- **Iceberg SQL extensions:** setting `spark.sql.extensions` (IcebergSparkSessionExtensions) requires the package `snowpark-connect-deps-iceberg`. Across all 35 checks it made **no difference** to any result, only to some error messages.
 - **Auth:** a personal user with password + MFA can't submit programmatically. Use a service user with a PAT.
 
 ## Under the hood (measured)
@@ -134,7 +133,7 @@ This is the biggest portability limit we hit. Other Spark platforms give a job o
 | `simple` | Smoke test: DataFrame conveniences end to end | Standard Small |
 | `etl` | Messy stage files, clean/join/UDF/pandas UDF, 3 Iceberg tables. `jobs/etl/gen_data.py` generates the data, `jobs/etl/check.py` (`etl_check`) verifies it. | Standard Small |
 | `coffee_gen`, `coffee_bench` | Josue Bogran's generator plus the 17 benchmark queries, run unchanged in `TPCH.COFFEE` (all Iceberg); schema, naming and stage checks | Standard Small |
-| `dml`, `dml_noext` | 59-check DML/DDL matrix, Iceberg and native, with and without the Iceberg extensions | Standard Small |
+| `dml`, `dml_noext` | 35-check DML/DDL matrix on Iceberg tables, with and without the Iceberg extensions | Standard Small |
 | `probe`, `probe_context`, `probe_mount` | Sandbox hardware, limits, network, packages; Snowpark Connect context chatter; stage-mount read/write | X-Small, Small, Snowpark-optimized Medium |
 | `tpch_gen`, `tpch` | TPC-H data generation in the sandbox (`tpchgen-cli`), uploaded with `session.file.put`; then loaded to Iceberg and the 22 queries run. Run with `--args --sf 100 ...`. | Standard X-Small |
 

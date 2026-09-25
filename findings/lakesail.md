@@ -3,7 +3,7 @@
 ## Setup
 - **Engine:** Sail 0.7.1 (`pysail`), started in-process by `platforms/lakesail/run.py`. It's a Rust Spark Connect server with no JVM.
 - **Client:** `pyspark-client` 4.2.0, the slim Spark Connect client.
-- **Catalog:** Sail's native `onelake` catalog (`api="iceberg"`) on a schema-enabled Fabric lakehouse. Tables are written as Iceberg to OneLake.
+- **Catalog:** Sail's built-in `onelake` catalog (`api="iceberg"`) on a schema-enabled Fabric lakehouse. Tables are written as Iceberg to OneLake.
 - **Inputs:** local files on the laptop, passed to the jobs as ordinary paths.
 - **Auth:** one Entra token for `https://storage.azure.com/`, taken from `az login`. Sail has no credential vending, so the runner passes the token twice: `bearer_token` for the catalog and `AZURE_STORAGE_TOKEN` for the files.
 
@@ -19,7 +19,7 @@ Getting there needed one non-standard branch. **Sail can't replace a table on th
 **TPC-H SF1: generation works, but the load didn't finish from the laptop.** `tpch_gen.py` took its standard branch: `tpchgen-cli` wrote SF1 straight into a local folder (8 tables, 346 MB, 16 s). `tpch.py` then failed on its first table: Sail's PUT of the `lineitem` parquet to OneLake gave up after 10 retries (156 s). It's the same laptop-to-North-Europe upload limit as `coffee_gen`, so the 22 queries haven't run on Sail yet. They need to run near the lakehouse.
 
 ## DML / DDL matrix (`jobs/dml/dml.py`, Iceberg on OneLake)
-**14 of 36 Iceberg checks pass, 1 is WRONG and 21 fail.** Snowflake passed 43 of 59, counting its native tables. The 23 native checks all fail here because this catalog only creates Iceberg tables ("cannot create 'parquet' tables"), so they don't apply.
+**14 of 35 checks pass, 1 is WRONG and 20 fail.** Snowflake passes 24 of the same 35 Iceberg checks.
 
 | Result | Checks |
 |---|---|
@@ -49,7 +49,7 @@ Getting there needed one non-standard branch. **Sail can't replace a table on th
 
 ## Gotchas
 - **ANSI mode is on, as in Spark 4.** A bad `to_timestamp()` or `cast` raises an error ("expected numeric datetime field", "Cannot cast string 'x'") instead of returning NULL. The jobs are Spark 3.5 code, which is what Snowflake runs, so the runner sets `spark.sql.ansi.enabled=false` and `spark.sql.session.timeZone=UTC`, like the `spark_conf` in the Snowflake bundles. `try_to_timestamp` also works.
-- **A table must name its format.** `saveAsTable` with no format defaults to parquet, and the OneLake Iceberg REST catalog refuses to create it: "Iceberg REST catalog cannot create 'parquet' tables". That's why `simple.py` now takes `--format`.
+- **Name the table format.** With no format, `saveAsTable` uses Spark's default source (parquet), which an Iceberg REST catalog can't create ("Iceberg REST catalog cannot create 'parquet' tables"). Every job passes `--format`, with Iceberg as the default. Setting `spark.sql.sources.default=iceberg` also works on Sail (format-less `saveAsTable`, `writeTo().create()`, `CREATE TABLE` and CTAS all create Iceberg tables), but Snowflake ignores it, so the jobs keep naming the format.
 - **DELETE, UPDATE and MERGE need a table property.** Iceberg MERGE needs `write.merge.mode=merge-on-read` and DELETE needs `write.delete.mode=merge-on-read`. It must be set when the table is created, because `ALTER TABLE` can't set it. `dml.py`'s setup does this on Sail.
 - **The catalog list is read once, at server start.** Setting `SAIL_CATALOG__LIST` after `SparkConnectServer()` starts has no effect.
 - **pandas 3 isn't supported by the client yet.** `pyspark-client` 4.2.0 warns about it, so the venv pins `pandas<3`.

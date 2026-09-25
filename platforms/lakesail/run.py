@@ -1,5 +1,5 @@
 """Run a job on LakeSail: a local Sail Spark Connect server (no JVM), local files in, tables written to
-OneLake through Sail's native OneLake Iceberg REST catalog. Every LakeSail-specific value the jobs need
+OneLake through Sail's built-in OneLake Iceberg REST catalog. Every LakeSail-specific value the jobs need
 is in JOBS below.
 
     pip install pysail pyspark-client azure-identity      # plus tpchgen-cli for tpch_gen
@@ -29,7 +29,7 @@ SPARK_CONF = {"spark.sql.session.timeZone": "UTC", "spark.sql.ansi.enabled": "fa
 
 # name: job file, job arguments, result table to show
 JOBS = {
-    "simple":       dict(job="jobs/simple/simple.py", args=["--table", "dbo.simple_demo", "--format", "iceberg"],
+    "simple":       dict(job="jobs/simple/simple.py", args=["--table", "dbo.simple_demo"],
                          result="dbo.simple_demo"),
     "etl":          dict(job="jobs/etl/etl.py", args=["--raw", local("jobs/etl/data"), "--schema", "spark_demo"],
                          result="spark_demo.etl_agg_daily_country"),

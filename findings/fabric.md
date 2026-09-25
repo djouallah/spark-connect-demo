@@ -9,7 +9,7 @@
   4. It prints the log the wrapper wrote to `Files/logs/<name>/`.
 - **Lakehouse:** its own schema-enabled lakehouse (`FABRIC_SPARK_LAKEHOUSE`), not the LakeSail one, so the schema and table names are the same as Sail's without clashing.
 - **Inputs:** the data files are in OneLake Files and passed to the jobs as `abfss://` paths.
-- **Format:** Delta, Fabric's native format (`--format delta`).
+- **Format:** Delta, Fabric's default open table format (`--format delta`).
 - **Auth:** `az login`. The runner uses one token for the Fabric REST API and one for OneLake storage.
 - **Session conf:** `spark.sql.session.timeZone=UTC` and `spark.sql.ansi.enabled=false`, the same as the LakeSail runner. Spark 4 turns ANSI mode on by default, and the jobs are Spark 3.5 code.
 

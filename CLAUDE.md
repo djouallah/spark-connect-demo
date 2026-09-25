@@ -9,6 +9,9 @@ The whole point of this repo is to test what Spark supports on each platform.
 - Engine differences are the point of the repo. Each job detects `ENGINE` (`snowflake`, `sail` or `spark`) at the top. Where an engine needs something different, write it inline at that spot as `if ENGINE == "<engine>": ... else: <standard Spark>`, marked `NON-STANDARD`, and record it in `findings/<engine>.md`. Don't add helper modules, per-engine files or abstractions: each job stays one plain Spark script.
 - Tooling under `platforms/<platform>/` may use platform SQL or APIs: uploading and submitting.
 
+## INVARIANT: a lakehouse test, open table formats only
+Every table a job writes is an open table format (Iceberg, or Delta on Fabric), passed as `--format` (default `iceberg`). Never write, test or score a platform's proprietary table format ("native" tables). The results compare engines on open tables, not table formats.
+
 ## Layout
 - `jobs/<test>/`: one folder per test (`simple`, `etl`, `coffee`, `dml`, `tpch`) with its portable Spark job(s) and its `data/`.
 - `platforms/<platform>/`: `run.py` holds every value specific to that platform in `JOBS` (Snowflake: stages and bundle specs; LakeSail: a local Sail server with the OneLake Iceberg catalog; Fabric: a Spark Job Definition submit through the Fabric REST API, not Spark Connect, and its `ENGINE` is `spark`).

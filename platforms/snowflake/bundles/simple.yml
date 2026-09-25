@@ -3,3 +3,7 @@ bundle:
   compute_type: warehouse
   language: python
   compute_options: {}
+  properties:
+    spark_conf:
+      snowpark.connect.iceberg.external_volume: "SNOWFLAKE_MANAGED"
+      spark.sql.session.timeZone: "UTC"
