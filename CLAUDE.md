@@ -11,6 +11,6 @@ The whole point of this repo is to test what Spark supports on each platform.
 
 ## Layout
 - `jobs/<test>/`: one folder per test (`simple`, `etl`, `coffee`, `dml`, `tpch`) with its portable Spark job(s) and its `data/`.
-- `platforms/<platform>/`: `run.py` holds every value specific to that platform in `JOBS` (Snowflake: stages and bundle specs; LakeSail: a local Sail server with the OneLake Iceberg catalog).
+- `platforms/<platform>/`: `run.py` holds every value specific to that platform in `JOBS` (Snowflake: stages and bundle specs; LakeSail: a local Sail server with the OneLake Iceberg catalog; Fabric: a Spark Job Definition submit through the Fabric REST API, not Spark Connect, and its `ENGINE` is `spark`).
 - `platforms/snowflake/`: Also the bundle specs, `sf.py` and the sandbox probes.
 - `findings/`: the results, one file per platform.

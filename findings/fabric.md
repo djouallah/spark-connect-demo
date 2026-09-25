@@ -1,0 +1,33 @@
+# Spark on Microsoft Fabric (Spark Job Definition)
+
+## Setup
+- **Engine:** Fabric Spark, `spark.version` = `4.1.1.5.5.20260803.3`, and Spark SQL `version()` = `4.1.1`. That's Spark 4, not 3.5.
+- **Submit:** Fabric has no Spark Connect endpoint. `platforms/fabric/run.py` works like this:
+  1. It uploads the job's data to OneLake `Files/raw/`.
+  2. It wraps the job's source in a small main file, which captures stdout and logging and shows the result table.
+  3. It points a Spark Job Definition `quack_<name>` at that file through the Fabric REST API, runs it, and polls until it finishes.
+  4. It prints the log the wrapper wrote to `Files/logs/<name>/`.
+- **Lakehouse:** its own schema-enabled lakehouse (`FABRIC_SPARK_LAKEHOUSE`), not the LakeSail one, so the schema and table names are the same as Sail's without clashing.
+- **Inputs:** the data files are in OneLake Files and passed to the jobs as `abfss://` paths.
+- **Format:** Delta, Fabric's native format (`--format delta`).
+- **Auth:** `az login`. The runner uses one token for the Fabric REST API and one for OneLake storage.
+- **Session conf:** `spark.sql.session.timeZone=UTC` and `spark.sql.ansi.enabled=false`, the same as the LakeSail runner. Spark 4 turns ANSI mode on by default, and the jobs are Spark 3.5 code.
+
+## Verdict so far
+| Job | Result |
+|---|---|
+| `simple` | PASS, with the same answers as Snowflake and Sail |
+| `coffee_gen` | PASS: 10M-order parameter, `FACT_SALES` 14,420,675 rows, all naming checks OK |
+| `etl`, `etl_check` | first run failed on `partitionedBy(F.days(...))` (see below). Being rerun now that `etl` partitions by a plain column. |
+| `coffee_bench`, `tpch_gen`, `tpch` | running |
+| `dml` | not run: it also runs every check against Iceberg, and Iceberg on Fabric is out of scope for now |
+
+## Findings
+- **The ENGINE check had to change for every engine.** Fabric's `spark.version` carries a vendor suffix (`4.1.1.5.5.x`), while `version()` is `4.1.1`. The old equality check therefore read Fabric as Sail. The jobs now use "`spark.version` starts with the first word of `version()`". That still holds on Snowflake (`3.5.6` for both) and on Sail (`0.7.1` against `4.2.0`).
+- **`partitionedBy(F.days(col))` fails on Delta:** `DELTA_OPERATION_NOT_ALLOWED: Partitioning by expressions is not supported for Delta tables`. Delta only has identity partitions. `days()`/`bucket()` transforms are Iceberg's hidden partitioning. This is a Delta limit, not a Fabric one. `etl.py` now partitions by `order_date`, a plain column, on every engine, so the test compares engines and not table formats.
+- **An unknown schema errors out.** `DROP TABLE IF EXISTS fabric_demo.x` on a schema that doesn't exist raises `SCHEMA_NOT_FOUND` rather than doing nothing. That's standard Spark behaviour.
+- **`currentDatabase()` returns an opaque id** (`chimcobldhq2...`), not the schema name. `USE SCHEMA` and `setCurrentDatabase` still work, and 1-part names resolve.
+
+## Gotchas
+- **Startup:** an SJD run takes about 2.5–4 minutes end to end, mostly session start. The job itself is usually under 40 s.
+- **Shell variable clash:** a shell variable `FABRIC_LAKEHOUSE` (used by other tooling) would override `.env`, which is why the setting is named `FABRIC_SPARK_LAKEHOUSE`.
