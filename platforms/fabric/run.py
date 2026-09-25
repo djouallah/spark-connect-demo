@@ -45,9 +45,9 @@ JOBS = {
                          args=["--sql", f"{ABFSS}/raw/coffee_sql/queries.sql", "--schema", "coffee",
                                "--format", "delta"],
                          result="coffee.timings_spark"),
-    # tpchgen-cli writes to a filesystem path: the default lakehouse's mount on the driver
-    "tpch_gen":     dict(job="jobs/tpch/tpch_gen.py", pip=["tpchgen-cli"],
-                         args=["--raw", "/lakehouse/default/Files/raw/sf1"]),
+    # tpchgen-cli writes to a filesystem path: @MOUNT@ is Files/ mounted on the driver (an SJD has no
+    # /lakehouse/default mount, unlike a notebook: files written there stay on the driver's disk and are lost)
+    "tpch_gen":     dict(job="jobs/tpch/tpch_gen.py", pip=["tpchgen-cli"], args=["--raw", "@MOUNT@/raw/sf1"]),
     "tpch":         dict(job="jobs/tpch/tpch.py", data="jobs/tpch/data",
                          args=["--raw", f"{ABFSS}/raw/sf1", "--sql", f"{ABFSS}/raw/tpch_sql/tpch.sql",
                                "--schema", "tpch_sf1", "--format", "delta"],
@@ -59,7 +59,7 @@ WRAPPER = '''\
 import io, logging, os, subprocess, sys, sysconfig, time
 from pyspark.sql import SparkSession
 
-NAME, SRC, RESULT, PIP, LOG = {name!r}, {src!r}, {result!r}, {pip!r}, {log!r}
+NAME, SRC, RESULT, PIP, LOG, FILES = {name!r}, {src!r}, {result!r}, {pip!r}, {log!r}, {files!r}
 
 buf = io.StringIO()
 class Tee:
@@ -83,6 +83,13 @@ if PIP:
     print(f"pip install {{' '.join(PIP)}}: exit {{p.returncode}} {{(p.stdout + p.stderr)[-800:]}}")
     os.environ["PATH"] += os.pathsep + os.pathsep.join(
         sysconfig.get_path("scripts", s) for s in (sysconfig.get_default_scheme(), f"{{os.name}}_user"))
+
+if any("@MOUNT@" in a for a in sys.argv):     # mount Files/ and hand the job its local path
+    import notebookutils
+    notebookutils.fs.mount(FILES, "/files")
+    mnt = notebookutils.fs.getMountPath("/files")
+    sys.argv = [a.replace("@MOUNT@", mnt) for a in sys.argv]
+    print(f"mounted {{FILES}} at {{mnt}}")
 
 t0, status = time.time(), "DONE"
 try:
@@ -155,7 +162,7 @@ if cfg.get("data"):
 log_dir = f"logs/{name}"
 rmdir(log_dir)                                 # no stale log from an earlier run
 main = WRAPPER.format(name=job.name, src=job.read_text(encoding="utf-8"), result=cfg.get("result"), pip=cfg.get("pip", []),
-                      log=f"{ABFSS}/{log_dir}")
+                      log=f"{ABFSS}/{log_dir}", files=ABFSS)
 put(f"py/{name}.py", main.encode())
 
 
