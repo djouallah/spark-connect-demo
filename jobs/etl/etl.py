@@ -23,19 +23,14 @@ def arg(name, default=None):
     return default
 
 
-# NON-STANDARD, Sail only (findings/lakesail.md). Sail answers version() with its own version, Spark with its own.
-SAIL = spark.sql("SELECT version()").first()[0].split()[0] != spark.version
-
-
-def overwrite(df, table, fmt=""):
-    """df.write.format(fmt).mode("overwrite").saveAsTable(table).
-    NON-STANDARD, Sail only: Sail can't replace a table on the OneLake Iceberg catalog, so drop it, then create it."""
-    w = df.write.format(fmt) if fmt else df.write
-    if SAIL:
-        spark.sql(f"DROP TABLE IF EXISTS {table}")
-        w.saveAsTable(table)
-    else:
-        w.mode("overwrite").saveAsTable(table)
+# Which engine runs this script. Every `if ENGINE == ...` below is a difference between engines (findings/<engine>.md).
+try:
+    from snowflake.snowpark.context import get_active_session
+    get_active_session()                         # only Snowflake Code Bundles have a Snowpark session
+    ENGINE = "snowflake"
+except Exception:
+    # Spark SQL version() is the engine's own version: on Spark it matches spark.version, on Sail it doesn't
+    ENGINE = "sail" if spark.sql("SELECT version()").first()[0].split()[0] != spark.version else "spark"
 
 RAW = arg("--raw")
 SCHEMA = arg("--schema")
@@ -128,14 +123,23 @@ agg_daily_country = (fct_orders.groupBy("order_date", "country")
                      .orderBy("order_date", "country"))
 
 # ---------------- load ----------------
-overwrite(dim_customer, "ETL_DIM_CUSTOMER", FMT)                                        # V1 API
+# V1 API
+if ENGINE == "sail":        # NON-STANDARD: Sail can't replace a table on the OneLake Iceberg catalog, so drop it and create it
+    spark.sql("DROP TABLE IF EXISTS ETL_DIM_CUSTOMER")
+    dim_customer.write.format(FMT).saveAsTable("ETL_DIM_CUSTOMER")
+else:
+    dim_customer.write.format(FMT).mode("overwrite").saveAsTable("ETL_DIM_CUSTOMER")
 v2 = fct_orders.writeTo("ETL_FCT_ORDERS").using(FMT).partitionedBy(F.days("order_ts"))  # V2 API
-if SAIL:                                     # NON-STANDARD, Sail only: no table replace, so drop + create
+if ENGINE == "sail":        # NON-STANDARD: Sail can't replace a table on the OneLake Iceberg catalog, so drop it and create it
     spark.sql("DROP TABLE IF EXISTS ETL_FCT_ORDERS")
     v2.create()
 else:
     v2.createOrReplace()
-overwrite(agg_daily_country, "ETL_AGG_DAILY_COUNTRY", FMT)
+if ENGINE == "sail":        # NON-STANDARD: Sail can't replace a table on the OneLake Iceberg catalog, so drop it and create it
+    spark.sql("DROP TABLE IF EXISTS ETL_AGG_DAILY_COUNTRY")
+    agg_daily_country.write.format(FMT).saveAsTable("ETL_AGG_DAILY_COUNTRY")
+else:
+    agg_daily_country.write.format(FMT).mode("overwrite").saveAsTable("ETL_AGG_DAILY_COUNTRY")
 
 log.info("LOAD|dim_customer=%d fct_orders=%d agg_daily_country=%d",
          spark.table("ETL_DIM_CUSTOMER").count(),

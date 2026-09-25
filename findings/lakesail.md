@@ -10,11 +10,11 @@
 ## Verdict so far
 **`simple` and `etl` pass, with the same answers as on Snowflake.** `etl_check` gets ALL PASS: the Python UDF, the pandas UDF, windows and a `days()`-partitioned Iceberg table all behave correctly. `coffee`, `dml` and `tpch` haven't been run yet.
 
-Getting there needed one non-standard branch. **Sail can't replace a table on this catalog**, and every job overwrites its outputs. So each job detects Sail and drops the table, then creates it, instead of overwriting (the `overwrite()` helper and the `if SAIL:` blocks, marked `NON-STANDARD`).
+Getting there needed one non-standard branch. **Sail can't replace a table on this catalog**, and every job overwrites its outputs. So each job does `if ENGINE == "sail":` drop the table, then create it, `else:` overwrite it, right at each write and marked `NON-STANDARD`.
 
-**How a job detects Sail:** Spark SQL `version()` returns Sail's own version (`0.7.1`). On Spark it returns the Spark version, which matches `spark.version`; Snowflake returns `3.5.6` for both.
+**How a job knows its engine:** a Snowpark session means Snowflake. Otherwise, Spark SQL `version()` returns Sail's own version (`0.7.1`) on Sail, while on Spark it matches `spark.version` (Snowflake returns `3.5.6` for both).
 
-## Table writes (`platforms/lakesail/probe_writes.py`)
+## Table writes (probed on Sail 0.7.1)
 | Works | Fails |
 |---|---|
 | `CREATE SCHEMA`, `DROP TABLE IF EXISTS` | `USE <schema>`: "expected 'DATABASE', 'SCHEMA', 'NAMESPACE', or 'CATALOG'". Spark SQL accepts the bare form. |

@@ -6,7 +6,7 @@ The whole point of this repo is to test what Spark supports on each platform.
 - **Never** use platform-specific SQL or APIs in a job: no `SnowflakeSession`, no Snowpark, no Snowflake-only syntax, no passthrough of any kind.
 - Jobs name no platform: stage paths, schema names and table format come in as job arguments (`--raw`, `--schema`, `--format`, ...).
 - If a Spark API or Spark SQL statement fails, that failure **is the finding**. Log it, report it and record it in `findings/<platform>.md`. Do not work around it with platform SQL.
-- Exception: when a platform forces non-standard code, it goes in the job behind a detected-platform branch, marked `NON-STANDARD` (e.g. `jobs/tpch/tpch_gen.py` uses Snowpark `file.put` only when a Snowpark session is found; the `overwrite()` helper drops and creates instead of replacing only when `SAIL` is detected). Each one must be backed by a finding explaining why.
+- Engine differences are the point of the repo. Each job detects `ENGINE` (`snowflake`, `sail` or `spark`) at the top. Where an engine needs something different, write it inline at that spot as `if ENGINE == "<engine>": ... else: <standard Spark>`, marked `NON-STANDARD`, and record it in `findings/<engine>.md`. Don't add helper modules, per-engine files or abstractions: each job stays one plain Spark script.
 - Tooling under `platforms/<platform>/` may use platform SQL or APIs: uploading and submitting.
 
 ## Layout

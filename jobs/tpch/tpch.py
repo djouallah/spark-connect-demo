@@ -27,19 +27,14 @@ def arg(name, default=None):
     return default
 
 
-# NON-STANDARD, Sail only (findings/lakesail.md). Sail answers version() with its own version, Spark with its own.
-SAIL = spark.sql("SELECT version()").first()[0].split()[0] != spark.version
-
-
-def overwrite(df, table, fmt=""):
-    """df.write.format(fmt).mode("overwrite").saveAsTable(table).
-    NON-STANDARD, Sail only: Sail can't replace a table on the OneLake Iceberg catalog, so drop it, then create it."""
-    w = df.write.format(fmt) if fmt else df.write
-    if SAIL:
-        spark.sql(f"DROP TABLE IF EXISTS {table}")
-        w.saveAsTable(table)
-    else:
-        w.mode("overwrite").saveAsTable(table)
+# Which engine runs this script. Every `if ENGINE == ...` below is a difference between engines (findings/<engine>.md).
+try:
+    from snowflake.snowpark.context import get_active_session
+    get_active_session()                         # only Snowflake Code Bundles have a Snowpark session
+    ENGINE = "snowflake"
+except Exception:
+    # Spark SQL version() is the engine's own version: on Spark it matches spark.version, on Sail it doesn't
+    ENGINE = "sail" if spark.sql("SELECT version()").first()[0].split()[0] != spark.version else "spark"
 
 
 RAW = arg("--raw").rstrip("/")
@@ -75,14 +70,23 @@ for t in TABLES:
 load_rows = []
 for t in todo:
     t0 = time.time()
-    overwrite(spark.read.parquet(f"{RAW}/{t}/"), f"{S}.{t}", FMT)
+    if ENGINE == "sail":        # NON-STANDARD: Sail can't replace a table on the OneLake Iceberg catalog, so drop it and create it
+        spark.sql(f"DROP TABLE IF EXISTS {S}.{t}")
+        spark.read.parquet(f"{RAW}/{t}/").write.format(FMT).saveAsTable(f"{S}.{t}")
+    else:
+        spark.read.parquet(f"{RAW}/{t}/").write.format(FMT).mode("overwrite").saveAsTable(f"{S}.{t}")
     n = spark.table(f"{S}.{t}").count()
     secs = round(time.time() - t0, 2)
     load_rows.append((t, n, secs))
     log.info("LOAD|%s|rows=%d|load %.2fs", t, n, secs)
 
 if load_rows:                                  # keep the previous LOAD_TIMINGS when nothing was reloaded
-    overwrite(spark.createDataFrame(load_rows, "tbl string, row_count long, load_s double"), f"{S}.LOAD_TIMINGS", FMT)
+    lt = spark.createDataFrame(load_rows, "tbl string, row_count long, load_s double")
+    if ENGINE == "sail":        # NON-STANDARD: Sail can't replace a table on the OneLake Iceberg catalog, so drop it and create it
+        spark.sql(f"DROP TABLE IF EXISTS {S}.LOAD_TIMINGS")
+        lt.write.format(FMT).saveAsTable(f"{S}.LOAD_TIMINGS")
+    else:
+        lt.write.format(FMT).mode("overwrite").saveAsTable(f"{S}.LOAD_TIMINGS")
 
 # ---- 2. the 22 queries through Spark SQL; only the timings are saved ----
 raw = "\n".join(r.value for r in spark.read.text(arg("--sql")).collect())
@@ -105,7 +109,11 @@ for i, q in enumerate(queries, 1):
     results.append((name, status, secs, rows, error))
     log.info("QUERY|%s|%s|%.2fs|rows=%d|%s", name, status, secs, rows, error)
 
-overwrite(spark.createDataFrame(results, "query string, status string, seconds double, row_count long, error string"),
-          f"{S}.TIMINGS", FMT)
+timings = spark.createDataFrame(results, "query string, status string, seconds double, row_count long, error string")
+if ENGINE == "sail":        # NON-STANDARD: Sail can't replace a table on the OneLake Iceberg catalog, so drop it and create it
+    spark.sql(f"DROP TABLE IF EXISTS {S}.TIMINGS")
+    timings.write.format(FMT).saveAsTable(f"{S}.TIMINGS")
+else:
+    timings.write.format(FMT).mode("overwrite").saveAsTable(f"{S}.TIMINGS")
 log.info("DONE|sf=%d|loaded %d tables, skipped %d|%d/22 ok|total query s=%.1f", SF, len(todo), len(TABLES) - len(todo),
          sum(r[1] == "OK" for r in results), sum(r[2] for r in results))

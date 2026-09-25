@@ -43,13 +43,16 @@ def err(e):
     return f"{type(e).__name__}: {e}".splitlines()[0][:300]
 
 
-# ---- Snowflake? Code Bundles inject a Snowpark session; nowhere else has one ----
+# Which engine runs this script. Every `if ENGINE == ...` below is a difference between engines (findings/<engine>.md).
 try:
     from snowflake.snowpark.context import get_active_session
-    snow = get_active_session()
+    get_active_session()                         # only Snowflake Code Bundles have a Snowpark session
+    ENGINE = "snowflake"
 except Exception:
-    snow = None
-log.info("PLATFORM|%s", "snowflake (Snowpark session found)" if snow else "generic (write straight to --raw)")
+    # Spark SQL version() is the engine's own version: on Spark it matches spark.version, on Sail it doesn't
+    ENGINE = "sail" if spark.sql("SELECT version()").first()[0].split()[0] != spark.version else "spark"
+snow = get_active_session() if ENGINE == "snowflake" else None   # NON-STANDARD: only for file.put below
+log.info("ENGINE|%s", ENGINE)
 
 
 def done(t):
@@ -93,11 +96,11 @@ def copy_to_stage(t, part_dir, first):
 for t in todo:
     parts = max(1, math.ceil(SF * MIB_PER_SF[t] / PART_MIB))
     gen_s, copy_s, how = 0.0, 0.0, "tpchgen-cli -> --raw"
-    if not snow:
+    if ENGINE != "snowflake":
         shutil.rmtree(Path(RAW) / t, ignore_errors=True)
     for part in range(1, parts + 1):
-        out = TMP / f"{t}-{part}" if snow else Path(RAW)
-        if snow:
+        out = TMP / f"{t}-{part}" if ENGINE == "snowflake" else Path(RAW)
+        if ENGINE == "snowflake":
             shutil.rmtree(out, ignore_errors=True)
         g0 = time.time()
         p = subprocess.run([exe, "parquet", "-s", str(SF), "--tables", t, "--parts", str(parts), "--part", str(part),
@@ -105,7 +108,7 @@ for t in todo:
         if p.returncode:
             raise SystemExit(f"tpchgen-cli failed for {t} part {part}: {p.stderr[-800:]}")
         gen_s += time.time() - g0
-        if snow:
+        if ENGINE == "snowflake":
             c0 = time.time()
             how = copy_to_stage(t, out, first=(part == 1))
             copy_s += time.time() - c0

@@ -13,19 +13,14 @@ def arg(name, default=None):
     return default
 
 
-# NON-STANDARD, Sail only (findings/lakesail.md). Sail answers version() with its own version, Spark with its own.
-SAIL = spark.sql("SELECT version()").first()[0].split()[0] != spark.version
-
-
-def overwrite(df, table, fmt=""):
-    """df.write.format(fmt).mode("overwrite").saveAsTable(table).
-    NON-STANDARD, Sail only: Sail can't replace a table on the OneLake Iceberg catalog, so drop it, then create it."""
-    w = df.write.format(fmt) if fmt else df.write
-    if SAIL:
-        spark.sql(f"DROP TABLE IF EXISTS {table}")
-        w.saveAsTable(table)
-    else:
-        w.mode("overwrite").saveAsTable(table)
+# Which engine runs this script. Every `if ENGINE == ...` below is a difference between engines (findings/<engine>.md).
+try:
+    from snowflake.snowpark.context import get_active_session
+    get_active_session()                         # only Snowflake Code Bundles have a Snowpark session
+    ENGINE = "snowflake"
+except Exception:
+    # Spark SQL version() is the engine's own version: on Spark it matches spark.version, on Sail it doesn't
+    ENGINE = "sail" if spark.sql("SELECT version()").first()[0].split()[0] != spark.version else "spark"
 
 TABLE = arg("--table", "SIMPLE_DEMO")
 FMT = arg("--format", "")                     # empty: the platform's default table format
@@ -85,5 +80,10 @@ print("pipeline columns:", pipeline.columns)
 result.printSchema()
 result.show()
 
-overwrite(result, TABLE, FMT)
+w = result.write.format(FMT) if FMT else result.write
+if ENGINE == "sail":        # NON-STANDARD: Sail can't replace a table on the OneLake Iceberg catalog, so drop it and create it
+    spark.sql(f"DROP TABLE IF EXISTS {TABLE}")
+    w.saveAsTable(TABLE)
+else:
+    w.mode("overwrite").saveAsTable(TABLE)
 print("rows written:", spark.table(TABLE).count())

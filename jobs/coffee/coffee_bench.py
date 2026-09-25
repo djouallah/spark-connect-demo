@@ -24,19 +24,14 @@ def arg(name, default=None):
     return default
 
 
-# NON-STANDARD, Sail only (findings/lakesail.md). Sail answers version() with its own version, Spark with its own.
-SAIL = spark.sql("SELECT version()").first()[0].split()[0] != spark.version
-
-
-def overwrite(df, table, fmt=""):
-    """df.write.format(fmt).mode("overwrite").saveAsTable(table).
-    NON-STANDARD, Sail only: Sail can't replace a table on the OneLake Iceberg catalog, so drop it, then create it."""
-    w = df.write.format(fmt) if fmt else df.write
-    if SAIL:
-        spark.sql(f"DROP TABLE IF EXISTS {table}")
-        w.saveAsTable(table)
-    else:
-        w.mode("overwrite").saveAsTable(table)
+# Which engine runs this script. Every `if ENGINE == ...` below is a difference between engines (findings/<engine>.md).
+try:
+    from snowflake.snowpark.context import get_active_session
+    get_active_session()                         # only Snowflake Code Bundles have a Snowpark session
+    ENGINE = "snowflake"
+except Exception:
+    # Spark SQL version() is the engine's own version: on Spark it matches spark.version, on Sail it doesn't
+    ENGINE = "sail" if spark.sql("SELECT version()").first()[0].split()[0] != spark.version else "spark"
 
 SCHEMA = arg("--schema")
 FMT = arg("--format", "iceberg")
@@ -57,7 +52,7 @@ def run(q):
         return len(spark.sql(q).collect()), "select"
     table, select = m.groups()
     try:
-        if SAIL:                                 # NON-STANDARD, Sail only: no table replace, so drop + create
+        if ENGINE == "sail":        # NON-STANDARD: Sail can't replace a table on the OneLake Iceberg catalog, so drop it and create it
             spark.sql(f"DROP TABLE IF EXISTS {table}").collect()
             spark.sql(f"CREATE TABLE {table} USING {FMT} AS {select}").collect()
         else:
@@ -65,7 +60,11 @@ def run(q):
         how = f"spark.sql CTAS USING {FMT}"
     except Exception as e:
         log.info("CTAS|%s|spark.sql USING %s FAIL|%s", table, FMT, f"{type(e).__name__}: {e}".splitlines()[0][:400])
-        overwrite(spark.sql(select), table, FMT)
+        if ENGINE == "sail":        # NON-STANDARD: Sail can't replace a table on the OneLake Iceberg catalog, so drop it and create it
+            spark.sql(f"DROP TABLE IF EXISTS {table}")
+            spark.sql(select).write.format(FMT).saveAsTable(table)
+        else:
+            spark.sql(select).write.format(FMT).mode("overwrite").saveAsTable(table)
         how = f"spark.sql(select).write.format({FMT})"
     return spark.table(table).count(), how
 
@@ -82,5 +81,9 @@ for name, q in queries.items():
     results.append((name, status, secs, rows, how, err))
     log.info("QUERY|%s|%s|%.2fs|rows=%d|%s|%s", name, status, secs, rows, how, err)
 
-overwrite(spark.createDataFrame(results, "query string, status string, seconds double, row_count long, how string, error string"),
-          f"{SCHEMA}.TIMINGS_SPARK", FMT)
+timings = spark.createDataFrame(results, "query string, status string, seconds double, row_count long, how string, error string")
+if ENGINE == "sail":        # NON-STANDARD: Sail can't replace a table on the OneLake Iceberg catalog, so drop it and create it
+    spark.sql(f"DROP TABLE IF EXISTS {SCHEMA}.TIMINGS_SPARK")
+    timings.write.format(FMT).saveAsTable(f"{SCHEMA}.TIMINGS_SPARK")
+else:
+    timings.write.format(FMT).mode("overwrite").saveAsTable(f"{SCHEMA}.TIMINGS_SPARK")

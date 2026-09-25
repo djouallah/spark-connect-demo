@@ -26,19 +26,14 @@ def arg(name, default=None):
     return default
 
 
-# NON-STANDARD, Sail only (findings/lakesail.md). Sail answers version() with its own version, Spark with its own.
-SAIL = spark.sql("SELECT version()").first()[0].split()[0] != spark.version
-
-
-def overwrite(df, table, fmt=""):
-    """df.write.format(fmt).mode("overwrite").saveAsTable(table).
-    NON-STANDARD, Sail only: Sail can't replace a table on the OneLake Iceberg catalog, so drop it, then create it."""
-    w = df.write.format(fmt) if fmt else df.write
-    if SAIL:
-        spark.sql(f"DROP TABLE IF EXISTS {table}")
-        w.saveAsTable(table)
-    else:
-        w.mode("overwrite").saveAsTable(table)
+# Which engine runs this script. Every `if ENGINE == ...` below is a difference between engines (findings/<engine>.md).
+try:
+    from snowflake.snowpark.context import get_active_session
+    get_active_session()                         # only Snowflake Code Bundles have a Snowpark session
+    ENGINE = "snowflake"
+except Exception:
+    # Spark SQL version() is the engine's own version: on Spark it matches spark.version, on Sail it doesn't
+    ENGINE = "sail" if spark.sql("SELECT version()").first()[0].split()[0] != spark.version else "spark"
 
 S = arg("--schema")
 TAG = arg("--tag", "default")
@@ -52,15 +47,20 @@ COLS = "id int, name string, amount double, dt date"
 def fresh(t, fmt, rows=BASE):
     """Setup, not a check: a fresh table with the 5 base rows."""
     df = spark.createDataFrame(rows, COLS)
-    if SAIL and fmt == "iceberg":
-        # NON-STANDARD, Sail only: DELETE/UPDATE/MERGE need merge-on-read, and ALTER TABLE can't set it later
+    w = df.write.format("iceberg") if fmt == "iceberg" else df.write
+    if ENGINE == "sail":
+        # NON-STANDARD: Sail can't replace a table, and its Iceberg DELETE/UPDATE/MERGE need merge-on-read,
+        # which ALTER TABLE can't set later -- so drop, then create with the properties
         spark.sql(f"DROP TABLE IF EXISTS {t}")
-        w = df.writeTo(t).using("iceberg")
-        for k in ("write.delete.mode", "write.update.mode", "write.merge.mode"):
-            w = w.tableProperty(k, "merge-on-read")
-        w.create()
+        if fmt == "iceberg":
+            v2 = df.writeTo(t).using("iceberg")
+            for k in ("write.delete.mode", "write.update.mode", "write.merge.mode"):
+                v2 = v2.tableProperty(k, "merge-on-read")
+            v2.create()
+        else:
+            w.saveAsTable(t)
     else:
-        overwrite(df, t, "iceberg" if fmt == "iceberg" else "")
+        w.mode("overwrite").saveAsTable(t)
 
 
 def state(t, cols="id, amount"):
@@ -336,7 +336,11 @@ for fmt in ("iceberg", "native"):
         results.append((fmt, name, status, secs, detail[:500]))
         log.info("DML|%s|%s|%s|%.1fs|%s", fmt, name, status, secs, detail[:300])
 
-overwrite(spark.createDataFrame(results, "format string, feature string, status string, seconds double, detail string"),
-          f"{S}.RESULTS_{TAG.upper()}", "iceberg")
+res = spark.createDataFrame(results, "format string, feature string, status string, seconds double, detail string")
+if ENGINE == "sail":        # NON-STANDARD: Sail can't replace a table on the OneLake Iceberg catalog, so drop it and create it
+    spark.sql(f"DROP TABLE IF EXISTS {S}.RESULTS_{TAG.upper()}")
+    res.write.format("iceberg").saveAsTable(f"{S}.RESULTS_{TAG.upper()}")
+else:
+    res.write.format("iceberg").mode("overwrite").saveAsTable(f"{S}.RESULTS_{TAG.upper()}")
 log.info("DONE|%s|" % TAG + "%d checks, %d pass, %d wrong, %d fail", len(results),
          sum(r[2] == "PASS" for r in results), sum(r[2] == "WRONG" for r in results), sum(r[2] == "FAIL" for r in results))

@@ -20,19 +20,14 @@ def arg(name, default=None):
     return default
 
 
-# NON-STANDARD, Sail only (findings/lakesail.md). Sail answers version() with its own version, Spark with its own.
-SAIL = spark.sql("SELECT version()").first()[0].split()[0] != spark.version
-
-
-def overwrite(df, table, fmt=""):
-    """df.write.format(fmt).mode("overwrite").saveAsTable(table).
-    NON-STANDARD, Sail only: Sail can't replace a table on the OneLake Iceberg catalog, so drop it, then create it."""
-    w = df.write.format(fmt) if fmt else df.write
-    if SAIL:
-        spark.sql(f"DROP TABLE IF EXISTS {table}")
-        w.saveAsTable(table)
-    else:
-        w.mode("overwrite").saveAsTable(table)
+# Which engine runs this script. Every `if ENGINE == ...` below is a difference between engines (findings/<engine>.md).
+try:
+    from snowflake.snowpark.context import get_active_session
+    get_active_session()                         # only Snowflake Code Bundles have a Snowpark session
+    ENGINE = "snowflake"
+except Exception:
+    # Spark SQL version() is the engine's own version: on Spark it matches spark.version, on Sail it doesn't
+    ENGINE = "sail" if spark.sql("SELECT version()").first()[0].split()[0] != spark.version else "spark"
 
 # -------------------- Parameters --------------------
 schema_name        = arg("--schema")                                           # CHANGED: from --schema instead of sweetcoffeetree.<schema>
@@ -67,10 +62,14 @@ dim_products = (spark.read.option("header", True).csv(f"{DIMS}/Dim_Products.csv"
                 .withColumn("to_date", F.to_date("to_date")))
 
 # Naming probes: write 3-part, read 2-part, switch schema, read 1-part
+if ENGINE == "sail":                                                            # CHANGED: NON-STANDARD: Sail can't replace a table on the OneLake Iceberg catalog, so drop it and create it
+    spark.sql(f"DROP TABLE IF EXISTS {schema_name}.DIM_LOCATIONS")
+    spark.sql(f"DROP TABLE IF EXISTS {schema_name}.DIM_PRODUCTS")
+mode = "append" if ENGINE == "sail" else "overwrite"                            # CHANGED: see above
 probe(f"write {schema_name}.DIM_LOCATIONS",
-      lambda: overwrite(dim_locations, f"{schema_name}.DIM_LOCATIONS", fmt))
+      lambda: dim_locations.write.format(fmt).mode(mode).saveAsTable(f"{schema_name}.DIM_LOCATIONS"))
 probe(f"write {schema_name}.DIM_PRODUCTS",
-      lambda: overwrite(dim_products, f"{schema_name}.DIM_PRODUCTS", fmt))
+      lambda: dim_products.write.format(fmt).mode(mode).saveAsTable(f"{schema_name}.DIM_PRODUCTS"))
 probe(f"read {schema_name}.DIM_LOCATIONS", lambda: spark.table(f"{schema_name}.DIM_LOCATIONS").count())
 probe(f"read {db_name}.DIM_LOCATIONS", lambda: spark.table(f"{db_name}.DIM_LOCATIONS").count())
 probe("read 1-part DIM_LOCATIONS before switching (expect FAIL: not the current schema yet)",
@@ -421,7 +420,7 @@ for qi, (chunk_start, chunk_end) in enumerate(quarter_ranges):                 #
     )
 
     # Persist this quarter’s factsbase in append mode
-    if qi == 0 and SAIL:                                                        # CHANGED: NON-STANDARD, Sail can't replace a table
+    if qi == 0 and ENGINE == "sail":                                            # CHANGED: NON-STANDARD, Sail can't replace a table
         spark.sql(f"DROP TABLE IF EXISTS {schema_name}.FACTSBASE")
     (
         final_line_items
@@ -431,7 +430,7 @@ for qi, (chunk_start, chunk_end) in enumerate(quarter_ranges):                 #
         )
         .write
         .format(fmt)                                                            # CHANGED: delta -> --format
-        .mode("overwrite" if qi == 0 and not SAIL else "append")                # CHANGED: first quarter overwrites (rerunnable); dropped overwriteSchema
+        .mode("overwrite" if qi == 0 and ENGINE != "sail" else "append")        # CHANGED: first quarter overwrites (rerunnable); dropped overwriteSchema
         .saveAsTable(f"{schema_name}.FACTSBASE")                             # CHANGED: name from --schema
     )
     log.info("QUARTER|%s..%s|%.1fs", chunk_start, chunk_end, time.time() - t0)
@@ -462,5 +461,9 @@ fact_sales = (
          F.col("f.product_id"),
      )
 )
-overwrite(fact_sales, f"{schema_name}.{fact_table_name}", fmt)
+if ENGINE == "sail":        # NON-STANDARD: Sail can't replace a table on the OneLake Iceberg catalog, so drop it and create it
+    spark.sql(f"DROP TABLE IF EXISTS {schema_name}.{fact_table_name}")
+    fact_sales.write.format(fmt).saveAsTable(f"{schema_name}.{fact_table_name}")
+else:
+    fact_sales.write.format(fmt).mode("overwrite").saveAsTable(f"{schema_name}.{fact_table_name}")
 log.info("FACT|%s rows=%d|%.1fs", fact_table_name, spark.table(f"{schema_name}.{fact_table_name}").count(), time.time() - t0)
