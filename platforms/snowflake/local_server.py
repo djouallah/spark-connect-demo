@@ -1,5 +1,5 @@
 """Snowflake's Spark Connect server on the laptop: snowpark-connect runs it locally (with a JVM) and executes
-the plans on a Snowflake warehouse. Any Spark Connect client can then use sc://localhost:15002, e.g. local.ipynb.
+the plans on a Snowflake warehouse. Any Spark Connect client can then use sc://localhost:15002, e.g. spark_connect.ipynb.
 Everything lives in the repo: the venv, and the JRE from the [jdk] extra inside it.
 
     python -m venv .venv-snowflake

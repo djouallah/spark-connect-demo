@@ -18,8 +18,8 @@ Getting there needed one non-standard branch. **Sail can't replace a table on th
 
 **TPC-H SF1: generation works, but the load didn't finish from the laptop.** `tpch_gen.py` took its standard branch: `tpchgen-cli` wrote SF1 straight into a local folder (8 tables, 346 MB, 16 s). `tpch.py` then failed on its first table: Sail's PUT of the `lineitem` parquet to OneLake gave up after 10 retries (156 s). It's the same laptop-to-North-Europe upload limit as `coffee_gen`, so the 22 queries haven't run on Sail yet. They need to run near the lakehouse.
 
-## `local.ipynb` (Spark 3.5.6 client)
-**41 of 44 pass** (run of 2026-09-27, per check: [`local/sail.csv`](local/sail.csv); the executed notebook is [`local.ipynb`](../local.ipynb)). A Spark 3.5 client works against Sail 0.7.1, so one notebook and one client serve both Sail and Snowflake. The 3 failures are the gaps already listed below:
+## `spark_connect.ipynb` (Spark 3.5.6 client)
+**41 of 44 pass** (run of 2026-09-27, per check: [`local/sail.csv`](local/sail.csv); the executed notebook is [`spark_connect.ipynb`](../spark_connect.ipynb)). A Spark 3.5 client works against Sail 0.7.1, so one notebook and one client serve both Sail and Snowflake. The 3 failures are the gaps already listed below:
 - `MERGE` and `DELETE` fail on a table created without `write.merge.mode` / `write.delete.mode=merge-on-read`.
 - `UPDATE` isn't supported (`CommandNode::Update`).
 
