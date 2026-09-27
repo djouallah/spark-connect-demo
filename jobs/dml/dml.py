@@ -1,4 +1,4 @@
-"""DML / DDL feature matrix -- pure PySpark + Spark SQL (see CLAUDE.md).
+"""DML / DDL feature matrix -- pure PySpark + Spark SQL (see Agent.md).
 
     --schema <catalog.schema>  [--tag default] [--only <substring of a check name>]
 

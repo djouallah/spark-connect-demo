@@ -1,4 +1,4 @@
-"""TPC-H load + 22 queries, pure PySpark / Spark SQL (see CLAUDE.md).
+"""TPC-H load + 22 queries, pure PySpark / Spark SQL (see Agent.md).
 
     --raw <dir with one parquet folder per table>  --sql <path to tpch.sql>  --schema <catalog.schema>
     [--sf 1] [--format iceberg] [--force]
