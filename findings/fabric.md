@@ -36,12 +36,11 @@
 
 ## Notebook via Livy (`spark_connect.ipynb`, `ENDPOINT = "fabric"`)
 - **How:** the Connect cell opens a Livy session on the lakehouse (`.../lakehouses/<id>/livyapi/versions/2023-12-01/sessions`, `az login` token for `https://analysis.windows.net/powerbi/api/.default`, the same as dbt-fabricspark's CLI auth) and installs an IPython input transformer. After that, every cell that doesn't start with `# laptop` is sent to the session unchanged as a `pyspark` statement, and its output is printed locally. The summary pulls `RESULTS` back as JSON.
-- **Session start:** idle after **21 s** on the starter pool, against 2.5–4 min for an SJD run. Statements then take 0.1–10 s each.
+- **Session start:** idle after **16–21 s** on the starter pool, against 2.5–4 min for an SJD run. Statements then take 0.1–10 s each.
 - **Engine:** `version()` = `4.1.1`, `spark.version` = `4.1.1.5.5.20260910.235373633`. Session conf `spark.sql.session.timeZone=UTC` and `spark.sql.ansi.enabled=false` are passed when the session is created.
-- **Result (2026-09-27, Delta):** 39 PASS, 2 WRONG, 3 FAIL of 44 (`findings/local/fabric.csv`). DataFrame, SQL, UDF (Python, pandas, `udf.register`) and every Delta write (`saveAsTable`, INSERT, INSERT OVERWRITE, MERGE, UPDATE, DELETE, `writeTo().append()`, `PARTITIONED BY`) pass.
-  - WRONG `SHOW NAMESPACES lists it`: `local_nb` isn't in the list after `CREATE SCHEMA`.
-  - WRONG `catalog.currentDatabase`: an opaque id (`chimcobldhq2...`), not `local_nb`, as in the SJD runs.
-  - FAIL `read CSV file` / `read CSV folder` / `read JSON lines`: the paths are laptop paths (`C:/...`), which a remote engine can't see (`No FileSystem for scheme "C"`). Expected for any remote engine.
+- **Result (2026-09-27, Delta):** 39 PASS, 2 WRONG, 0 FAIL of 41 (`findings/local/fabric.csv`). DataFrame, SQL, UDF (Python, pandas, `udf.register`) and every Delta write (`saveAsTable`, INSERT, INSERT OVERWRITE, MERGE, UPDATE, DELETE, `writeTo().append()`, `PARTITIONED BY`) pass.
+  - WRONG `SHOW NAMESPACES lists it`: Fabric lists three-part names, `sqlengines.sjd.local_nb` (workspace.lakehouse.schema), where Spark lists `local_nb`. `SHOW SCHEMAS` is the same, and `SHOW NAMESPACES LIKE 'local*'` returns nothing.
+  - WRONG `catalog.currentDatabase`: an internal id (`chimcobldhq2...`), not `local_nb`, even right after `USE SCHEMA local_nb`. `current_database()` and `listDatabases()` return the same kind of ids; `databaseExists("local_nb")` is True and one-part names resolve. Same as the SJD runs.
 - **Output:** the Livy REPL echoes expression statements inside loops (`DataFrame[]` in the teardown cell). Cosmetic.
 
 ## Gotchas
