@@ -5,5 +5,6 @@
 __pycache__/
 *.pyc
 .venv/
+.venv-snowflake/
 jobs/tpch/data/sf*/
 .ipynb_checkpoints/
