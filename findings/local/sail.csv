@@ -1,16 +1,16 @@
-# 2026-09-27T07:18:05Z endpoint=sail format=iceberg schema=local_nb client=pyspark 3.5.6 engine=0.7.1 | 38 PASS, 3 FAIL of 41
+# 2026-09-27T07:39:46Z endpoint=sail format=iceberg schema=local_nb client=pyspark 3.5.6 engine=0.7.1 | 38 PASS, 3 FAIL of 41
 check,status,secs,detail
-CREATE SCHEMA IF NOT EXISTS,PASS,7.3,
+CREATE SCHEMA IF NOT EXISTS,PASS,5.9,
 USE SCHEMA,PASS,0.7,
 SHOW NAMESPACES lists it,PASS,0.7,
 catalog.currentDatabase,PASS,0.0,
-catalog.listTables,PASS,2.8,
+catalog.listTables,PASS,3.0,
 createDataFrame (rows),PASS,0.0,
 createDataFrame (pandas),PASS,0.0,
 range + filter,PASS,0.0,
 withColumn + select,PASS,0.0,
 groupBy + agg,PASS,0.0,
-join inner / left / anti,PASS,0.0,
+join inner / left / anti,PASS,0.1,
 union + distinct,PASS,0.0,
 dropDuplicates,PASS,0.0,
 orderBy desc + limit,PASS,0.0,
@@ -31,13 +31,13 @@ GROUPING SETS,PASS,0.0,
 Python UDF,PASS,0.1,
 pandas UDF,PASS,0.0,
 udf.register + SQL,PASS,0.0,
-DROP TABLE IF EXISTS,PASS,2.6,
-"saveAsTable (append, new table)",PASS,20.7,
+DROP TABLE IF EXISTS,PASS,1.4,
+"saveAsTable (append, new table)",PASS,20.4,
 DESCRIBE TABLE,PASS,0.7,
-INSERT INTO VALUES,PASS,14.4,
-INSERT OVERWRITE,PASS,13.0,
-MERGE upsert,FAIL,7.1,UnsupportedOperationException: Iceberg MERGE with `write.merge.mode=copy-on-write` is not supported yet; set `write.merge.mode=merge-on-read`
+INSERT INTO VALUES,PASS,14.5,
+INSERT OVERWRITE,PASS,12.7,
+MERGE upsert,FAIL,7.0,UnsupportedOperationException: Iceberg MERGE with `write.merge.mode=copy-on-write` is not supported yet; set `write.merge.mode=merge-on-read`
 UPDATE,FAIL,0.0,UnsupportedOperationException: CommandNode::Update
-DELETE,FAIL,3.6,UnsupportedOperationException: Iceberg DELETE with `write.delete.mode=copy-on-write` is not supported yet; set `write.delete.mode=merge-on-read`
-writeTo().append(),PASS,13.6,
-CREATE TABLE PARTITIONED BY + INSERT,PASS,18.8,
+DELETE,FAIL,3.5,UnsupportedOperationException: Iceberg DELETE with `write.delete.mode=copy-on-write` is not supported yet; set `write.delete.mode=merge-on-read`
+writeTo().append(),PASS,34.4,
+CREATE TABLE PARTITIONED BY + INSERT,PASS,17.8,
