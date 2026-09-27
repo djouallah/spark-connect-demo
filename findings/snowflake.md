@@ -124,7 +124,7 @@ Snowflake doesn't host a Spark Connect endpoint. `snowpark-connect` (1.43.0) run
 - **Startup:** about 30–100 s of fixed overhead per job, even for tiny data. Our guess is package install plus server start.
 - **Where your Python runs:** a sandbox on one warehouse node. The traceback (`_udf_code.py`, handler `run`, `/home/udf/...`, `runpy`) suggests the bundle runs as a Python stored procedure, which is inference. Snowflake documents stored procedures as [single-node](https://docs.snowflake.com/en/developer-guide/snowpark/python/python-snowpark-training-ml).
 - **Where the Spark work runs:** `SPARK_REMOTE=sc://127.0.0.1:15002`, so Spark Connect talks to a server inside the same sandbox. That server turns your plan into Snowflake SQL, which runs on the warehouse ([engineering blog](https://www.snowflake.com/en/engineering-blog/spark-connect-engine-snowflake-engineering-deep-dive/)).
-- **UDFs:** Spark UDFs become Snowflake UDFs and [scale across the warehouse](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-designing). They're correct in our tests; we haven't measured their parallelism.
+- **UDFs:** Spark UDFs become Snowflake UDFs and [scale across the warehouse](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-designing). They're correct in our tests; we haven't measured their parallelism. Plain SQL can do the same without Spark: `CREATE [TEMPORARY] FUNCTION ... LANGUAGE PYTHON` takes the function as text (source, runtime, packages). That is arguably the more mature design than Spark Connect's pickled closures: self-contained, reviewable, and independent of the client's Python version.
 - **The sandbox box** (`platforms/snowflake/probe/`):
 
   | Warehouse | vCPU | RAM | `/tmp` | CPU |
