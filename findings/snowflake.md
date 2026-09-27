@@ -8,7 +8,7 @@
 
 The results were checked against independently computed answers, down to the cent. A third-party Spark generator and its 17-query benchmark ran with a single one-line change. There's a short list of real gaps (below), mostly in advanced MERGE, overwrite and Iceberg-metadata features. Scale was deliberately not the focus.
 
-All tests are **pure PySpark and Spark SQL**, with no Snowflake SQL inside a job. When Spark fails, that failure is the finding (see `CLAUDE.md`).
+All tests are **pure PySpark and Spark SQL**, with no Snowflake SQL inside a job. When Spark fails, that failure is the finding (see `Agent.md`).
 
 ## What works well (the pleasant surprises)
 - **TPC-H SF100 data generated and loaded inside one Spark job on an X-Small warehouse** (measured as one job, now split into `jobs/tpch/tpch_gen.py` and `jobs/tpch/tpch.py`; nothing generated on the laptop):
