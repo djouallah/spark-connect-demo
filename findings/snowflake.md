@@ -86,6 +86,7 @@ Snowflake doesn't host a Spark Connect endpoint. `snowpark-connect` (1.43.0) run
 
   This matches the docs, which say Spark 4.0+ clients "aren't supported and may produce protocol errors or missing API failures". The SQL case doesn't raise a protocol error. The server quietly receives no SQL at all.
 
+- **`local.ipynb` with the 3.5.6 client: 44/44 pass.** That covers catalog, DataFrame API, Spark SQL, all three UDF kinds, reading laptop CSV/JSON paths (the local server uploads them), and Iceberg `saveAsTable`, `INSERT`/`INSERT OVERWRITE`, `MERGE`, `UPDATE`, `DELETE`, `writeTo().append()` and a partitioned `CREATE TABLE`. Most checks take 1–3 s. The first Python UDF takes about 40 s and the first pandas UDF about 35 s, because each is registered on the warehouse; `udf.register` takes about 8 s and local file reads 10–13 s.
 ## Gotchas and behaviour differences
 - **`CREATE SCHEMA` switches the session into the new schema.** That's Snowflake behaviour; Spark doesn't do it. One-part names then resolve in the new schema.
 - **Unquoted identifiers come back in uppercase** (`country` becomes `COUNTRY`). Spark access stays case-insensitive, but Python `Row` attributes don't: `r.id` fails where `r["ID"]` works.
