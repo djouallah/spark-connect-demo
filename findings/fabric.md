@@ -2,7 +2,7 @@
 
 ## Setup
 - **Engine:** Fabric Spark, `spark.version` = `4.1.1.5.5.20260803.3`, and Spark SQL `version()` = `4.1.1`. That's Spark 4, not 3.5.
-- **Submit:** Fabric has no Spark Connect endpoint. `platforms/fabric/run.py` works like this:
+- **Submit:** Fabric has no Spark Connect endpoint. Its interactive path is the Livy API (see *Notebook via Livy* below). `platforms/fabric/run.py` submits jobs instead, like this:
   1. It uploads the job's data to OneLake `Files/raw/`.
   2. It wraps the job's source in a small main file, which captures stdout and logging and shows the result table.
   3. It points a Spark Job Definition `quack_<name>` at that file through the Fabric REST API, runs it, and polls until it finishes.
@@ -33,6 +33,16 @@
 - **An SJD has no `/lakehouse/default` mount**, unlike a notebook. A tool that writes there (`tpchgen-cli` in `tpch_gen`) succeeds, but the files stay on the driver's local disk and are lost, so `tpch` then finds no `Files/raw/sf1`. The runner's wrapper mounts `Files/` itself with `notebookutils.fs.mount` (tooling, not the job) and replaces `@MOUNT@` in the job's arguments with the local mount path (`/synfs/notebook/<id>/files`).
 - **pip works in an SJD:** `python -m pip install tpchgen-cli` on the driver succeeds (the workspace has outbound internet).
 - **`currentDatabase()` returns an opaque id** (`chimcobldhq2...`), not the schema name. `USE SCHEMA` and `setCurrentDatabase` still work, and 1-part names resolve.
+
+## Notebook via Livy (`spark_connect.ipynb`, `ENDPOINT = "fabric"`)
+- **How:** the Connect cell opens a Livy session on the lakehouse (`.../lakehouses/<id>/livyapi/versions/2023-12-01/sessions`, `az login` token for `https://analysis.windows.net/powerbi/api/.default`, the same as dbt-fabricspark's CLI auth) and installs an IPython input transformer. After that, every cell that doesn't start with `# laptop` is sent to the session unchanged as a `pyspark` statement, and its output is printed locally. The summary pulls `RESULTS` back as JSON.
+- **Session start:** idle after **21 s** on the starter pool, against 2.5–4 min for an SJD run. Statements then take 0.1–10 s each.
+- **Engine:** `version()` = `4.1.1`, `spark.version` = `4.1.1.5.5.20260910.235373633`. Session conf `spark.sql.session.timeZone=UTC` and `spark.sql.ansi.enabled=false` are passed when the session is created.
+- **Result (2026-09-27, Delta):** 39 PASS, 2 WRONG, 3 FAIL of 44 (`findings/local/fabric.csv`). DataFrame, SQL, UDF (Python, pandas, `udf.register`) and every Delta write (`saveAsTable`, INSERT, INSERT OVERWRITE, MERGE, UPDATE, DELETE, `writeTo().append()`, `PARTITIONED BY`) pass.
+  - WRONG `SHOW NAMESPACES lists it`: `local_nb` isn't in the list after `CREATE SCHEMA`.
+  - WRONG `catalog.currentDatabase`: an opaque id (`chimcobldhq2...`), not `local_nb`, as in the SJD runs.
+  - FAIL `read CSV file` / `read CSV folder` / `read JSON lines`: the paths are laptop paths (`C:/...`), which a remote engine can't see (`No FileSystem for scheme "C"`). Expected for any remote engine.
+- **Output:** the Livy REPL echoes expression statements inside loops (`DataFrame[]` in the teardown cell). Cosmetic.
 
 ## Gotchas
 - **Startup:** an SJD run takes about 2.5–4 minutes end to end, mostly session start. The job itself is usually under 40 s.
