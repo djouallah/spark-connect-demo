@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -120 2020 1000" width="2020" height="1000" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<rect x="-50" y="-120" width="2020" height="1000" fill="#ffffff"/>
+<defs>
+<marker id="m0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1971c2"/></marker>
+<marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2f9e44"/></marker>
+<marker id="m2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8590c"/></marker>
+</defs>
+<rect x="-20.0" y="0.0" width="1080.0" height="760.0" rx="12" fill="#f8f9fa" stroke="#1e1e1e" stroke-width="1.5" stroke-dasharray="8 6"/>
+<rect x="10.0" y="60.0" width="235.0" height="660.0" rx="12" fill="#e9ecef" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="1120.0" y="0.0" width="820.0" height="760.0" rx="12" fill="#fff9db" stroke="#1e1e1e" stroke-width="1.5" stroke-dasharray="8 6"/>
+<rect x="280.0" y="70.0" width="270.0" height="120.0" rx="12" fill="#a5d8ff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="680.0" y="70.0" width="330.0" height="120.0" rx="12" fill="#a5d8ff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="1180.0" y="70.0" width="330.0" height="120.0" rx="12" fill="#a5d8ff" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="249.0" y1="390.0" x2="276.0" y2="130.0" stroke="#1971c2" stroke-width="2" marker-end="url(#m0)"/>
+<line x1="554.0" y1="130.0" x2="676.0" y2="130.0" stroke="#1971c2" stroke-width="2" marker-end="url(#m0)"/>
+<line x1="1014.0" y1="130.0" x2="1176.0" y2="130.0" stroke="#1971c2" stroke-width="2" marker-end="url(#m0)"/>
+<rect x="280.0" y="320.0" width="270.0" height="120.0" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="680.0" y="320.0" width="330.0" height="120.0" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="1180.0" y="320.0" width="330.0" height="120.0" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="249.0" y1="390.0" x2="276.0" y2="380.0" stroke="#2f9e44" stroke-width="2" marker-end="url(#m1)"/>
+<line x1="554.0" y1="380.0" x2="676.0" y2="380.0" stroke="#2f9e44" stroke-width="2" marker-end="url(#m1)"/>
+<line x1="1014.0" y1="380.0" x2="1176.0" y2="380.0" stroke="#2f9e44" stroke-width="2" marker-end="url(#m1)"/>
+<rect x="280.0" y="570.0" width="270.0" height="120.0" rx="12" fill="#ffd8a8" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="680.0" y="570.0" width="330.0" height="120.0" rx="12" fill="#ffd8a8" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="1180.0" y="570.0" width="330.0" height="120.0" rx="12" fill="#ffd8a8" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="1620.0" y="570.0" width="270.0" height="120.0" rx="12" fill="#ffd8a8" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="249.0" y1="390.0" x2="276.0" y2="630.0" stroke="#e8590c" stroke-width="2" marker-end="url(#m2)"/>
+<line x1="554.0" y1="630.0" x2="676.0" y2="630.0" stroke="#e8590c" stroke-width="2" marker-end="url(#m2)"/>
+<line x1="1014.0" y1="630.0" x2="1176.0" y2="630.0" stroke="#e8590c" stroke-width="2" marker-end="url(#m2)"/>
+<line x1="1514.0" y1="630.0" x2="1616.0" y2="630.0" stroke="#e8590c" stroke-width="2" marker-end="url(#m2)"/>
+<text font-size="28" fill="#1e1e1e" text-anchor="start" dominant-baseline="middle"><tspan x="0.0" y="-73.2">spark_connect.ipynb: one notebook, three engines</tspan></text>
+<text font-size="16" fill="#495057" text-anchor="start" dominant-baseline="middle"><tspan x="0.0" y="-35.4">Set NB_ENDPOINT, Run All: the same 41 pure-Spark checks run on each. Results land in findings/local/&lt;endpoint&gt;.csv</tspan></text>
+<text font-size="18" fill="#1e1e1e" text-anchor="start" dominant-baseline="middle"><tspan x="0.0" y="22.8">Laptop: Jupyter kernel .venv-snowflake (PySpark 3.5.6 client), az login</tspan></text>
+<text font-size="16" fill="#1e1e1e" text-anchor="middle" dominant-baseline="middle"><tspan x="127.5" y="300.0">spark_connect.ipynb</tspan><tspan x="127.5" y="320.0"></tspan><tspan x="127.5" y="340.0">Connect cell picks</tspan><tspan x="127.5" y="360.0">ENDPOINT:</tspan><tspan x="127.5" y="380.0">sail | snowflake | fabric</tspan><tspan x="127.5" y="400.0"></tspan><tspan x="127.5" y="420.0">then 41 checks:</tspan><tspan x="127.5" y="440.0">catalog, DataFrame,</tspan><tspan x="127.5" y="460.0">SQL, UDFs,</tspan><tspan x="127.5" y="480.0">open-format writes</tspan></text>
+<text font-size="18" fill="#1e1e1e" text-anchor="start" dominant-baseline="middle"><tspan x="1140.0" y="22.8">Cloud</tspan></text>
+<text font-size="18" fill="#1971c2" text-anchor="start" dominant-baseline="middle"><tspan x="280.0" y="58.8">sail</tspan></text>
+<text font-size="16" fill="#1e1e1e" text-anchor="middle" dominant-baseline="middle"><tspan x="415.0" y="110.0">PySpark client</tspan><tspan x="415.0" y="130.0">SparkSession.builder</tspan><tspan x="415.0" y="150.0">.remote(sc://localhost:&lt;port&gt;)</tspan></text>
+<text font-size="16" fill="#1e1e1e" text-anchor="middle" dominant-baseline="middle"><tspan x="845.0" y="110.0">Sail 0.7.2 server</tspan><tspan x="845.0" y="130.0">started in-process (pysail)</tspan><tspan x="845.0" y="150.0">Rust + DataFusion, no JVM</tspan></text>
+<text font-size="16" fill="#1e1e1e" text-anchor="middle" dominant-baseline="middle"><tspan x="1345.0" y="110.0">OneLake lakehouse (Sail's)</tspan><tspan x="1345.0" y="130.0">Iceberg REST catalog</tspan><tspan x="1345.0" y="150.0">+ abfss storage</tspan></text>
+<rect x="559.0" y="109.5" width="111.9" height="41.0" rx="4" fill="#ffffff" opacity="0.92"/>
+<text font-size="14" fill="#1971c2" text-anchor="middle" dominant-baseline="middle"><tspan x="615.0" y="121.2">gRPC</tspan><tspan x="615.0" y="138.8">Spark Connect</tspan></text>
+<rect x="1019.4" y="109.5" width="151.1" height="41.0" rx="4" fill="#ffffff" opacity="0.92"/>
+<text font-size="14" fill="#1971c2" text-anchor="middle" dominant-baseline="middle"><tspan x="1095.0" y="121.2">HTTPS, Entra token</tspan><tspan x="1095.0" y="138.8">(Iceberg tables)</tspan></text>
+<text font-size="18" fill="#2f9e44" text-anchor="start" dominant-baseline="middle"><tspan x="280.0" y="308.8">snowflake</tspan></text>
+<text font-size="16" fill="#1e1e1e" text-anchor="middle" dominant-baseline="middle"><tspan x="415.0" y="360.0">PySpark client</tspan><tspan x="415.0" y="380.0">SparkSession.builder</tspan><tspan x="415.0" y="400.0">.remote(sc://localhost:15002)</tspan></text>
+<text font-size="16" fill="#1e1e1e" text-anchor="middle" dominant-baseline="middle"><tspan x="845.0" y="350.0">snowpark-connect 1.44 server</tspan><tspan x="845.0" y="370.0">local_server.py: Python + JVM</tspan><tspan x="845.0" y="390.0">(~600 MB, Spark 3.5 only)</tspan><tspan x="845.0" y="410.0">plans -&gt; Snowflake SQL</tspan></text>
+<text font-size="16" fill="#1e1e1e" text-anchor="middle" dominant-baseline="middle"><tspan x="1345.0" y="360.0">Snowflake warehouse</tspan><tspan x="1345.0" y="380.0">runs the SQL</tspan><tspan x="1345.0" y="400.0">Iceberg tables</tspan></text>
+<rect x="559.0" y="359.5" width="111.9" height="41.0" rx="4" fill="#ffffff" opacity="0.92"/>
+<text font-size="14" fill="#2f9e44" text-anchor="middle" dominant-baseline="middle"><tspan x="615.0" y="371.2">gRPC</tspan><tspan x="615.0" y="388.8">Spark Connect</tspan></text>
+<rect x="1039.0" y="359.5" width="111.9" height="41.0" rx="4" fill="#ffffff" opacity="0.92"/>
+<text font-size="14" fill="#2f9e44" text-anchor="middle" dominant-baseline="middle"><tspan x="1095.0" y="371.2">HTTPS</tspan><tspan x="1095.0" y="388.8">Snowflake SQL</tspan></text>
+<text font-size="18" fill="#e8590c" text-anchor="start" dominant-baseline="middle"><tspan x="280.0" y="558.8">fabric</tspan></text>
+<text font-size="16" fill="#1e1e1e" text-anchor="middle" dominant-baseline="middle"><tspan x="415.0" y="610.0">IPython input transformer</tspan><tspan x="415.0" y="630.0">any cell not starting with</tspan><tspan x="415.0" y="650.0"># laptop -&gt; livy(cell source)</tspan></text>
+<text font-size="16" fill="#1e1e1e" text-anchor="middle" dominant-baseline="middle"><tspan x="845.0" y="610.0">Livy client (requests)</tspan><tspan x="845.0" y="630.0">POST statement {code, kind: pyspark}</tspan><tspan x="845.0" y="650.0">poll -&gt; print text/plain</tspan></text>
+<text font-size="16" fill="#1e1e1e" text-anchor="middle" dominant-baseline="middle"><tspan x="1345.0" y="600.0">Fabric Livy session</tspan><tspan x="1345.0" y="620.0">Spark 4.1 driver + executors</tspan><tspan x="1345.0" y="640.0">the real `spark` object</tspan><tspan x="1345.0" y="660.0">(idle in ~20 s)</tspan></text>
+<text font-size="16" fill="#1e1e1e" text-anchor="middle" dominant-baseline="middle"><tspan x="1755.0" y="610.0">OneLake lakehouse</tspan><tspan x="1755.0" y="630.0">(Fabric's)</tspan><tspan x="1755.0" y="650.0">Delta tables</tspan></text>
+<rect x="566.9" y="609.5" width="96.2" height="41.0" rx="4" fill="#ffffff" opacity="0.92"/>
+<text font-size="14" fill="#e8590c" text-anchor="middle" dominant-baseline="middle"><tspan x="615.0" y="621.2">Python</tspan><tspan x="615.0" y="638.8">source text</tspan></text>
+<rect x="1003.8" y="609.5" width="182.5" height="41.0" rx="4" fill="#ffffff" opacity="0.92"/>
+<text font-size="14" fill="#e8590c" text-anchor="middle" dominant-baseline="middle"><tspan x="1095.0" y="621.2">HTTPS Livy REST</tspan><tspan x="1095.0" y="638.8">/sessions, /statements</tspan></text>
+<rect x="1540.4" y="618.2" width="49.2" height="23.5" rx="4" fill="#ffffff" opacity="0.92"/>
+<text font-size="14" fill="#e8590c" text-anchor="middle" dominant-baseline="middle"><tspan x="1565.0" y="630.0">Delta</tspan></text>
+<text font-size="16" fill="#495057" text-anchor="start" dominant-baseline="middle"><tspan x="0.0" y="799.6">Sail and Snowflake: real Spark Connect (gRPC), but the server runs on the laptop.</tspan><tspan x="0.0" y="819.6">Fabric: no Spark Connect endpoint; Livy runs the cell code on a remote Spark driver,</tspan><tspan x="0.0" y="839.6">so laptop paths aren't visible there. The Summary and close cells (# laptop) stay local.</tspan></text>
+</svg>
