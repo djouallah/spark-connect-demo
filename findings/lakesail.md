@@ -1,7 +1,7 @@
 # Spark on LakeSail (Sail) with the OneLake Iceberg catalog
 
 ## Setup
-- **Engine:** Sail 0.7.1 (`pysail`), started in-process by `platforms/lakesail/run.py`. It's a Rust Spark Connect server with no JVM.
+- **Engine:** Sail 0.7.2 (`pysail`; 0.7.1 until 2026-10-01), started in-process by `platforms/lakesail/run.py`. It's a Rust Spark Connect server with no JVM.
 - **Client:** `pyspark-client` 4.2.0, the slim Spark Connect client.
 - **Catalog:** Sail's built-in `onelake` catalog (`api="iceberg"`) on a schema-enabled Fabric lakehouse. Tables are written as Iceberg to OneLake.
 - **Inputs:** local files on the laptop, passed to the jobs as ordinary paths.
@@ -19,11 +19,9 @@ Getting there needed one non-standard branch. **Sail can't replace a table on th
 **TPC-H SF1: generation works, but the load didn't finish from the laptop.** `tpch_gen.py` took its standard branch: `tpchgen-cli` wrote SF1 straight into a local folder (8 tables, 346 MB, 16 s). `tpch.py` then failed on its first table: Sail's PUT of the `lineitem` parquet to OneLake gave up after 10 retries (156 s). It's the same laptop-to-North-Europe upload limit as `coffee_gen`, so the 22 queries haven't run on Sail yet. They need to run near the lakehouse.
 
 ## `spark_connect.ipynb` (Spark 3.5.6 client)
-**38 of 41 pass** (run of 2026-09-27, per check: [`local/sail.csv`](local/sail.csv); the executed notebook is [`spark_connect.ipynb`](../spark_connect.ipynb)). A Spark 3.5 client works against Sail 0.7.1, so one notebook and one client serve both Sail and Snowflake. The 3 failures are the gaps already listed below:
-- `MERGE` and `DELETE` fail on a table created without `write.merge.mode` / `write.delete.mode=merge-on-read`.
-- `UPDATE` isn't supported (`CommandNode::Update`).
+**41 of 41 pass on Sail 0.7.2** (run of 2026-10-01, per check: [`local/sail.csv`](local/sail.csv)). A Spark 3.5 client works against Sail, so one notebook and one client serve both Sail and Snowflake. Catalog, DataFrame API, Spark SQL, Python, pandas and registered UDFs, and Iceberg append, insert, overwrite, `MERGE`, `UPDATE`, `DELETE`, `writeTo().append()` and partitioned `CREATE TABLE` all pass.
 
-Everything else passes: catalog, DataFrame API, Spark SQL, Python, pandas and registered UDFs, and Iceberg append, insert, overwrite, `writeTo().append()` and partitioned `CREATE TABLE`.
+On Sail 0.7.1 (2026-09-27) it was 38 of 41: `MERGE` and `DELETE` failed on a table created without `write.merge.mode` / `write.delete.mode=merge-on-read`, and `UPDATE` wasn't supported (`CommandNode::Update`). 0.7.2 ([release](https://github.com/lakehq/sail/releases/tag/v0.7.2)) unified the row-level operations and added copy-on-write. The DML matrix below is still from 0.7.1.
 
 ## DML / DDL matrix (`jobs/dml/dml.py`, Iceberg on OneLake)
 **14 of 35 checks pass, 1 is WRONG and 20 fail.** Snowflake passes 24 of the same 35 Iceberg checks.
